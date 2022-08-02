@@ -1,18 +1,15 @@
-package kunimitsova.valbee.datetimecalculator.Dialogs
+package kunimitsova.valbee.datetimecalculator.dialogs
 
 import android.app.TimePickerDialog
-import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,20 +33,25 @@ fun TimeBlock(modifier: Modifier = Modifier ) {
         },
         startHour,
         startMin,
-        false
+        true
     )
-    Column(modifier = Modifier.padding(16.dp) ) {
+    androidx.compose.material.Surface(elevation = 3.dp) {
         Row(modifier = Modifier
-            .padding(vertical = 8.dp)
+            .padding(8.dp)
             .clickable(enabled = true, onClickLabel = "select time") { timePickerDialog.show() }
-        ){
+        ) {
             Text(
                 text = pickedTime.value,
-                style = MaterialTheme.typography.h6)
+                style = MaterialTheme.typography.h6
+            )
             Spacer(modifier = Modifier.width(8.dp))
-            Icon(painter = painterResource(id = R.drawable.ic_baseline_access_time_filled_24), contentDescription = "")
+            Icon(
+                painter = painterResource(id = R.drawable.ic_baseline_access_time_filled_24),
+                contentDescription = ""
+            )
         }
     }
+
 }
 
 @Preview
