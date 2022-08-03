@@ -12,7 +12,7 @@ import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kunimitsova.valbee.datetimecalculator.screens.DateTimeMainScreen
+import kunimitsova.valbee.datetimecalculator.ui.screens.DateTimeMainScreen
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
 class MainActivity : ComponentActivity() {

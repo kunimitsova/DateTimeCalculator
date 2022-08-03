@@ -1,6 +1,6 @@
 package kunimitsova.valbee.datetimecalculator.utils
 
-import kunimitsova.valbee.datetimecalculator.leadingZero
+import kunimitsova.valbee.datetimecalculator.utils.leadingZero
 
 data class DateClassic(val day: Int, val month: Int, val year: Int){
     override fun toString(): String {

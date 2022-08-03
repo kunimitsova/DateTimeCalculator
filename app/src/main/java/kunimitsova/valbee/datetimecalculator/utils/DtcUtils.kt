@@ -1,4 +1,4 @@
-package kunimitsova.valbee.datetimecalculator
+package kunimitsova.valbee.datetimecalculator.utils
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.OutlinedTextField
@@ -88,96 +88,5 @@ fun leadingZero(num: Int, maxDigits: Int): String {
     return exitString
 }
 
-@Composable
-fun properOlt() {
-    var myText by remember { mutableStateOf("sample")}
-    OutlinedTextField(
-        value = myText,
-        onValueChange = { myText = it},
-        label = { Text("Example") },
-        modifier = Modifier
-            .padding(horizontal = 8.dp)
-    )
-}
 
-@Composable
-fun HelloScreen() {
-    var name by rememberSaveable { mutableStateOf("2022") }
-    var yr1 = "2022"
-    Column {
-        HelloContent(name = name, onNameChange = { name = it })
-        if (name.matches(Regex("[0-9][0-9][0-9][0-9]"))) {
-            yr1 = name
-        } else {
-            if (name.matches(Regex("[0-9][0-9]"))) {
-                yr1 = "20" + name
-            } else {
-                yr1 = "Error"
-            }
-        }
-        Text("Save the input: $yr1")
-    }
-}
 
-@Composable
-fun HelloContent(name: String, onNameChange: (String) -> Unit) {
-    Column(modifier = Modifier.padding(16.dp)) {
-//        Text(
-//            text = "Hello, $name",
-//            modifier = Modifier.padding(bottom = 8.dp),
-//            style = MaterialTheme.typography.h5
-//        )
-        OutlinedTextField(
-            value = name,
-            onValueChange = onNameChange,
-            label = { Text("Name") }
-        )
-    }
-}
-@Preview
-@Composable
-fun HelloPreview() {
-    HelloScreen()
-}
-
-// code tests from the dev guides
-//@Composable
-//fun HelloContent() {
-//    Column(modifier = Modifier.padding(16.dp)) {
-//        var name by remember { mutableStateOf("") }
-//        if (name.isNotEmpty()) {
-//            Text(
-//                text = "Hello, $name!",
-//                modifier = Modifier.padding(bottom = 8.dp),
-//                style = MaterialTheme.typography.h5
-//            )
-//        }
-//        OutlinedTextField(
-//            value = name,
-//            onValueChange = { name = it },
-//            label = { Text("Name") }
-//        )
-//    }
-//}
-
-//@Composable
-//fun StyledTextField() {
-//    var value by remember { mutableStateOf("Hello\nWorld\nInvisible") }
-//
-//    TextField(
-//        value = value,
-//        onValueChange = { value = it },
-//        label = { Text("Enter text") },
-//        maxLines = 2,
-//        textStyle = TextStyle(color = Color.Blue, fontWeight = FontWeight.Bold),
-//        modifier = Modifier.padding(20.dp)
-//    )
-//}
-//
-//@Preview(widthDp = 320)
-//@Composable
-//fun HCPrev() {
-//    DateTimeCalculatorTheme {
-//        HelloContent()
-//    }
-//}
