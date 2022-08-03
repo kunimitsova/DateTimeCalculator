@@ -1,4 +1,4 @@
-package kunimitsova.valbee.datetimecalculator.dialogs
+package kunimitsova.valbee.datetimecalculator.ui.dialogs
 
 import android.app.DatePickerDialog
 import android.widget.DatePicker
@@ -11,9 +11,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kunimitsova.valbee.datetimecalculator.DateClassic
+import kunimitsova.valbee.datetimecalculator.utils.DateClassic
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import java.util.*

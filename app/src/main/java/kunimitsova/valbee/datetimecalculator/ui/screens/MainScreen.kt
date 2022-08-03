@@ -4,9 +4,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.DtcDivider
-import kunimitsova.valbee.datetimecalculator.EntryText
+//import kunimitsova.valbee.datetimecalculator.EntryText
 import kunimitsova.valbee.datetimecalculator.HeaderText
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
@@ -29,8 +30,15 @@ fun DateTimeMainScreen(modifier: Modifier = Modifier) {
                 }
                 Spacer(Modifier.height(4.dp))
                 DtcDivider()
-                EntryText(text = "MM-DD-YYYY", label = "Date", onChanged = {})
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun MainScreenPreview() {
+    DateTimeCalculatorTheme {
+        DateTimeMainScreen()
     }
 }

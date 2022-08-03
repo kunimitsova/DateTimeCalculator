@@ -1,6 +1,8 @@
 package kunimitsova.valbee.datetimecalculator
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -21,6 +23,17 @@ fun EntryText(
         onValueChange = onChanged,
         label = { Text(label) },
         modifier = modifier
+    )
+}
+
+@Composable
+fun BigText(
+    text: String,
+    modifier: Modifier = Modifier
+) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.h5
     )
 }
 

@@ -14,7 +14,7 @@ val Typography = Typography(
         fontSize = 16.sp
     ),
     h5 = TextStyle(
-        fontSize = 20.sp,
+        fontSize = 22.sp,
         fontWeight = FontWeight.Medium
     )
     /* Other default text styles to override
