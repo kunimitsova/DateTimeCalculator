@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">DateTimeCalculator</string>
+    <string name="app_name">Date\/Time Calculator</string>
+    <string name="Years">Years</string>
+    <string name="Months">Months</string>
+    <string name="Days">Days</string>
+    <string name="appName">Date/Time Calculator</string>
+    <string name="Weeks">Weeks</string>
+    <string name="Hours">Hours</string>
+    <string name="Minutes">Minutes</string>
+    <string name="Seconds">Seconds</string>
+    <string name="Millis">Milliseconds</string>
+    <string name="calculate">Calculate</string>
+    <string name="tonww">Click to toggle addition or subtraction</string>
+    <string name="lemons">lemons</string>
 </resources>

@@ -1,16 +1,17 @@
 package kunimitsova.valbee.datetimecalculator.ui.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.annotation.StyleableRes
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
-// is this like the stateless thing? I'm trying to make one...
+// EntryText height on main page = 79dp
 @Composable
 fun EntryText(
     text: String,
@@ -18,22 +19,49 @@ fun EntryText(
     onChanged: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    OutlinedTextField(
+    TextField(
         value = text,
         onValueChange = onChanged,
+        textStyle = MaterialTheme.typography.h4,
         label = { Text(label) },
         modifier = modifier
     )
 }
 
 @Composable
-fun BigText(
+fun ButtonText(
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = text,
-        style = MaterialTheme.typography.h5
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.h4,
+        modifier = Modifier
+    )
+}
+
+@Composable
+fun DateDivider(modifier: Modifier = Modifier){
+    Text(text = "/",
+        style = MaterialTheme.typography.h3,
+        modifier = modifier.wrapContentWidth(Alignment.CenterHorizontally)
+    )
+}
+
+@Composable
+fun TimeDivider(modifier: Modifier = Modifier){
+    Text(text = ":",
+        style = MaterialTheme.typography.h3,
+        modifier = modifier.wrapContentWidth(Alignment.CenterHorizontally)
+    )
+}
+
+@Composable
+fun DotDivider(modifier: Modifier = Modifier){
+    Text(text = ".",
+        style = MaterialTheme.typography.h3,
+        modifier = modifier.wrapContentWidth(Alignment.CenterHorizontally)
     )
 }
 
@@ -58,5 +86,13 @@ fun HeaderText(
                 .fillMaxWidth(width)
                 .padding(vertical = 8.dp, horizontal = 4.dp)
         )
+    }
+}
+
+@Preview
+@Composable
+fun showEntryTextSample() {
+    DateTimeCalculatorTheme {
+        EntryText(text = "Bloody Hell", label = "where", onChanged = {})
     }
 }
