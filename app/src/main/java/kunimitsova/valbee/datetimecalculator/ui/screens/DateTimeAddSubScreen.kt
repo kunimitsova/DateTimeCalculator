@@ -15,9 +15,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.components.DateItemsInput
+import kunimitsova.valbee.datetimecalculator.ui.components.DtcDivider
+import kunimitsova.valbee.datetimecalculator.ui.components.PlusMinusButton
 import kunimitsova.valbee.datetimecalculator.ui.components.TimeItemsInput
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.utils.leadingZero
+import java.time.temporal.ChronoUnit
+import java.time.temporal.TemporalUnit
 import java.util.*
 
 @Composable
@@ -37,7 +41,12 @@ fun DateTimeScreen(){
     var startMilli by rememberSaveable {
         mutableStateOf(leadingZero(calendar[Calendar.MILLISECOND], 3)) }
 
-    val showMillis by rememberSaveable { mutableStateOf(false) }
+    var showMillis by rememberSaveable { mutableStateOf(false) }
+    var plusMinus by rememberSaveable { mutableStateOf(true) }
+
+    var numToAdd by rememberSaveable { mutableStateOf("0") }
+
+
 
     Scaffold(
         topBar = { TopAppBar(title = {
@@ -91,7 +100,9 @@ fun DateTimeScreen(){
                 onMilliChange = { startMilli -> it },
                 showMillis = false
             )
-
+            DtcDivider()
+            PlusMinusButton(addDate = plusMinus, onToggle = { addDate -> plusMinus = !plusMinus })
+            DtcDivider()
         }
     }
 }

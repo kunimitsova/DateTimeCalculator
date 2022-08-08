@@ -1,5 +1,6 @@
 package kunimitsova.valbee.datetimecalculator.utils
 
+import android.annotation.SuppressLint
 import androidx.compose.ui.res.stringResource
 import kunimitsova.valbee.datetimecalculator.R
 import java.time.LocalDateTime
@@ -7,16 +8,16 @@ import java.time.Year
 import java.time.temporal.ChronoUnit
 import java.time.temporal.TemporalUnit
 
-
-enum class DateTimeUnits(val friendlyName: String, val abbrev: String) {
-    YEAR(  R.string.Years.toString(), "y"),
-    MONTH( R.string.Months.toString(), "M"),
-    WEEK(R.string.Weeks.toString(), "w"),
-    DAY(R.string.Days.toString(), "d"),
-    HOUR(R.string.Hours.toString(), "H"),
-    MINUTE(R.string.Minutes.toString(), "m"),
-    SECOND(R.string.Seconds.toString(), "s"),
-    MILLISECOND(R.string.Millis.toString(), "S");
+@SuppressLint("NewApi")
+enum class DateTimeUnits(val friendlyNameID: Int, val unit: ChronoUnit) {
+    YEAR(  R.string.Years, ChronoUnit.YEARS),
+    MONTH( R.string.Months, ChronoUnit.MONTHS),
+    WEEK(R.string.Weeks, ChronoUnit.WEEKS),
+    DAY(R.string.Days, ChronoUnit.DAYS),
+    HOUR(R.string.Hours, ChronoUnit.HOURS),
+    MINUTE(R.string.Minutes, ChronoUnit.MINUTES),
+    SECOND(R.string.Seconds, ChronoUnit.SECONDS),
+    MILLISECOND(R.string.Millis, ChronoUnit.MILLIS);
 
     // to get to the next granular level of dateness, in case of fractional user inputs
     fun getNext() = when (this) {
@@ -40,5 +41,4 @@ enum class DateTimeUnits(val friendlyName: String, val abbrev: String) {
         SECOND -> { numF * 1000 }
         MILLISECOND -> { numF }
     }
-
 }

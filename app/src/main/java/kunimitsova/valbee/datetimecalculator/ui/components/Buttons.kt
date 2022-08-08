@@ -1,42 +1,66 @@
 package kunimitsova.valbee.datetimecalculator.ui.components
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.IconToggleButton
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.AlignmentLine
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.R
+import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
 @Composable
 fun PlusMinusButton(addDate: Boolean, onToggle: (Boolean) -> Unit) {
-    Row(modifier = Modifier.padding(start = 30.dp)) {
+    Row(modifier = Modifier.padding(start = 30.dp, end = 16.dp)) {
         IconToggleButton(
             checked = addDate,
             onCheckedChange = onToggle,
-            modifier = Modifier.height(79.dp)
-        ) {
+            modifier = Modifier
+                .height(75.dp)
+                .width(75.dp)
+                .padding(4.dp)
+//                .background(
+//                    color = MaterialTheme.colors.primary,
+//                    shape = MaterialTheme.shapes.medium
+//                )
+        )
+         {
+             Surface(color = MaterialTheme.colors.primary,
+                 elevation = 4.dp,
+                 shape = MaterialTheme.shapes.medium
+             ) {
             if (!addDate) {
-                Icon(painter = painterResource(id = R.drawable.baseline_horizontal_rule_24),
-                    contentDescription = "Subtract" )
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_horizontal_rule_24),
+                    contentDescription = "Subtract",
+                    tint = MaterialTheme.colors.onPrimary,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(50.dp)
+                )
             } else {
-                Icon(painter = painterResource(id = R.drawable.baseline_add_24),
-                    contentDescription = "Add")
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_add_24),
+                    contentDescription = "Add",
+                    tint = MaterialTheme.colors.onPrimary,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(50.dp)
+                )
             }
-        }
-        Text(text = "click to toggle addition/subtraction")
+        }}
+        Spacer(modifier = Modifier.width(30.dp))
+        bodyText(
+            text = "click to toggle addition/subtraction",
+            modifier = Modifier.align(Alignment.CenterVertically)
+        )
     }
 }
 
@@ -49,13 +73,19 @@ fun CalculateButton(onCalculate: () -> Unit) {
             onClick = onCalculate,
             modifier = Modifier.fillMaxWidth(1f)
         ) {
+            Surface(color = MaterialTheme.colors.primary,
+                elevation = 4.dp
+            ) {
             ButtonText(text = stringResource(id = R.string.calculate))
-        }
+        } }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun buttonPreview() {
-
+fun ButtonPreview() {
+    var addTe = remember{ mutableStateOf(true  )}
+    DateTimeCalculatorTheme {
+        PlusMinusButton(addTe.value, {addDTe -> addTe.value = !addTe.value })
+    }
 }

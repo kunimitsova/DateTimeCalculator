@@ -19,8 +19,11 @@ private val LightColorPalette = lightColors(
     primary = Purple500,
     primaryVariant = Purple700,
     secondary = Teal200,
-    surface = Color.White,
+    surface = Pink45,
     onSurface = Color.Black,
+    background = Color.White,
+    onBackground = Color.Black,
+    onPrimary = Pink45
 
     /* Other default colors to override
     background = Color.White,
