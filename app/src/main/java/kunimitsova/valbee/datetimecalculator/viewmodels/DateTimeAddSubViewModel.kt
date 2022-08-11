@@ -54,11 +54,11 @@ class DateTimeAddSubViewModel: ViewModel() {
         selectedUnit = it
         expanded = false
     }
-
-    var dateStr = startYear + "-" + startMonth + "-" + startDay + "T" + startHour + ":" +
-            startMin + ":" + startSec + "." + startMilli
+    var dateStr = validateDate(startYear, startMonth, startDay)
+    var timeStr = formatLocalTime(startHour, startMin, startSec, startMilli)
+    var dateTimeStr = dateStr + "T" + timeStr
     @SuppressLint("NewApi")
-    var dateTimeLocal = LocalDateTime.parse(dateStr)
+    var dateTimeLocal = LocalDateTime.parse(dateTimeStr)
 
     var numAndUnits = getNumAndUnits(numToAdd, selectedUnit)
 
@@ -71,9 +71,20 @@ class DateTimeAddSubViewModel: ViewModel() {
 
     @SuppressLint("NewApi")
     val onCalculate = {
-        dateStr = startYear + "-" + startMonth + "-" + startDay + "T" + startHour + ":" +
-                startMin + ":" + startSec + "." + startMilli
-        dateTimeLocal = LocalDateTime.parse(dateStr)
+        startYear = getYearStr(startYear)
+        startMonth = getMonthString(startMonth)
+        startDay = getDayString(startDay)
+        startHour = getHourString(startHour)
+        startMin = getMinString(startMin)
+        startSec = getSecString(startSec)
+        startMilli = getMilliString(startMilli)
+        dateStr = validateDate(startYear, startMonth, startDay)
+        if (dateStr.endsWith("01")) {
+            startDay = getDayString("01")
+        }
+        timeStr = formatLocalTime(startHour, startMin, startSec, startMilli)
+        dateTimeStr = dateStr + "T" + timeStr
+        dateTimeLocal = LocalDateTime.parse(dateTimeStr)
         numAndUnits = getNumAndUnits(numToAdd, selectedUnit)
         if (plusMinus) { // true = Plus, false = Minus
             endDateTime = calculatePlus(dateTimeLocal, numAndUnits.first, numAndUnits.second)

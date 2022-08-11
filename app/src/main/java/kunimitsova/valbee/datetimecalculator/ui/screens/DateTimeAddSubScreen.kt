@@ -1,20 +1,21 @@
 package kunimitsova.valbee.datetimecalculator.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,9 +30,12 @@ import kunimitsova.valbee.datetimecalculator.viewmodels.DateTimeAddSubViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.*
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun DateTimeScreen(viewModel: DateTimeAddSubViewModel = viewModel(), modifier: Modifier = Modifier) {
-        Column(modifier = modifier.fillMaxHeight(1f).background(color = MaterialTheme.colors.secondary)) {
+        Column(modifier = modifier.fillMaxHeight(1f)
+            .background(color = MaterialTheme.colors.secondary)
+        ) {
             Column (modifier = Modifier.padding(8.dp)) {
                 DateItemsInput(
                     startYear = viewModel.startYear,

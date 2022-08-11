@@ -21,14 +21,15 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
+import java.util.*
 
 /**
- * utilities, plus some code testing
+ * utilities for validatin', formattin', and calculatin'
  */
 
-fun leadingZero(num: Int, maxDigits: Int): String {
+fun leadingZero(num: Any, maxDigits: Int): String {
     val numString = num.toString()
     var len = numString.length
     var exitString = numString
@@ -39,9 +40,154 @@ fun leadingZero(num: Int, maxDigits: Int): String {
     return exitString
 }
 
+fun validInt(num: Any?): String {
+    val numString = num.toString()
+    val nonNumeric = "[^0-9]".toRegex()
+    return numString.replace(nonNumeric, "")
+}
+
 @SuppressLint("NewApi")
-fun getNumAndUnits( numToAdd: String, units: DateTimeUnits) : Pair<Long, DateTimeUnits>  {
-    var setupNum = numToAdd.toFloat()
+fun validateDate(year: String, month: String, day: String): String {
+    // try to parse the numbers to see if it's a valid date, if not,
+    // return the 1st of the selected year/month
+    val dateStr = formatLocalDate(year, month, day)
+    try {
+        LocalDate.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE)
+    } catch (e: Exception) {
+        return formatLocalDate(year, month, "01")
+    }
+    return dateStr
+}
+
+fun validateItems(numStr: String, units: DateTimeUnits?) : String {
+    return when (units) {
+        DateTimeUnits.YEAR -> leadingZero(numStr, 4)
+        DateTimeUnits.MONTH -> getMonthString(leadingZero(numStr, 2))
+        DateTimeUnits.DAY -> getDayString(leadingZero(numStr, 2))
+        DateTimeUnits.HOUR -> getHourString(leadingZero(numStr, 2))
+        DateTimeUnits.MINUTE -> getMinString(leadingZero(numStr, 2))
+        DateTimeUnits.SECOND -> getSecString(leadingZero(numStr, 2))
+        DateTimeUnits.MILLISECOND -> getMilliString(numStr)
+        else -> numStr
+    }
+}
+
+fun getMilliString(milliStr: String): String {
+    if (milliStr.length > 3) {
+        return milliStr.dropLast(milliStr.length - 3)
+    } else {
+        return leadingZero(milliStr,3)
+    }
+}
+
+@SuppressLint("NewApi")
+fun getSecString(secStr: String?): String {
+    if (secStr.isNullOrBlank()) {
+        return "00"
+    } else {
+        if (secStr.toInt() in (0..59)) {
+            return leadingZero(secStr, 2)
+        } else {
+            return leadingZero(
+                LocalTime.now()
+                    .format(DateTimeFormatter.ofPattern("ss")), 2
+            )
+        }
+    }
+}
+
+@SuppressLint("NewApi")
+fun getMinString(minStr: String?): String {
+    if (minStr.isNullOrBlank()) {
+        return "00"
+    } else {
+        val minNum = minStr.toInt()
+        if (minNum in (0..59)) {
+            return leadingZero(minStr, 2)
+        } else {
+            return leadingZero(
+                LocalTime.now()
+                    .format(DateTimeFormatter.ofPattern("mm")), 2
+            )
+        }
+    }
+}
+
+@SuppressLint("NewApi")
+fun getHourString(hourStr: String?) : String {
+    if (hourStr.isNullOrBlank()) {
+        return "00"
+    } else {
+        val hourNum = hourStr.toInt()
+        if (hourNum in (0..23)) {
+            return leadingZero(hourStr, 2)
+        } else {
+            // 'k' is hour in a day (1-24)
+            return leadingZero(
+                LocalTime.now()
+                    .format(DateTimeFormatter.ofPattern("kk")), 2
+            )
+        }
+    }
+}
+
+@SuppressLint("NewApi")
+fun getDayString(dayStr: String?) : String {
+    if (dayStr.isNullOrBlank()) {
+        return "01"
+    } else {
+        val dayNum = dayStr.toInt()
+        if (dayNum in (1..31)) {
+            return leadingZero(dayStr, 2)
+        } else {
+            return leadingZero(
+                LocalDate.now()
+                    .format(DateTimeFormatter.ofPattern("dd")), 2
+            )
+        }
+    }
+}
+
+@SuppressLint("NewApi")
+fun getMonthString(month: String?): String {
+    if (month.isNullOrBlank()) {
+        return "01"
+    } else {
+        val numMonth = month.toInt()
+        if (numMonth in (1..12)) {
+            return leadingZero(month, 2)
+        } else {
+            return leadingZero(
+                LocalDate.now()
+                    .format(DateTimeFormatter.ofPattern("MM")), 2
+            )
+        }
+    }
+}
+
+@SuppressLint("NewApi")
+fun getYearStr(year: String?): String {
+    if (year.isNullOrBlank()) {
+        return "1900"
+    } else {
+        return leadingZero(validInt(year), 4)
+    }
+}
+
+fun formatLocalDate(year: String, month: String, day: String): String {
+    return  getYearStr(validInt(year)) + "-" +
+            getMonthString(validInt(month)) + "-" +
+            getDayString(validInt(day))
+}
+
+fun formatLocalTime(hour: String, minute: String, second: String, millis: String): String {
+    return getHourString(validInt(hour)) + ":" + getMinString(validInt(minute)) +
+            ":" + getSecString(validInt(second)) + "." + getMilliString(millis)
+}
+
+@SuppressLint("NewApi")
+fun getNumAndUnits( numToAdd: String?, units: DateTimeUnits) : Pair<Long, DateTimeUnits>  {
+    var setupNum = if(numToAdd.isNullOrBlank()) 0f else numToAdd.toFloat()
     var setupUnits = units
     // first get the new number to add, before updating the actual units.
     while ((setupNum.toInt().toFloat() != setupNum) and (setupUnits != DateTimeUnits.MILLISECOND)) {
