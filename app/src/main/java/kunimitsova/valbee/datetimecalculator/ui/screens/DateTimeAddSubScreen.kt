@@ -1,8 +1,11 @@
 package kunimitsova.valbee.datetimecalculator.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,61 +29,30 @@ import kunimitsova.valbee.datetimecalculator.viewmodels.DateTimeAddSubViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.*
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun DateTimeScreen(viewModel: DateTimeAddSubViewModel = viewModel()) {
-    Scaffold(
-        topBar = { TopAppBar(title = {
-            Row(
-                modifier = Modifier
-                    .height(50.dp)
-                    .fillMaxWidth()
-                    .selectableGroup()
-            ) {
-                Surface(elevation = 1.dp, color = MaterialTheme.colors.primary,
-                ) {
-                    Text(
-                        "Add/Subtract from Date",
-                        style = MaterialTheme.typography.h6,
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .weight(1f)
-                    )
-                }
-                Surface(elevation = 1.dp, color = MaterialTheme.colors.primary) {
-                    Text(
-                        "Difference between Dates",
-                        style = MaterialTheme.typography.h6,
-                        color = MaterialTheme.colors.onPrimary,
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .weight(1f)
-                            .alpha(0.5f)
-                    )
-                }
+fun DateTimeScreen(viewModel: DateTimeAddSubViewModel = viewModel(), modifier: Modifier = Modifier) {
+        Column(modifier = modifier.fillMaxHeight(1f).background(color = MaterialTheme.colors.secondary)) {
+            Column (modifier = Modifier.padding(8.dp)) {
+                DateItemsInput(
+                    startYear = viewModel.startYear,
+                    startMonth = viewModel.startMonth,
+                    startDay = viewModel.startDay,
+                    onYrChange = viewModel.onYrChange,
+                    onMonthChange = viewModel.onMoChange,
+                    onDayChange = viewModel.onDayChange,
+                )
+                TimeItemsInput(
+                    startHour = viewModel.startHour,
+                    startMin = viewModel.startMin,
+                    startSec = viewModel.startSec,
+                    startMilli = viewModel.startMilli,
+                    onHrChange = viewModel.onHoChange,
+                    onMinChange = viewModel.onMiChange,
+                    onSecChange = viewModel.onSchange,
+                    onMilliChange = viewModel.onMillChange,
+                    showMillis = false
+                )
             }
-        }) }
-    ) {
-        Column {
-            DateItemsInput(
-                startYear = viewModel.startYear,
-                startMonth = viewModel.startMonth,
-                startDay = viewModel.startDay,
-                onYrChange = viewModel.onYrChange,
-                onMonthChange = viewModel.onMoChange,
-                onDayChange = viewModel.onDayChange,
-            )
-            TimeItemsInput(
-                startHour = viewModel.startHour,
-                startMin = viewModel.startMin,
-                startSec = viewModel.startSec,
-                startMilli = viewModel.startMilli,
-                onHrChange =  viewModel.onHoChange,
-                onMinChange = viewModel.onMiChange,
-                onSecChange = viewModel.onSchange,
-                onMilliChange = viewModel.onMillChange,
-                showMillis = false
-            )
             DtcDivider()
             PlusMinusButton(addDate = viewModel.plusMinus,
                 onToggle = { addDate -> viewModel.plusMinus = !viewModel.plusMinus })
@@ -100,7 +72,6 @@ fun DateTimeScreen(viewModel: DateTimeAddSubViewModel = viewModel()) {
             Spacer(modifier = Modifier.height(16.dp))
             OutputDateTimeVert(dateTime = viewModel.endDateTime)
         }
-    }
 }
 
 @Preview

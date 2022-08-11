@@ -23,7 +23,7 @@ fun TimeItemsInput(
 ) {
     // Milliseconds will be implemented later.
     Row(verticalAlignment = Alignment.Bottom,
-        modifier = Modifier.padding(16.dp)) {
+        modifier = Modifier.padding(4.dp)) {
         EntryText(
             text = startHour, label = stringResource(id = R.string.hour),
             onChanged = onHrChange,

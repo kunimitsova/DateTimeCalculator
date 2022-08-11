@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Date\/Time Calculator</string>
+    <string name="app_name">Calculate Date/Time</string>
     <string name="Years">Years</string>
     <string name="Months">Months</string>
     <string name="Days">Days</string>
@@ -10,7 +10,7 @@
     <string name="Seconds">Seconds</string>
     <string name="Millis">Milliseconds</string>
     <string name="calculate">Calculate</string>
-    <string name="tonww">Click to toggle addition or subtraction</string>
+    <string name="toggle_plus_minus">Click to toggle addition or subtraction</string>
     <string name="lemons">lemons</string>
     <string name="year">Year</string>
     <string name="month">Month</string>
@@ -19,4 +19,5 @@
     <string name="minute">Minute</string>
     <string name="second">Second</string>
     <string name="numToCalculate">number of units</string>
+    <string name="what_is_this">click to change the units to add or subtract</string>
 </resources>

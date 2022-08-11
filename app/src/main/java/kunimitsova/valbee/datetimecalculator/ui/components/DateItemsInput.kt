@@ -27,7 +27,7 @@ fun DateItemsInput(
     // starting date is current date
     Row(
         verticalAlignment = Alignment.Bottom,
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(4.dp)
     ) {
         EntryText(
             text = startYear, label = stringResource(id = R.string.year),

@@ -58,7 +58,7 @@ fun PlusMinusButton(addDate: Boolean, onToggle: (Boolean) -> Unit) {
         }}
         Spacer(modifier = Modifier.width(30.dp))
         BodyText(
-            text = "click to toggle addition/subtraction",
+            text = stringResource(id = R.string.toggle_plus_minus),
             modifier = Modifier.align(Alignment.CenterVertically)
         )
     }
@@ -69,15 +69,17 @@ fun CalculateButton(onCalculate: () -> Unit) {
     Row(modifier = Modifier
         .fillMaxWidth(1f)
         .padding(horizontal = 16.dp)) {
-        Button(
-            onClick = onCalculate,
-            modifier = Modifier.fillMaxWidth(1f)
+        Surface(color = MaterialTheme.colors.primary,
+            shape = MaterialTheme.shapes.large,
+            elevation = 4.dp
         ) {
-            Surface(color = MaterialTheme.colors.primary,
-                elevation = 4.dp
+            Button(
+                onClick = onCalculate,
+                modifier = Modifier.fillMaxWidth(1f)
             ) {
-            ButtonText(text = stringResource(id = R.string.calculate))
-        } }
+                ButtonText(text = stringResource(id = R.string.calculate))
+            }
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 package kunimitsova.valbee.datetimecalculator.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActionScope
@@ -10,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,6 +34,8 @@ fun EntryText(
     TextField(
         value = text,
         singleLine = true,
+        colors = TextFieldDefaults
+            .textFieldColors(backgroundColor = MaterialTheme.colors.background),
         onValueChange = onChanged,
         textStyle = MaterialTheme.typography.h4,
         keyboardOptions = KeyboardOptions(
@@ -51,6 +55,16 @@ fun BigText(text: String, modifier: Modifier = Modifier){
     Text(
         text = text,
         style = MaterialTheme.typography.h4,
+        modifier = modifier
+    )
+}
+
+@Composable
+fun LittleText(text: String, modifier: Modifier = Modifier) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.caption,
+        textAlign = TextAlign.End,
         modifier = modifier
     )
 }
