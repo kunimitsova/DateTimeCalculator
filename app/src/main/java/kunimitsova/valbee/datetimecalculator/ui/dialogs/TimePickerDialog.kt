@@ -18,6 +18,7 @@ import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import java.util.*
 
+// tbd - later add option for user to use the dialogs rather than direct number entry.
 @Composable
 fun TimeBlock(modifier: Modifier = Modifier ) {
     val context = LocalContext.current
@@ -54,7 +55,7 @@ fun TimeBlock(modifier: Modifier = Modifier ) {
 
 }
 
-@Preview
+//@Preview
 @Composable
 fun TimeDiaPreview() {
     DateTimeCalculatorTheme {

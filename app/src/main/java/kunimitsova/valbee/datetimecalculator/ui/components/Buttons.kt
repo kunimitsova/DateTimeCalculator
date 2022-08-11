@@ -57,7 +57,7 @@ fun PlusMinusButton(addDate: Boolean, onToggle: (Boolean) -> Unit) {
             }
         }}
         Spacer(modifier = Modifier.width(30.dp))
-        bodyText(
+        BodyText(
             text = "click to toggle addition/subtraction",
             modifier = Modifier.align(Alignment.CenterVertically)
         )
@@ -84,8 +84,9 @@ fun CalculateButton(onCalculate: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun ButtonPreview() {
-    var addTe = remember{ mutableStateOf(true  )}
+//    var addTe = remember{ mutableStateOf(true  )}
     DateTimeCalculatorTheme {
-        PlusMinusButton(addTe.value, {addDTe -> addTe.value = !addTe.value })
+        CalculateButton({})
+//        PlusMinusButton(addTe.value, {addDTe -> addTe.value = !addTe.value })
     }
 }

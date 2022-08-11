@@ -8,46 +8,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import kunimitsova.valbee.datetimecalculator.R
-import kunimitsova.valbee.datetimecalculator.ui.components.DateItemsInput
-import kunimitsova.valbee.datetimecalculator.ui.components.DtcDivider
-import kunimitsova.valbee.datetimecalculator.ui.components.PlusMinusButton
-import kunimitsova.valbee.datetimecalculator.ui.components.TimeItemsInput
+import kunimitsova.valbee.datetimecalculator.ui.components.*
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
+import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 import kunimitsova.valbee.datetimecalculator.utils.leadingZero
-import java.time.temporal.ChronoUnit
-import java.time.temporal.TemporalUnit
+import kunimitsova.valbee.datetimecalculator.viewmodels.DateTimeAddSubViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import java.util.*
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun DateTimeScreen(){
-    val calendar = Calendar.getInstance()
-    var startYear by rememberSaveable { mutableStateOf(calendar[Calendar.YEAR].toString()) }
-    var startMonth by rememberSaveable {
-        mutableStateOf(leadingZero((calendar[Calendar.MONTH] + 1), 2)) }
-    var startDay by rememberSaveable {
-        mutableStateOf(leadingZero(calendar[Calendar.DAY_OF_MONTH],2)) }
-    var startHour by rememberSaveable {
-        mutableStateOf(leadingZero(calendar[Calendar.HOUR_OF_DAY], 2)) }
-    var startMin by rememberSaveable {
-        mutableStateOf(leadingZero(calendar[Calendar.MINUTE], 2)) }
-    var startSec by rememberSaveable {
-        mutableStateOf(leadingZero(calendar[Calendar.SECOND], 2)) }
-    var startMilli by rememberSaveable {
-        mutableStateOf(leadingZero(calendar[Calendar.MILLISECOND], 3)) }
-
-    var showMillis by rememberSaveable { mutableStateOf(false) }
-    var plusMinus by rememberSaveable { mutableStateOf(true) }
-
-    var numToAdd by rememberSaveable { mutableStateOf("0") }
-
-
-
+fun DateTimeScreen(viewModel: DateTimeAddSubViewModel = viewModel()) {
     Scaffold(
         topBar = { TopAppBar(title = {
             Row(
@@ -82,27 +63,42 @@ fun DateTimeScreen(){
     ) {
         Column {
             DateItemsInput(
-                startYear = startYear,
-                startMonth = startMonth,
-                startDay = startDay,
-                onYrChange = { startYr -> it },
-                onMonthChange = { startMonth -> it },
-                onDayChange = { startDay -> it },
+                startYear = viewModel.startYear,
+                startMonth = viewModel.startMonth,
+                startDay = viewModel.startDay,
+                onYrChange = viewModel.onYrChange,
+                onMonthChange = viewModel.onMoChange,
+                onDayChange = viewModel.onDayChange,
             )
             TimeItemsInput(
-                startHour = startHour,
-                startMin = startMin,
-                startSec = startSec,
-                startMilli = startMilli,
-                onHrChange = { startHour -> it },
-                onMinChange = { startMin -> it },
-                onSecChange = { startSec -> it },
-                onMilliChange = { startMilli -> it },
+                startHour = viewModel.startHour,
+                startMin = viewModel.startMin,
+                startSec = viewModel.startSec,
+                startMilli = viewModel.startMilli,
+                onHrChange =  viewModel.onHoChange,
+                onMinChange = viewModel.onMiChange,
+                onSecChange = viewModel.onSchange,
+                onMilliChange = viewModel.onMillChange,
                 showMillis = false
             )
             DtcDivider()
-            PlusMinusButton(addDate = plusMinus, onToggle = { addDate -> plusMinus = !plusMinus })
+            PlusMinusButton(addDate = viewModel.plusMinus,
+                onToggle = { addDate -> viewModel.plusMinus = !viewModel.plusMinus })
             DtcDivider()
+            Spacer(modifier = Modifier.height(8.dp))
+            AddOrSubtractThis(
+                numToAdd = viewModel.numToAdd,
+                onNumChange = viewModel.onNumChange,
+                selectedUnit = viewModel.selectedUnit,
+                expanded = viewModel.expanded,
+                onBoxClick = viewModel.onBoxClick,
+                onDismissMenu = viewModel.onDismissMenu,
+                onClickUnits = viewModel.onItemClick
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            CalculateButton(onCalculate = viewModel.onCalculate)
+            Spacer(modifier = Modifier.height(16.dp))
+            OutputDateTimeVert(dateTime = viewModel.endDateTime)
         }
     }
 }

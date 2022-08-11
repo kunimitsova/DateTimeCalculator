@@ -40,9 +40,7 @@ fun leadingZero(num: Int, maxDigits: Int): String {
 }
 
 @SuppressLint("NewApi")
-fun addWhatever(dateStr: String, numToAdd: String, units: DateTimeUnits) {
-    val dateStart = DateClassic.fromString(dateStr)
-    val dateDate = LocalDate.of(dateStart.year, dateStart.month, dateStart.day)
+fun getNumAndUnits( numToAdd: String, units: DateTimeUnits) : Pair<Long, DateTimeUnits>  {
     var setupNum = numToAdd.toFloat()
     var setupUnits = units
     // first get the new number to add, before updating the actual units.
@@ -50,6 +48,18 @@ fun addWhatever(dateStr: String, numToAdd: String, units: DateTimeUnits) {
         setupNum = setupUnits.nextValue(setupNum)
         setupUnits = setupUnits.getNext()
     }
-    val date1: LocalDateTime = LocalDateTime.parse(dateStr)
+    return Pair(setupNum.toLong(), setupUnits)
+}
+
+@SuppressLint("NewApi")
+fun calculatePlus(startDate: LocalDateTime, numToAdd: Long, units: DateTimeUnits): LocalDateTime {
+    return startDate.plus(numToAdd, units.unit)
+}
+
+@SuppressLint("NewApi")
+fun calculateMinus(startDate: LocalDateTime,
+                   numToSubtract: Long,
+                   units: DateTimeUnits): LocalDateTime {
+    return startDate.minus(numToSubtract, units.unit)
 }
 

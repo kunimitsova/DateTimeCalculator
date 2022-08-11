@@ -2,10 +2,17 @@ package kunimitsova.valbee.datetimecalculator.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -13,17 +20,27 @@ import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import java.sql.Types
 
 // EntryText height on main page = 79dp
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EntryText(
     text: String,
     label: String,
     onChanged: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     TextField(
         value = text,
+        singleLine = true,
         onValueChange = onChanged,
         textStyle = MaterialTheme.typography.h4,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Number
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = { keyboardController?.hide() }
+        ),
         label = { Text(label) },
         modifier = modifier
     )
@@ -39,7 +56,7 @@ fun BigText(text: String, modifier: Modifier = Modifier){
 }
 
 @Composable
-fun bodyText(text: String, modifier: Modifier = Modifier) {
+fun BodyText(text: String, modifier: Modifier = Modifier) {
     Text(
         text = text,
         style = MaterialTheme.typography.body1,

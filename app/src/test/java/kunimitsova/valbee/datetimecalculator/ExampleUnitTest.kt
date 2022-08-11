@@ -1,8 +1,12 @@
 package kunimitsova.valbee.datetimecalculator
 
+import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
+import kunimitsova.valbee.datetimecalculator.utils.calculateMinus
+import kunimitsova.valbee.datetimecalculator.utils.calculatePlus
 import org.junit.Test
 
 import org.junit.Assert.*
+import java.time.LocalDateTime
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,6 +16,24 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        val myDate = LocalDateTime.now()
+        val myNum = 123L
+        val myUnit = DateTimeUnits.DAY
+        val expected = myDate.plusDays(123)
+        val actual = calculatePlus(myDate, myNum, myUnit)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun subtraction_isCorrect() {
+        val myDate = LocalDateTime.now()
+        val myNum = 120L
+        val myUnit = DateTimeUnits.DAY
+        val expected = myDate.minusDays(120)
+        val actual = calculateMinus(myDate, myNum, myUnit)
+        val expectedString = expected.toString()
+        val actualString = actual.toString()
+        println(expectedString)
+        assertEquals(expectedString, actualString)
     }
 }

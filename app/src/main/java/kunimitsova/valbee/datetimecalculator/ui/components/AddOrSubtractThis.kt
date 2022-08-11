@@ -1,32 +1,57 @@
 package kunimitsova.valbee.datetimecalculator.ui.components
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
+import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 
 @Composable
-fun AddOrSubtractThis(numToAdd: String, onNumChange: (String) -> Unit ) {
-    Row(modifier = Modifier.padding(start = 24.dp)) {
+fun AddOrSubtractThis(numToAdd: String, onNumChange: (String) -> Unit ,
+                      selectedUnit: DateTimeUnits,
+                      expanded: Boolean,
+                      onBoxClick: () -> Unit,
+                      onDismissMenu: () -> Unit,
+                      onClickUnits: (DateTimeUnits) -> Unit) {
+    Row(modifier = Modifier.padding(start = 24.dp).fillMaxWidth(1f)) {
         EntryText(text = numToAdd ,
             label = stringResource(id = R.string.numToCalculate),
-            onChanged = onNumChange)
+            onChanged = onNumChange,
+            modifier = Modifier.weight(1f)
+        )
         Spacer(modifier = Modifier.width(16.dp))
-
+        UnitsSpinner(
+            selectedUnit = selectedUnit,
+            expanded = expanded,
+            onBoxClick = onBoxClick,
+            onDismissMenu = onDismissMenu ,
+            onClickUnits = onClickUnits )
     }
 }
 
 @Preview
 @Composable
 fun AstPreview() {
+    var selectedUnit by remember { mutableStateOf(DateTimeUnits.DAY) }
+    var expanded by remember { mutableStateOf(false) }
+    val onBoxClick = { expanded = !expanded }
+    val onDismissMenu = { expanded = false }
+    val onItemClick = { it: DateTimeUnits ->
+        selectedUnit = it
+        expanded = false
+    }
     DateTimeCalculatorTheme {
-        AddOrSubtractThis(numToAdd = "123", onNumChange = {})
+        AddOrSubtractThis(numToAdd = "123", onNumChange = {it},
+            selectedUnit = selectedUnit,
+            expanded = expanded,
+            onBoxClick = onBoxClick,
+            onDismissMenu = onDismissMenu,
+            onClickUnits = onItemClick
+        )
     }
 }
