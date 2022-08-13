@@ -20,7 +20,10 @@ fun AddOrSubtractThis(numToAdd: String, onNumChange: (String) -> Unit ,
                       expanded: Boolean,
                       onBoxClick: () -> Unit,
                       onDismissMenu: () -> Unit,
-                      onClickUnits: (DateTimeUnits) -> Unit) {
+                      onClickUnits: (DateTimeUnits) -> Unit,
+                      modifier: Modifier = Modifier
+) {
+    // modifier is for the EntryText
     Row(verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .padding(start = 16.dp)
@@ -28,7 +31,7 @@ fun AddOrSubtractThis(numToAdd: String, onNumChange: (String) -> Unit ,
         EntryText(text = numToAdd ,
             label = stringResource(id = R.string.numToCalculate),
             onChanged = onNumChange,
-            modifier = Modifier.weight(1f)
+            modifier = modifier.weight(1f)
         )
 //        Spacer(modifier = Modifier.width(8.dp))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

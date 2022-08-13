@@ -3,6 +3,7 @@ package kunimitsova.valbee.datetimecalculator
 import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 import kunimitsova.valbee.datetimecalculator.utils.calculateMinus
 import kunimitsova.valbee.datetimecalculator.utils.calculatePlus
+import kunimitsova.valbee.datetimecalculator.utils.validFloat
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -35,5 +36,12 @@ class ExampleUnitTest {
         val actualString = actual.toString()
         println(expectedString)
         assertEquals(expectedString, actualString)
+    }
+
+    @Test
+    fun validFloat_iscorrect() {
+        val myStr = "123.123.123.123"
+        val expStr = "123"
+        assertEquals(expStr, validFloat(myStr))
     }
 }

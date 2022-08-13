@@ -1,10 +1,8 @@
 package kunimitsova.valbee.datetimecalculator.viewmodels
 
 import android.annotation.SuppressLint
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import kunimitsova.valbee.datetimecalculator.utils.*
 import java.time.LocalDateTime
@@ -17,79 +15,123 @@ import java.util.*
  */
 
 class DateTimeAddSubViewModel: ViewModel() {
+
     // state altering vars for the user input - starting date/time = current.
     private val calendar = Calendar.getInstance()
-    var startYear by mutableStateOf(calendar[Calendar.YEAR].toString())
-    var startMonth by mutableStateOf(leadingZero((calendar[Calendar.MONTH] + 1), 2))
-    var startDay by mutableStateOf(leadingZero(calendar[Calendar.DAY_OF_MONTH],2))
-    var startHour by mutableStateOf(leadingZero(calendar[Calendar.HOUR_OF_DAY], 2))
-    var startMin by mutableStateOf(leadingZero(calendar[Calendar.MINUTE], 2))
-    var startSec by mutableStateOf(leadingZero(calendar[Calendar.SECOND], 2))
-    var startMilli by mutableStateOf(leadingZero(calendar[Calendar.MILLISECOND], 3))
+    private val _startYear = mutableStateOf(calendar[Calendar.YEAR].toString())
+    val startYear: State<String> = _startYear
+    fun updateStartYear(strYear: String) {
+        _startYear.value = strYear
+    }
 
-    val onYrChange = { startYr: String -> startYear = startYr }
-    val onMoChange = { startMo:String -> startMonth = startMo }
-    val onDayChange = { startDy: String -> startDay = startDy }
-    val onHoChange = { startH: String -> startHour = startH }
-    val onMiChange = { startMn: String -> startMin = startMn }
-    val onSchange = { startSc: String -> startSec = startSc }
-    val onMillChange = { startMil: String -> startMilli = startMil }
+    private val _startMonth = mutableStateOf(leadingZero((calendar[Calendar.MONTH] + 1), 2))
+    val startMonth: State<String> = _startMonth
+    fun updateStartMonth(strMonth: String) {
+        _startMonth.value = strMonth
+    }
+
+    private val _startDay = mutableStateOf(leadingZero(calendar[Calendar.DAY_OF_MONTH],2))
+    val startDay: State<String> = _startDay
+    fun updateStartDay(strDay: String) {
+        _startDay.value = strDay
+    }
+
+    private val _startHour = mutableStateOf(leadingZero(calendar[Calendar.HOUR_OF_DAY], 2))
+    val startHour: State<String> = _startHour
+    fun updateStartHour(strHour: String) {
+        _startHour.value = strHour
+    }
+
+    private val _startMin = mutableStateOf(leadingZero(calendar[Calendar.MINUTE], 2))
+    val startMin: State<String> = _startMin
+    fun updateStartMin(strMin: String) {
+        _startMin.value = strMin
+    }
+
+    private val _startSec = mutableStateOf(leadingZero(calendar[Calendar.SECOND], 2))
+    val startSec: State<String> = _startSec
+    fun updateStartSec(strSec: String) {
+        _startSec.value = strSec
+    }
+
+    private val _startMilli = mutableStateOf(leadingZero(calendar[Calendar.MILLISECOND], 3))
+    val startMilli: State<String> = _startMilli
+    fun updateStartMilli(strMilli: String) {
+        _startMilli.value = strMilli
+    }
 
 // this will be implemented later
 //    var showMillis by mutableStateOf(false)
 
     // state of the toggle button for add(true) subtract(false)
-    var plusMinus by mutableStateOf(true)
+    private val _plusMinus = mutableStateOf(true)
+    val plusMinus: State<Boolean> = _plusMinus
+    fun updatePlusMinus(boolPlus: Boolean) {
+        _plusMinus.value = boolPlus
+    }
 
     // state of the number of [units] to add/subtract
-    var numToAdd by mutableStateOf("0")
-    val onNumChange = { numCh: String -> numToAdd = numCh}
-
+    private val _numToAdd = mutableStateOf("0")
+    val numToAdd: State<String> = _numToAdd
+    fun updateNumToAdd(strNum: String) {
+        _numToAdd.value = strNum
+    }
     // state of unit selector
-    var selectedUnit by mutableStateOf(DateTimeUnits.DAY)
-    var expanded by mutableStateOf(false)
-    val onBoxClick = { expanded = !expanded }
-    val onDismissMenu = { expanded = false }
-    val onItemClick = { it: DateTimeUnits ->
-        selectedUnit = it
-        expanded = false
+    private val _selectedUnit = mutableStateOf(DateTimeUnits.DAY)
+    val selectedUnit: State<DateTimeUnits> = _selectedUnit
+    fun updateSelectedUnit(dtuUnit: DateTimeUnits) {
+        _selectedUnit.value = dtuUnit
     }
-    var dateStr = validateDate(startYear, startMonth, startDay)
-    var timeStr = formatLocalTime(startHour, startMin, startSec, startMilli)
-    var dateTimeStr = dateStr + "T" + timeStr
-    @SuppressLint("NewApi")
-    var dateTimeLocal = LocalDateTime.parse(dateTimeStr)
-
-    var numAndUnits = getNumAndUnits(numToAdd, selectedUnit)
-
-    var endDateTime by mutableStateOf(dateTimeLocal)
-
-    // why are we suppress Lint NewApi everywhere? Because according
-    // to the documentation, all of the java.util.time is available
-    // to older APIs now, but the compiler still thinks it's 26 and up.
-    // if I'm wrong, I'll have to rewrite all this.
 
     @SuppressLint("NewApi")
-    val onCalculate = {
-        startYear = getYearStr(startYear)
-        startMonth = getMonthString(startMonth)
-        startDay = getDayString(startDay)
-        startHour = getHourString(startHour)
-        startMin = getMinString(startMin)
-        startSec = getSecString(startSec)
-        startMilli = getMilliString(startMilli)
-        dateStr = validateDate(startYear, startMonth, startDay)
-        if (dateStr.endsWith("01")) {
-            startDay = getDayString("01")
-        }
-        timeStr = formatLocalTime(startHour, startMin, startSec, startMilli)
-        dateTimeStr = dateStr + "T" + timeStr
-        dateTimeLocal = LocalDateTime.parse(dateTimeStr)
-        numAndUnits = getNumAndUnits(numToAdd, selectedUnit)
-        if (plusMinus) { // true = Plus, false = Minus
-            endDateTime = calculatePlus(dateTimeLocal, numAndUnits.first, numAndUnits.second)
+    fun getDateTimeLocal(): LocalDateTime {
+        var dateStr = validateDate(startYear.value, startMonth.value, startDay.value)
+        var timeStr = formatLocalTime(
+            startHour.value, startMin.value,
+            startSec.value, startMilli.value
+        )
+        var dateTimeStr = dateStr + "T" + timeStr
+
+        return LocalDateTime.parse(dateTimeStr)
+    }
+
+    @SuppressLint("NewApi")
+    fun updateDateTimeFields(ldtDate: LocalDateTime) {
+        updateStartYear(getYearStr(ldtDate.year.toString()))
+        updateStartMonth(getMonthString(ldtDate.monthValue.toString()))
+        // if the date is 01 then the internal day may have been changed by validateDate
+        // so make sure the UI is updated with the assumed value
+        val strDay = if (ldtDate.dayOfMonth == 1) "01" else
+            getDayString(ldtDate.dayOfMonth.toString())
+        updateStartDay(strDay = strDay)
+        updateStartHour(getHourString(ldtDate.hour.toString()))
+        updateStartMin(getMinString(ldtDate.minute.toString()))
+        updateStartSec(getSecString(ldtDate.second.toString()))
+        // there would be 9 nanos digits for there to be 3 millis digits, the GetMilliString is
+        // designed to take the top 3 because that's how it is right now. Millis are not really
+        // implemented but here they are so .
+        val strNano = leadingZero(ldtDate.nano.toString(), 9)
+        updateStartMilli(getMilliString(strNano))
+        updateNumToAdd(validFloat(numToAdd.value))
+    }
+    var startLocalDateTime = getDateTimeLocal()
+
+    fun calculatedDate(): LocalDateTime {
+        val numAndUnits = getNumAndUnits(numToAdd.value, selectedUnit.value)
+        // plusMInus = TRUE for addition, FALSE for subtraction.
+        if (plusMinus.value) {
+            return calculatePlus(getDateTimeLocal(), numAndUnits.first, numAndUnits.second)
         } else {
-            endDateTime = calculateMinus(dateTimeLocal, numAndUnits.first, numAndUnits.second)
+            return calculateMinus(getDateTimeLocal(), numAndUnits.first, numAndUnits.second)
         }
     }
+
+    private val _endDateTime = mutableStateOf(startLocalDateTime)
+    val endDateTime: State<LocalDateTime> = _endDateTime
+    fun updateEndDateTime(ldtFinal: LocalDateTime) {
+        _endDateTime.value = ldtFinal
+    }
+
+
+
 }

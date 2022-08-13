@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kunimitsova.valbee.datetimecalculator.LogCompositions
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -17,7 +16,6 @@ import java.time.format.FormatStyle
 @SuppressLint("NewApi")
 @Composable
 fun OutputDate(date: LocalDateTime) {
-    LogCompositions("OutputDate", "Recomposed")
     BigText(text = date.format(DateTimeFormatter.ofPattern("EEE, MMM dd, yyyy", java.util.Locale.getDefault())) )
 }
 @SuppressLint("NewApi")

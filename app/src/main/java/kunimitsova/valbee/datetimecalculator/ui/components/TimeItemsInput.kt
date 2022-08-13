@@ -20,6 +20,7 @@ fun TimeItemsInput(
     onSecChange: (String) -> Unit,
     onMilliChange: (String) -> Unit,
     showMillis: Boolean,
+    modifier: Modifier = Modifier
 ) {
     // Milliseconds will be implemented later.
     Row(verticalAlignment = Alignment.Bottom,
@@ -27,26 +28,26 @@ fun TimeItemsInput(
         EntryText(
             text = startHour, label = stringResource(id = R.string.hour),
             onChanged = onHrChange,
-            modifier = Modifier.weight(1f)
+            modifier = modifier.weight(1f)
         )
         TimeDivider()
         EntryText(
             text = startMin, label = stringResource(id = R.string.minute),
             onChanged = onMinChange,
-            modifier = Modifier.weight(1f)
+            modifier = modifier.weight(1f)
         )
         TimeDivider()
         EntryText(
             text = startSec, label = stringResource(id = R.string.second),
             onChanged = onSecChange,
-            modifier = Modifier.weight(1f)
+            modifier = modifier.weight(1f)
         )
         if (showMillis) {
             EntryText(
                 text = startMilli,
                 label = stringResource(id = R.string.Millis),
                 onChanged = onMilliChange,
-                modifier = Modifier.weight(1f)
+                modifier = modifier.weight(1f)
             )
         }
     }

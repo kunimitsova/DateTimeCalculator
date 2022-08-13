@@ -23,8 +23,10 @@ fun DateItemsInput(
     onYrChange: (String) -> Unit,
     onMonthChange: (String) -> Unit,
     onDayChange: (String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     // starting date is current date
+    // modifier is for EVERY SINGLE entryText
     Row(
         verticalAlignment = Alignment.Bottom,
         modifier = Modifier.padding(4.dp)
@@ -32,33 +34,33 @@ fun DateItemsInput(
         EntryText(
             text = startYear, label = stringResource(id = R.string.year),
             onChanged = onYrChange ,
-            modifier = Modifier.weight(1f)
+            modifier = modifier.weight(1f)
         )
         DateDivider()
         EntryText(
             text = startMonth, label = stringResource(id = R.string.month),
             onChanged = onMonthChange,
-            modifier = Modifier.weight(0.8f)
+            modifier = modifier.weight(0.8f)
         )
         DateDivider()
         EntryText(
             text = startDay, label = stringResource(id = R.string.day),
             onChanged = onDayChange,
-            modifier = Modifier.weight(0.8f)
+            modifier = modifier.weight(0.8f)
         )
     }
 }
-@Preview
-@Composable
-fun DateItemsInputPreview() {
-    DateTimeCalculatorTheme {
-        DateItemsInput(
-            startYear = "2022",
-            startMonth = "08",
-            startDay = "07",
-            onYrChange = { },
-            onMonthChange = {  },
-            onDayChange = {  }
-        )
-    }
-}
+//@Preview
+//@Composable
+//fun DateItemsInputPreview() {
+//    DateTimeCalculatorTheme {
+//        DateItemsInput(
+//            startYear = "2022",
+//            startMonth = "08",
+//            startDay = "07",
+//            onYrChange = { },
+//            onMonthChange = {  },
+//            onDayChange = {  }
+//        )
+//    }
+//}

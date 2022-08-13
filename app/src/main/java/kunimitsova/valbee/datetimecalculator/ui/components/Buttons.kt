@@ -2,6 +2,8 @@ package kunimitsova.valbee.datetimecalculator.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.focusable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -13,6 +15,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.focusTarget
 import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -69,17 +72,19 @@ fun PlusMinusButton(addDate: Boolean, onToggle: (Boolean) -> Unit) {
 }
 
 @Composable
-fun CalculateButton(onCalculate: () -> Unit) {
+fun CalculateButton(modifier: Modifier = Modifier,onCalculate: () -> Unit) {
+// the modifier param is for the Button not the row.
     Row(modifier = Modifier
         .fillMaxWidth(1f)
-        .padding(horizontal = 16.dp)) {
+        .padding(horizontal = 16.dp)
+    ) {
         Surface(color = MaterialTheme.colors.primary,
             shape = MaterialTheme.shapes.large,
             elevation = 4.dp
         ) {
             Button(
                 onClick = onCalculate,
-                modifier = Modifier.fillMaxWidth(1f)
+                modifier = modifier
             ) {
                 ButtonText(text = stringResource(id = R.string.calculate))
             }
@@ -87,12 +92,12 @@ fun CalculateButton(onCalculate: () -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ButtonPreview() {
-//    var addTe = remember{ mutableStateOf(true  )}
-    DateTimeCalculatorTheme {
-        CalculateButton({})
-//        PlusMinusButton(addTe.value, {addDTe -> addTe.value = !addTe.value })
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun ButtonPreview() {
+////    var addTe = remember{ mutableStateOf(true  )}
+//    DateTimeCalculatorTheme {
+//        CalculateButton({})
+////        PlusMinusButton(addTe.value, {addDTe -> addTe.value = !addTe.value })
+//    }
+//}

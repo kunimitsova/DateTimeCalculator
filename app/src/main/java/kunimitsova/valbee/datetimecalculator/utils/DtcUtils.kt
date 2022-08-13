@@ -27,6 +27,12 @@ import java.util.*
 
 /**
  * utilities for validatin', formattin', and calculatin'
+ *
+ * why are we suppress Lint NewApi everywhere? Because according
+ * to the documentation, all of the java.util.time is available
+ * to older APIs now, but the compiler still thinks it's 26 and up.
+ * if I'm wrong, I'll have to rewrite all this.
+ *
  */
 
 fun leadingZero(num: Any, maxDigits: Int): String {
@@ -46,6 +52,22 @@ fun validInt(num: Any?): String {
     return numString.replace(nonNumeric, "")
 }
 
+fun validFloat(num: Any?): String {
+    // returns either the string representing a Float or
+    // a string with the numbers extracted from something weird.
+    val numString = num.toString()
+    val regFloaty = "\\d*\\.?\\d+".toRegex()
+    if (numString.matches(regFloaty)) {
+        return numString
+    } else {
+        // select all chars prior to a dot and send them to validInt
+        var index = numString.indexOf(".")
+        index = if (index == -1) 0 else index
+        val tmp = validInt(numString.dropLast(numString.length - index))
+        return if (tmp.isBlank()) validInt(numString) else validInt(tmp)
+    }
+}
+
 @SuppressLint("NewApi")
 fun validateDate(year: String, month: String, day: String): String {
     // try to parse the numbers to see if it's a valid date, if not,
@@ -57,19 +79,6 @@ fun validateDate(year: String, month: String, day: String): String {
         return formatLocalDate(year, month, "01")
     }
     return dateStr
-}
-
-fun validateItems(numStr: String, units: DateTimeUnits?) : String {
-    return when (units) {
-        DateTimeUnits.YEAR -> leadingZero(numStr, 4)
-        DateTimeUnits.MONTH -> getMonthString(leadingZero(numStr, 2))
-        DateTimeUnits.DAY -> getDayString(leadingZero(numStr, 2))
-        DateTimeUnits.HOUR -> getHourString(leadingZero(numStr, 2))
-        DateTimeUnits.MINUTE -> getMinString(leadingZero(numStr, 2))
-        DateTimeUnits.SECOND -> getSecString(leadingZero(numStr, 2))
-        DateTimeUnits.MILLISECOND -> getMilliString(numStr)
-        else -> numStr
-    }
 }
 
 fun getMilliString(milliStr: String): String {
