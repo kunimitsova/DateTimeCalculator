@@ -39,7 +39,7 @@ fun DateTimeScreen(modifier: Modifier = Modifier, vM: DateTimeAddSubViewModel = 
     val onPlusMinus = { addDate: Boolean -> vM.updatePlusMinus(addDate) }
     val onCalculate = {
         localFocusManager.clearFocus()
-        vM.updateDateTimeFields(vM.getDateTimeLocal())
+        vM.updateDateTimeFields(vM.formatAsDateTime())
         vM.updateEndDateTime(vM.calculatedDate())
     }
 

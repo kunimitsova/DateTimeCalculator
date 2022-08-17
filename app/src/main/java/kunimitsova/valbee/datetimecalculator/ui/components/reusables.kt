@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.android.material.theme.overlay.MaterialThemeOverlay
 import kunimitsova.valbee.datetimecalculator.BuildConfig
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import java.sql.Types
@@ -51,10 +53,9 @@ fun EntryText(
     TextField(
         value = text,
         singleLine = true,
-        colors = TextFieldDefaults
-            .textFieldColors(backgroundColor = MaterialTheme.colors.background),
+        colors = DtcTextFieldColors(),
         onValueChange = onChanged,
-        textStyle = MaterialTheme.typography.h4,
+        textStyle = MaterialTheme.typography.h5,
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Number
@@ -71,7 +72,7 @@ fun EntryText(
 fun BigText(text: String, modifier: Modifier = Modifier){
     Text(
         text = text,
-        style = MaterialTheme.typography.h4,
+        style = MaterialTheme.typography.h5,
         modifier = modifier
     )
 }
@@ -104,7 +105,7 @@ fun ButtonText(
     Text(
         text = text,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.h4,
+        style = MaterialTheme.typography.h5,
         modifier = modifier
     )
 }
@@ -112,7 +113,7 @@ fun ButtonText(
 @Composable
 fun DateDivider(modifier: Modifier = Modifier){
     Text(text = "/",
-        style = MaterialTheme.typography.h3,
+        style = MaterialTheme.typography.h4,
         modifier = modifier.wrapContentWidth(Alignment.CenterHorizontally)
     )
 }
@@ -120,7 +121,7 @@ fun DateDivider(modifier: Modifier = Modifier){
 @Composable
 fun TimeDivider(modifier: Modifier = Modifier){
     Text(text = ":",
-        style = MaterialTheme.typography.h3,
+        style = MaterialTheme.typography.h4,
         modifier = modifier.wrapContentWidth(Alignment.CenterHorizontally)
     )
 }
@@ -128,7 +129,7 @@ fun TimeDivider(modifier: Modifier = Modifier){
 @Composable
 fun DotDivider(modifier: Modifier = Modifier){
     Text(text = ".",
-        style = MaterialTheme.typography.h3,
+        style = MaterialTheme.typography.h4,
         modifier = modifier.wrapContentWidth(Alignment.CenterHorizontally)
     )
 }
@@ -150,6 +151,21 @@ fun HeaderText(
         modifier = modifier
     )
 }
+
+@Composable
+fun DtcTextFieldColors(
+    textColor: Color = MaterialTheme.colors.onBackground,
+    backgroundColor: Color = MaterialTheme.colors.background,
+    cursorColor: Color = MaterialTheme.colors.onSurface,
+    focusedIndicatorColor: Color = MaterialTheme.colors.primary,
+    focusedLabelColor: Color = MaterialTheme.colors.secondaryVariant
+) = TextFieldDefaults.textFieldColors(
+    textColor = textColor,
+    backgroundColor = backgroundColor,
+    cursorColor = cursorColor,
+    focusedIndicatorColor = focusedIndicatorColor,
+    focusedLabelColor = focusedLabelColor
+)
 
 @Preview
 @Composable

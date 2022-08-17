@@ -76,7 +76,7 @@ fun CalculateButton(modifier: Modifier = Modifier,onCalculate: () -> Unit) {
 // the modifier param is for the Button not the row.
     Row(modifier = Modifier
         .fillMaxWidth(1f)
-        .padding(horizontal = 16.dp)
+        .padding(horizontal = 12.dp)
     ) {
         Surface(color = MaterialTheme.colors.primary,
             shape = MaterialTheme.shapes.large,
@@ -84,7 +84,7 @@ fun CalculateButton(modifier: Modifier = Modifier,onCalculate: () -> Unit) {
         ) {
             Button(
                 onClick = onCalculate,
-                modifier = modifier
+                modifier = modifier.defaultMinSize(minHeight = 48.dp)
             ) {
                 ButtonText(text = stringResource(id = R.string.calculate))
             }

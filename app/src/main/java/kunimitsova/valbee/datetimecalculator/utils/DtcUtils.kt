@@ -1,6 +1,8 @@
 package kunimitsova.valbee.datetimecalculator.utils
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
@@ -23,6 +25,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 /**
@@ -206,6 +209,19 @@ fun formatLocalTime(hour: String, minute: String, second: String, millis: String
 }
 
 @SuppressLint("NewApi")
+fun getDateTimeLocal(year: String, month: String, day: String, hour: String,
+                     min: String, sec: String, milli: String
+): LocalDateTime {
+    var dateStr = validateDate(year, month, day)
+    var timeStr = formatLocalTime(
+        hour, min, sec, milli
+    )
+    var dateTimeStr = dateStr + "T" + timeStr
+
+    return LocalDateTime.parse(dateTimeStr)
+}
+
+@SuppressLint("NewApi")
 fun getNumAndUnits( numToAdd: String?, units: DateTimeUnits) : Pair<Long, DateTimeUnits>  {
     var setupNum = if(numToAdd.isNullOrBlank()) 0f else numToAdd.toFloat()
     var setupUnits = units
@@ -227,5 +243,13 @@ fun calculateMinus(startDate: LocalDateTime,
                    numToSubtract: Long,
                    units: DateTimeUnits): LocalDateTime {
     return startDate.minus(numToSubtract, units.unit)
+}
+
+
+@SuppressLint("NewApi")
+fun calculateDifference(date1: LocalDateTime, date2: LocalDateTime, units: DateTimeUnits): Long {
+    val chronoUnits: ChronoUnit = units.unit
+    val diff = chronoUnits.between(date1 , date2)
+    return diff
 }
 

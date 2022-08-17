@@ -28,8 +28,9 @@ fun DateTimeMainScreen(modifier: Modifier = Modifier) {
             }
         ) },
          content = { innerPadding ->
+             DateDifferenceScreen(modifier = Modifier.padding(innerPadding))
             // HelpScreen( modifier = Modifier.padding(innerPadding))
-            DateTimeScreen(modifier = Modifier.padding(innerPadding).fillMaxSize(1f))
+//            DateTimeScreen(modifier = Modifier.padding(innerPadding).fillMaxSize(1f))
         }
         )
     }

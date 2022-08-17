@@ -39,6 +39,13 @@ class ExampleUnitTest {
     }
 
     @Test
+    fun parse_date_test() {
+        val expected = "2022-08-01T00:00"
+        val actual = testParseThingy()
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun validFloat_iscorrect() {
         val myStr = "123.123.123.123"
         val expStr = "123"

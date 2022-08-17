@@ -83,16 +83,10 @@ class DateTimeAddSubViewModel: ViewModel() {
         _selectedUnit.value = dtuUnit
     }
 
-    @SuppressLint("NewApi")
-    fun getDateTimeLocal(): LocalDateTime {
-        var dateStr = validateDate(startYear.value, startMonth.value, startDay.value)
-        var timeStr = formatLocalTime(
-            startHour.value, startMin.value,
-            startSec.value, startMilli.value
+    fun formatAsDateTime(): LocalDateTime {
+        return getDateTimeLocal(startYear.value, startMonth.value, startDay.value,
+            startHour.value, startMin.value, startSec.value, startMilli.value
         )
-        var dateTimeStr = dateStr + "T" + timeStr
-
-        return LocalDateTime.parse(dateTimeStr)
     }
 
     @SuppressLint("NewApi")
@@ -114,15 +108,15 @@ class DateTimeAddSubViewModel: ViewModel() {
         updateStartMilli(getMilliString(strNano))
         updateNumToAdd(validFloat(numToAdd.value))
     }
-    var startLocalDateTime = getDateTimeLocal()
+    var startLocalDateTime = formatAsDateTime()
 
     fun calculatedDate(): LocalDateTime {
         val numAndUnits = getNumAndUnits(numToAdd.value, selectedUnit.value)
         // plusMInus = TRUE for addition, FALSE for subtraction.
         if (plusMinus.value) {
-            return calculatePlus(getDateTimeLocal(), numAndUnits.first, numAndUnits.second)
+            return calculatePlus(formatAsDateTime(), numAndUnits.first, numAndUnits.second)
         } else {
-            return calculateMinus(getDateTimeLocal(), numAndUnits.first, numAndUnits.second)
+            return calculateMinus(formatAsDateTime(), numAndUnits.first, numAndUnits.second)
         }
     }
 
@@ -131,7 +125,4 @@ class DateTimeAddSubViewModel: ViewModel() {
     fun updateEndDateTime(ldtFinal: LocalDateTime) {
         _endDateTime.value = ldtFinal
     }
-
-
-
 }

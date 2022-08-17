@@ -34,19 +34,19 @@ fun DateItemsInput(
         EntryText(
             text = startYear, label = stringResource(id = R.string.year),
             onChanged = onYrChange ,
-            modifier = modifier.weight(1f)
+            modifier = modifier.weight(0.8f)
         )
         DateDivider()
         EntryText(
             text = startMonth, label = stringResource(id = R.string.month),
             onChanged = onMonthChange,
-            modifier = modifier.weight(0.8f)
+            modifier = modifier.weight(0.6f)
         )
         DateDivider()
         EntryText(
             text = startDay, label = stringResource(id = R.string.day),
             onChanged = onDayChange,
-            modifier = modifier.weight(0.8f)
+            modifier = modifier.weight(0.6f)
         )
     }
 }

@@ -19,6 +19,10 @@
     <string name="minute">Minute</string>
     <string name="second">Second</string>
     <string name="numToCalculate">number of units</string>
-    <string name="what_is_this">click to change the units to add or subtract</string>
+    <string name="add_or_subtract_units">click to change the units to add or subtract</string>
+    <string name="difference_units">click to select the units to display</string>
     <string name="help">How To Use</string>
+    <string name="date_difference">Difference between dates</string>
+    <string name="how_many">How many</string>
+    <string name="output_difference">%1$s between: %2$d</string>
 </resources>

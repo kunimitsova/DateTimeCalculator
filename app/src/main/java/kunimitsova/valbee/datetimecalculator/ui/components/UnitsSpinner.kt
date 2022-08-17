@@ -42,7 +42,7 @@ fun UnitsSpinner(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(10.dp)
                 .clickable(onClick =  onBoxClick)
                 .animateContentSize(
                     animationSpec = spring(
