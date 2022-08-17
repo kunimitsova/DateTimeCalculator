@@ -20,4 +20,5 @@
     <string name="second">Second</string>
     <string name="numToCalculate">number of units</string>
     <string name="what_is_this">click to change the units to add or subtract</string>
+    <string name="help">How To Use</string>
 </resources>

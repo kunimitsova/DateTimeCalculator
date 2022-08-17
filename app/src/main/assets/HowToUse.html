@@ -1,0 +1,20 @@
+<html>
+<body>
+<ul><li>Enter a valid date and time. The default is your current date and time.</li>
+<li>Decide whether to add or subtract by toggling the plus/minus button.</li>
+<li>Input the number of date/time units you wish to add/subtract.</li>
+<li>Click on the light button next to the number input to change what units to add/subtract. (Options are Years, Months, Weeks, Days, Hours, Minutes, Seconds).</li>
+    <li>Click Calculate to get the result!</li></ul>
+<p>
+    The Year only takes current era (CE) years at this time. If there is interest, I will add support for BCE.</p>
+<ul><li>If a number outside of 1-12 is entered for Month, it will default to the current month before calculating.</li>
+    <li>If a number outside of 1-31 is entered for Day, it will default to the current day before calculating. If the day entered is not a valid date (for example, February 30), it will default to the 1st (example would reset to February 1) before calculating.</li>
+    <li>If a number outside of 0-23 is entered for the hour, it will default to the hour when the app was first opened before calculating.</li>
+    <li>If a number outside of 0-59 is entered for minute or second, it will default to the minute or second when the app was first opened before calculating.</li></ul>
+<p>
+If anything that is not a positive numeric value is entered for the number of units, the non-numeric characters will be removed before calculation and only numbers (if any) will be used.
+</p><p>
+After clicking the Calculate button, the entry fields will update to the actual values used (so if you accidentally put Feb 29, 2022, it will show Feb 1, 2022, and if you accidentally tried to add "123f" hours, it will show 123 in the Number of Units text.
+</p><p>
+If you are only calculating date units (years, months, weeks, days) you can leave the time as it is or clear it to 00:00:00. If you are only interested in time units (hours, minutes, seconds) you should leave the date as it is or change it to a date of interest. If you try to zero it out, it will default back to the current date. When adding or subtracting time units, remember that the answer may be on a different day, for example if you add 14 hours to Friday at 3pm, the result will be Saturday at 5am.
+</p></body></html>

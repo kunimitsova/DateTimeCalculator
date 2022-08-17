@@ -105,7 +105,7 @@ fun ButtonText(
         text = text,
         textAlign = TextAlign.Center,
         style = MaterialTheme.typography.h4,
-        modifier = Modifier
+        modifier = modifier
     )
 }
 
@@ -138,29 +138,23 @@ fun DtcDivider(modifier: Modifier = Modifier) {
     Divider(color = MaterialTheme.colors.primary, thickness = 1.dp, modifier = modifier)
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HeaderText(
-    text: String = "",
-    width: Float = 0.5f,
-    clickEvent: () -> Unit
+    text: String,
+    modifier: Modifier = Modifier,
 ) {
-    Surface(elevation = 3.dp, onClick = clickEvent) {
-        Text(
-            text = text,
-            style = MaterialTheme.typography.h6,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth(width)
-                .padding(vertical = 8.dp, horizontal = 4.dp)
-        )
-    }
+    Text(
+        text = text,
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.h6,
+        modifier = modifier
+    )
 }
 
 @Preview
 @Composable
-fun showEntryTextSample() {
+fun reusablesPreview() {
     DateTimeCalculatorTheme {
-        EntryText(text = "Bloody Hell", label = "where", onChanged = {})
+        HeaderText(text = "Bloody Hell")
     }
 }

@@ -82,6 +82,17 @@ fun validateDate(year: String, month: String, day: String): String {
 }
 
 fun getMilliString(milliStr: String): String {
+    /**
+     * Why cut off the length when it's possible to add any number of milliseconds?
+     * Millis might be more than one second, for example 1,234 is 1 second and 234 millis.
+     * but this particular string is just for the formatted time. So although you can
+     * add 1,234 millis to the time, you can't have 1,234 millis as part of the time because
+     * if it was 12:00:00.[1,234 millis] the time would actually show 12:00:01.234
+     * This not is more for me than anyone looking because I keep forgetting how
+     * millis work in my app.
+     * The app assumes if you've typed in more than 3 millis for starting time, it's
+     * because you've accidentally typed in micros or nanos.
+     */
     if (milliStr.length > 3) {
         return milliStr.dropLast(milliStr.length - 3)
     } else {
