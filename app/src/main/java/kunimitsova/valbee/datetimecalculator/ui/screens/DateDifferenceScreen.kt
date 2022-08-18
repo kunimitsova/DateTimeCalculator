@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.components.*
+import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 import kunimitsova.valbee.datetimecalculator.utils.calculateDifference
 import kunimitsova.valbee.datetimecalculator.viewmodels.DateDifferenceScreenViewModel
@@ -49,7 +50,7 @@ fun DateDifferenceScreen(modifier: Modifier = Modifier,
         }
         .padding(16.dp)
     ) {
-        Row() {
+        Row(horizontalArrangement = Arrangement.Center,modifier = Modifier.fillMaxWidth(1f)) {
             BigText(text = stringResource(id = R.string.date_difference))
         }
         Row (modifier = Modifier.padding(vertical = 4.dp)) {
@@ -104,5 +105,7 @@ fun DateDifferenceScreen(modifier: Modifier = Modifier,
 @Preview
 @Composable
 fun diPreview() {
-    DateDifferenceScreen()
+    DateTimeCalculatorTheme {
+        DateDifferenceScreen()
+    }
 }

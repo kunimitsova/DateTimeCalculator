@@ -36,9 +36,9 @@ fun HelpScreen (modifier: Modifier = Modifier, helpPageViewModel: HelpPageViewMo
         helpPageViewModel.uiState.value.howToUseString.toString()
     }
     val spannedString = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        Html.fromHtml(uiString, Html.FROM_HTML_MODE_LEGACY)
+        Html.fromHtml(uiString, Html.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM)
     } else {
-        HtmlCompat.fromHtml(uiString, HtmlCompat.FROM_HTML_MODE_LEGACY)
+        HtmlCompat.fromHtml(uiString, HtmlCompat.FROM_HTML_SEPARATOR_LINE_BREAK_LIST_ITEM)
     }
 
     Column(

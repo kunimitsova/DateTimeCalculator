@@ -27,6 +27,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
+import kotlin.math.abs
 
 /**
  * utilities for validatin', formattin', and calculatin'
@@ -249,7 +250,7 @@ fun calculateMinus(startDate: LocalDateTime,
 @SuppressLint("NewApi")
 fun calculateDifference(date1: LocalDateTime, date2: LocalDateTime, units: DateTimeUnits): Long {
     val chronoUnits: ChronoUnit = units.unit
-    val diff = chronoUnits.between(date1 , date2)
+    val diff = abs( chronoUnits.between(date1 , date2))
     return diff
 }
 
