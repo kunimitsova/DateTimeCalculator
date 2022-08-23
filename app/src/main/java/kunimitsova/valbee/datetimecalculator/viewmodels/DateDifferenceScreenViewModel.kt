@@ -29,7 +29,7 @@ class DateDifferenceScreenViewModel: ViewModel() {
         _year2.value = year
     }
 // add plus 1 because Calendar.MONTH is in 0..11 range.
-    private val _month1 = mutableStateOf((calendar[Calendar.MONTH] + 1).toString())
+    private val _month1 = mutableStateOf(leadingZero(calendar[Calendar.MONTH] + 1, 2))
     val month1: State<String> = _month1
     fun updateMonth1(month: String) {
         _month1.value = month
@@ -41,7 +41,7 @@ class DateDifferenceScreenViewModel: ViewModel() {
         _month2.value = month
     }
 
-    private val _day1 = mutableStateOf(calendar[Calendar.DAY_OF_MONTH].toString())
+    private val _day1 = mutableStateOf(leadingZero(calendar[Calendar.DAY_OF_MONTH],2))
     val day1: State<String> = _day1
     fun updateDay1(day: String) {
         _day1.value = day
