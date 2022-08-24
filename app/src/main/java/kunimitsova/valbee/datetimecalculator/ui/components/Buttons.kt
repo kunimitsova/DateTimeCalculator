@@ -6,6 +6,8 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -78,26 +80,17 @@ fun CalculateButton(modifier: Modifier = Modifier,onCalculate: () -> Unit) {
         .fillMaxWidth(1f)
         .padding(horizontal = 12.dp)
     ) {
-        Surface(color = MaterialTheme.colors.primary,
-            shape = MaterialTheme.shapes.large,
-            elevation = 4.dp
-        ) {
-            Button(
-                onClick = onCalculate,
-                modifier = modifier.defaultMinSize(minHeight = 48.dp)
-            ) {
-                ButtonText(text = stringResource(id = R.string.calculate))
-            }
+        ReusableTextButton(modifier = modifier, onClick = onCalculate) {
+            ButtonText(text = stringResource(id = R.string.calculate))
         }
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun ButtonPreview() {
-////    var addTe = remember{ mutableStateOf(true  )}
-//    DateTimeCalculatorTheme {
-//        CalculateButton({})
-////        PlusMinusButton(addTe.value, {addDTe -> addTe.value = !addTe.value })
-//    }
-//}
+@Preview(heightDp = 100)
+@Composable
+fun buttonsPreview() {
+    DateTimeCalculatorTheme {
+       CalculateButton (modifier = Modifier, onCalculate = {})
+
+    }
+}

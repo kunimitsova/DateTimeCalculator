@@ -18,12 +18,15 @@ import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.components.*
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
+import kunimitsova.valbee.datetimecalculator.utils.WindowWidthSizeClass
 import kunimitsova.valbee.datetimecalculator.utils.calculateDifference
 import kunimitsova.valbee.datetimecalculator.viewmodels.DateDifferenceScreenViewModel
 
 @Composable
-fun DateDifferenceScreen(modifier: Modifier = Modifier,
-    dateDiffViewModel: DateDifferenceScreenViewModel = viewModel()
+fun DateDifferenceScreen(
+    modifier: Modifier = Modifier,
+    dateDiffViewModel: DateDifferenceScreenViewModel = viewModel(),
+    windowSize: WindowWidthSizeClass
 ) {
     val localFocusManager = LocalFocusManager.current
 
@@ -50,62 +53,88 @@ fun DateDifferenceScreen(modifier: Modifier = Modifier,
         }
         .padding(16.dp)
     ) {
-        Row(horizontalArrangement = Arrangement.Center,modifier = Modifier.fillMaxWidth(1f)) {
-            BigText(text = stringResource(id = R.string.date_difference))
-        }
-        Row (modifier = Modifier.padding(vertical = 4.dp)) {
-            HeaderText(text = "Date 1")
-        }
-        DateItemsInput(
-            startYear = dateDiffViewModel.year1.value,
-            startMonth = dateDiffViewModel.month1.value,
-            startDay = dateDiffViewModel.day1.value,
-            onYrChange = { dateDiffViewModel.updateYear1(it) },
-            onMonthChange = { dateDiffViewModel.updateMonth1(it) },
-            onDayChange = { dateDiffViewModel.updateDay1(it) }
-        )
-
-        Row (modifier = Modifier.padding(vertical = 4.dp)) {
-            HeaderText(text = "Date 2")
-        }
-        DateItemsInput(
-            startYear = dateDiffViewModel.year2.value,
-            startMonth = dateDiffViewModel.month2.value,
-            startDay = dateDiffViewModel.day2.value,
-            onYrChange = { dateDiffViewModel.updateYear2(it) },
-            onMonthChange = { dateDiffViewModel.updateMonth2(it) },
-            onDayChange = { dateDiffViewModel.updateDay2(it) }
-        )
-        Divider()
-        Row(verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(1f)
-        ) {
-            BigText(text = stringResource(id = R.string.how_many),
-                modifier = Modifier.weight(1f)
-            )
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                LittleText(text = stringResource(id = R.string.difference_units))
-                UnitsSpinner(
-                    selectedUnit = dateDiffViewModel.selectedUnit.value,
-                    expanded = expandedAst,
-                    onBoxClick = onExpandClick,
-                    onDismissMenu = onDismissMenu,
-                    onClickUnits = onClickSpinner
-                )
-            }
-        }
-        CalculateButton(modifier = Modifier.fillMaxWidth(1f), onCalculate = onCalculate)
-        Spacer(modifier = Modifier.height(24.dp))
-        OutputDiff(dateDiffViewModel.answer.value, dateDiffViewModel.selectedUnit.value)
+       AdaptiveScreenLayout(
+           topHalf = {
+                     DateDiffTopHalf(
+                         year1 = dateDiffViewModel.year1.value,
+                         month1 = dateDiffViewModel.month1.value,
+                         day1 = dateDiffViewModel.day1.value,
+                         year2 = dateDiffViewModel.year2.value,
+                         month2 = dateDiffViewModel.month2.value,
+                         day2 = dateDiffViewModel.day2.value,
+                         onYr1Change = { dateDiffViewModel.updateYear1(it) },
+                         onYr2Change = { dateDiffViewModel.updateYear2(it) },
+                         onMonth1Change = { dateDiffViewModel.updateMonth1(it) },
+                         onMonth2Change = { dateDiffViewModel.updateMonth2(it) },
+                         onDay1Change = { dateDiffViewModel.updateDay1(it) },
+                         onDay2Change = { dateDiffViewModel.updateDay2(it) }
+                     )
+                     },
+           bottomHalf = {
+                        DateDiffBottomHalf(
+                            selectedUnit = dateDiffViewModel.selectedUnit.value,
+                            expanded = expandedAst,
+                            onExpandClick = onExpandClick,
+                            onDismissMenu = onDismissMenu,
+                            onClickSpinner = onClickSpinner,
+                            onCalculate = onCalculate,
+                            answer = dateDiffViewModel.answer.value
+                        )
+                        },
+           windowSize = windowSize)
+//        Row (modifier = Modifier.padding(vertical = 4.dp)) {
+//            HeaderText(text = "Date 1")
+//        }
+//        DateItemsInput(
+//            startYear = dateDiffViewModel.year1.value,
+//            startMonth = dateDiffViewModel.month1.value,
+//            startDay = dateDiffViewModel.day1.value,
+//            onYrChange = { dateDiffViewModel.updateYear1(it) },
+//            onMonthChange = { dateDiffViewModel.updateMonth1(it) },
+//            onDayChange = { dateDiffViewModel.updateDay1(it) }
+//        )
+//
+//        Row (modifier = Modifier.padding(vertical = 4.dp)) {
+//            HeaderText(text = "Date 2")
+//        }
+//        DateItemsInput(
+//            startYear = dateDiffViewModel.year2.value,
+//            startMonth = dateDiffViewModel.month2.value,
+//            startDay = dateDiffViewModel.day2.value,
+//            onYrChange = { dateDiffViewModel.updateYear2(it) },
+//            onMonthChange = { dateDiffViewModel.updateMonth2(it) },
+//            onDayChange = { dateDiffViewModel.updateDay2(it) }
+//        )
+//        DtcDivider()
+//        Row(verticalAlignment = Alignment.CenterVertically,
+//            modifier = Modifier
+//                .padding(16.dp)
+//                .fillMaxWidth(1f)
+//        ) {
+//            BigText(text = stringResource(id = R.string.how_many),
+//                modifier = Modifier.weight(1f)
+//            )
+//            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+//                LittleText(text = stringResource(id = R.string.difference_units))
+//                UnitsSpinner(
+//                    selectedUnit = dateDiffViewModel.selectedUnit.value,
+//                    expanded = expandedAst,
+//                    onBoxClick = onExpandClick,
+//                    onDismissMenu = onDismissMenu,
+//                    onClickUnits = onClickSpinner
+//                )
+//            }
+//        }
+//        CalculateButton(modifier = Modifier.fillMaxWidth(1f), onCalculate = onCalculate)
+//        Spacer(modifier = Modifier.height(24.dp))
+//        OutputDiff(dateDiffViewModel.answer.value, dateDiffViewModel.selectedUnit.value)
     }
 }
 
-@Preview
+@Preview(widthDp = 700)
 @Composable
 fun diPreview() {
     DateTimeCalculatorTheme {
-        DateDifferenceScreen()
+        DateDifferenceScreen(windowSize = WindowWidthSizeClass.Medium)
     }
 }

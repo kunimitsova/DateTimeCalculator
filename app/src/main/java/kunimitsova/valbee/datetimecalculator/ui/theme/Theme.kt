@@ -7,19 +7,20 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+// my palette uses Secondary as a secondary surface color for now.
 private val DarkColorPalette = darkColors(
     primary = DeepOrange200_dark,
     primaryVariant = Orange100_dark,
-    secondary = Teal100_dark,
+    secondary = Teal800_dark,
     surface = BlueGray900,
     background = Gray900
 )
 
 private val LightColorPalette = lightColors(
     primary = Red200,
-    primaryVariant = Amber100,
+    primaryVariant = Red200_dark,
     secondary = Teal50,
-    surface = Pink45,
+    surface = Red200_light,
     onSurface = Color.Black,
     background = Color.White,
     onBackground = Color.Black,

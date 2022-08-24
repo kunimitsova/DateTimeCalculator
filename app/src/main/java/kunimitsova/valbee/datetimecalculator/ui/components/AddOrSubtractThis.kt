@@ -35,7 +35,10 @@ fun AddOrSubtractThis(numToAdd: String, onNumChange: (String) -> Unit ,
         )
 //        Spacer(modifier = Modifier.width(8.dp))
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            LittleText(text = stringResource(id = R.string.add_or_subtract_units))
+            Spacer(modifier.height(4.dp))
+            LittleText(text = stringResource(id = R.string.add_or_subtract_units),
+                modifier = Modifier
+            )
             UnitsSpinner(
                 selectedUnit = selectedUnit,
                 expanded = expanded,
@@ -43,6 +46,7 @@ fun AddOrSubtractThis(numToAdd: String, onNumChange: (String) -> Unit ,
                 onDismissMenu = onDismissMenu,
                 onClickUnits = onClickUnits
             )
+
         }
     }
 }

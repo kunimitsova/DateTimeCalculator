@@ -1,9 +1,6 @@
 package kunimitsova.valbee.datetimecalculator
 
-import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
-import kunimitsova.valbee.datetimecalculator.utils.calculateMinus
-import kunimitsova.valbee.datetimecalculator.utils.calculatePlus
-import kunimitsova.valbee.datetimecalculator.utils.validFloat
+import kunimitsova.valbee.datetimecalculator.utils.*
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -50,5 +47,13 @@ class ExampleUnitTest {
         val myStr = "123.123.123.123"
         val expStr = "123"
         assertEquals(expStr, validFloat(myStr))
+    }
+
+    @Test
+    fun leadingzeros_onlyaddswhenmissing() {
+        val myStr = "012"
+        val expected = "12"
+        val actual = leadingZero(myStr, 2)
+        assertEquals(expected, actual)
     }
 }

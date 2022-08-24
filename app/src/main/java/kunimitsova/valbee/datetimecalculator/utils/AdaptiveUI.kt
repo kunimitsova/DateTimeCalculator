@@ -1,6 +1,7 @@
 package kunimitsova.valbee.datetimecalculator.utils
 
 import android.graphics.Rect
+import androidx.compose.ui.unit.dp
 import androidx.window.layout.FoldingFeature
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
@@ -43,32 +44,11 @@ fun isSeparating(foldFeature: FoldingFeature?): Boolean {
 }
 
 enum class dtcDisplayType {
-    ONE_TAB, TWO_TABS
+    ONE_COLUMN, TWO_COLUMNS
 }
 
 enum class dtcNavigationType {
-    RAIL, TOP_TABS
+     BOTTOM_AND_TOP, TOP_ONLY
 }
-
-//data class DateClassic(val year: Int,  val month: Int, val day: Int, val hour: Int,
-//                       val minute: Int, val second: Int, val millis: Int
-//) {
-//    override fun toString(): String {
-//        var str = "$year-${leadingZero(month, 2)}-${leadingZero(day, 2)}"
-//        str = str + "T${leadingZero(hour, 2)}:${leadingZero(minute, 2)}"
-//        str = str + ":${leadingZero(second, 2)}.${leadingZero(millis, 3)}"
-//        return str
-//    }
-//    companion object {
-//        @SuppressLint("NewApi")
-//        fun fromString(dateString: String): DateClassic {
-//            val dateTime = LocalDateTime.parse(dateString)
-//            return DateClassic(dateTime.year, dateTime.monthValue, dateTime.dayOfMonth,
-//                dateTime.hour, dateTime.minute, dateTime.second, (dateTime.nano / 1000000)
-//            )
-//            // divide by 1mil because DateClassic holds millis, not nanos.
-//        }
-//    }
-//}
 
 

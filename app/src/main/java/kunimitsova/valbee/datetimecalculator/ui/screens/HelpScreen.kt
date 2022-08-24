@@ -48,8 +48,7 @@ fun HelpScreen (modifier: Modifier = Modifier, helpPageViewModel: HelpPageViewMo
         HeaderText(text = stringResource(id = R.string.help))
         Spacer(modifier = Modifier.height(16.dp))
         Divider(Modifier.fillMaxWidth(1f))
-        BodyText(text = spannedString.toString(),
-            Modifier.verticalScroll(rememberScrollState()))
+        BodyText(text = spannedString.toString())
     }
 }
 

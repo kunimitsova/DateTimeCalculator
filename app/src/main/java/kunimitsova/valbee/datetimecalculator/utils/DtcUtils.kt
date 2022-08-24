@@ -40,7 +40,7 @@ import kotlin.math.abs
  */
 
 fun leadingZero(num: Any, maxDigits: Int): String {
-    val numString = num.toString()
+    val numString = num.toString().toLong().toString()
     var len = numString.length
     var exitString = numString
     while (len < maxDigits) {

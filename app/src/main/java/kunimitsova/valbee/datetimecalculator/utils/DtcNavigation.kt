@@ -27,6 +27,7 @@ val mainLocations = listOf(
 fun DtcNavHost(
     navController: NavHostController,
     startDestination: String,
+    windowSize: WindowWidthSizeClass,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -35,10 +36,10 @@ fun DtcNavHost(
         modifier = modifier
     ) {
         composable(Screen.addScreen.route) {
-            DateTimeScreen()
+            DateTimeScreen(windowSize = windowSize)
         }
         composable(Screen.dateDiff.route ) {
-            DateDifferenceScreen()
+            DateDifferenceScreen(windowSize = windowSize)
         }
         composable(Screen.helpScreen.route ) {
             HelpScreen()

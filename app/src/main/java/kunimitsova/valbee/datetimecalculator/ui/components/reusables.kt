@@ -54,6 +54,7 @@ fun EntryText(
         value = text,
         singleLine = true,
         colors = DtcTextFieldColors(),
+        shape = MaterialTheme.shapes.medium,
         onValueChange = onChanged,
         textStyle = MaterialTheme.typography.h5,
         keyboardOptions = KeyboardOptions(
@@ -166,6 +167,34 @@ fun DtcTextFieldColors(
     focusedIndicatorColor = focusedIndicatorColor,
     focusedLabelColor = focusedLabelColor
 )
+
+@Composable
+fun ReusableTextButton(modifier: Modifier = Modifier,
+                       onClick: () -> Unit,
+                       content: @Composable (RowScope.() -> Unit)
+) {
+    Surface(
+        elevation = 4.dp,
+        color = MaterialTheme.colors.primary,
+        shape = MaterialTheme.shapes.large,
+        modifier = modifier.defaultMinSize(minHeight = 48.dp)
+    ){
+        Button(onClick = onClick, content = content)
+    }
+}
+
+@Composable
+fun ReusableIconButton(modifier: Modifier = Modifier, onClick: () -> Unit, content: @Composable (RowScope.() -> Unit)
+) {
+    Surface(
+        elevation = 4.dp,
+        color = MaterialTheme.colors.primary,
+        shape = MaterialTheme.shapes.medium,
+        modifier = modifier.defaultMinSize(minHeight = 48.dp)
+    ){
+        Button(onClick = onClick, content = content)
+    }
+}
 
 @Preview
 @Composable

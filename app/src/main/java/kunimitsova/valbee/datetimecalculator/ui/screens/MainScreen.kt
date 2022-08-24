@@ -2,7 +2,10 @@ package kunimitsova.valbee.datetimecalculator.ui.screens
 
 import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,56 +19,73 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.window.layout.FoldingFeature
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.components.BottomMenu
+import kunimitsova.valbee.datetimecalculator.ui.components.TopBarFullNav
 import kunimitsova.valbee.datetimecalculator.ui.components.TopBarWithOverflow
 import kunimitsova.valbee.datetimecalculator.utils.*
 
 @Composable
-fun DateTimeMainScreen(modifier: Modifier = Modifier, navController: NavHostController = rememberNavController()) {
+fun DateTimeMainScreen(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController(),
+    windowSize: WindowWidthSizeClass,
+    foldingDevicePosture: DevicePosture
+) {
     DateTimeCalculatorTheme {
         val currentBackStack by navController.currentBackStackEntryAsState()
         val currentDestination = currentBackStack?.destination
+        val navToHelp = { navController.navigatePopToHome(Screen.helpScreen.route)}
 
         val scaffoldState = rememberScaffoldState()
 //        val scope = rememberCoroutineScope()
 
         Scaffold(
             scaffoldState = scaffoldState,
-            topBar = { TopBarWithOverflow(
-                isBackStackBase = navController.previousBackStackEntry == null,
-                title = stringResource(id = R.string.app_name),
-                onNavigate = { navController.navigateUp() },
-                // the help screen is weird so I'm trying to explicitly determine where it came from
-                // in order to make it work right.
-                onNavToHelp = { navController.navigatePopToHome(Screen.helpScreen.route) }
-            )
-                     },
+            backgroundColor = MaterialTheme.colors.secondary,
+            topBar = {
+                when (windowSize) {
+                    // only two options right now
+                    WindowWidthSizeClass.Compact ->
+                        TopBarWithOverflow(
+                            isBackStackBase = navController.previousBackStackEntry == null,
+                            title = stringResource(id = R.string.app_name),
+                            onNavigate = { navController.navigateUp() },
+                            onNavToHelp = navToHelp
+                        )
+                    else ->
+                        TopBarFullNav(
+                            isBackStackBase = navController.previousBackStackEntry == null,
+                            title = "",
+                            onNavigate = { navController.navigateUp() },
+                            onNavToHelp = navToHelp,
+                            onNavToAdd = { navController.navigatePopToHome(Screen.addScreen.route) },
+                            onNavToDiff = { navController.navigatePopToHome(Screen.dateDiff.route)}
+                        )
+                }
+            },
             bottomBar = {
-                BottomMenu(
-                    navController = navController,
-                    currentBackStack = currentBackStack,
-                    currentDestination = currentDestination
-                )
+                when (windowSize) {
+                    WindowWidthSizeClass.Medium -> {}
+                    else -> BottomMenu(
+                        navController = navController,
+                        currentBackStack = currentBackStack,
+                        currentDestination = currentDestination
+                    )
+                }
             },
          content = { innerPadding ->
              DtcNavHost(
                  navController = navController,
                  startDestination = Screen.addScreen.route,
+                 windowSize = windowSize,
                  modifier = Modifier
                      .fillMaxSize(1f)
                      .padding(innerPadding)
              )
         }
         )
-    }
-}
-
-@Preview
-@Composable
-fun MainScreenPreview() {
-    DateTimeCalculatorTheme {
-        DateTimeMainScreen()
     }
 }

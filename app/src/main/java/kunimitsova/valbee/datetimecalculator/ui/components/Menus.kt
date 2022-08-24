@@ -1,11 +1,15 @@
 package kunimitsova.valbee.datetimecalculator.ui.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,17 +30,32 @@ fun BottomMenu(
     currentBackStack: NavBackStackEntry?,
     currentDestination: NavDestination?
 ) {
-    BottomNavigation {
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colors.secondary,
+        elevation = 0.dp,
+        modifier = Modifier.padding(vertical = 4.dp)
+    // horizontal padding are in the content
+    ) {
+        Spacer(modifier = Modifier.width(4.dp)) // starting external padding
         mainLocations.forEach {screen ->
-            BottomNavigationItem(
-                icon = {HeaderText(stringResource(id = screen.resourceId ))},
-                label = null,
-                selected = currentDestination?.hierarchy?.any() { it.route == screen.route }  == true,
-                onClick = {
-                    navController.navigatePopToHome(route = screen.route)
-                },
-                modifier = Modifier.padding(horizontal = 10.dp)
-            )
+            Surface(color = MaterialTheme.colors.primary,
+                elevation = 1.dp,
+                shape = MaterialTheme.shapes.large,
+                border = BorderStroke(1.dp, MaterialTheme.colors.primaryVariant),
+                modifier = Modifier.weight(0.8f)
+            ) {
+                BottomNavigationItem(
+                    icon = { HeaderText(stringResource(id = screen.resourceId)) },
+                    label = null,
+                    selected = currentDestination?.hierarchy?.any() { it.route == screen.route } == true,
+                    onClick = {
+                        navController.navigatePopToHome(route = screen.route)
+                    },
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
+                )
+            }
+            Spacer(modifier = Modifier.width(4.dp)) // ending external padding, one per item.
         }
     }
 }
@@ -88,10 +107,131 @@ fun TopBarWithOverflow(isBackStackBase: Boolean, title: String, onNavigate: () -
 //            }
 }
 
+@Composable
+fun TopBarFullNav(isBackStackBase: Boolean, title: String, onNavigate: () -> Unit,
+                  onNavToHelp: () -> Unit, onNavToAdd: () -> Unit, onNavToDiff: () -> Unit
+) {
+// for when the window width size class = Medium (phone in landscape)
+    TopAppBar(
+        title = {},
+        navigationIcon = if (!isBackStackBase) { // put in {} since it expects a lambda
+            { IconButton(onClick = onNavigate) {
+                Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Back"
+                )
+            } }
+        } else {
+            { Spacer(modifier = Modifier.width(48.dp)) }
+        },
+        actions = {
+            ActionsNavRow(
+                onNavToAdd = onNavToAdd,
+                onNavToDiff = onNavToDiff,
+                onNavToHelp = onNavToHelp
+            )
+        }
+    )
+    // this will come in handy when we change from Help button to OVerflow menu
+    //            DropdownMenu(
+    //                expanded = showMenu,
+    //                onDismissRequest = { showMenu = false }
+    //            ) {
+    //                DropdownMenuItem(onClick = {  }) {
+    //                    Icon(Icons.Filled.Coffee)
+    //                }
+    //            }
+}
+
+@Composable
+fun ActionsNavRow(onNavToAdd: () -> Unit, onNavToDiff: () -> Unit, onNavToHelp: () -> Unit,
+                  modifier: Modifier = Modifier
+) {
+    // fits into the TopAppBar after the Navigation Icon
+    // where Actions{} go, so if it's used somehwere else
+    // make sure to put at least 48dp of something in front
+    // so it's balanced.
+    Row(modifier) {
+        IconButton(
+            onClick = onNavToAdd, modifier = Modifier
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colors.primaryVariant,
+                    shape = MaterialTheme.shapes.large
+                )
+                .background(
+                    color = MaterialTheme.colors.primary,
+                    shape = MaterialTheme.shapes.large
+                )
+                .weight(1f)
+        ) {
+            HeaderText(text = stringResource(id = R.string.add_date))
+        }
+        Spacer(modifier = Modifier.width(4.dp))
+        IconButton(
+            onClick = onNavToDiff, modifier = Modifier
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colors.primaryVariant,
+                    shape = MaterialTheme.shapes.large
+                )
+                .background(
+                    color = MaterialTheme.colors.primary,
+                    shape = MaterialTheme.shapes.large
+                )
+                .weight(1f)
+        ) {
+            HeaderText(text = stringResource(id = R.string.date_difference))
+        }
+        Spacer(modifier = Modifier.width(4.dp))
+        IconButton(onClick = onNavToHelp, modifier = Modifier
+            .width(48.dp)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colors.primaryVariant,
+                shape = MaterialTheme.shapes.medium
+            )
+            .background(
+                color = MaterialTheme.colors.primary,
+                shape = MaterialTheme.shapes.medium
+            )
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.baseline_help_outline_24),
+                contentDescription = stringResource(id = R.string.overflow_desc)
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun RowPreview() {
+    DateTimeCalculatorTheme {
+    ActionsNavRow(modifier = Modifier,onNavToAdd = { }, onNavToDiff = { { /*TODO*/ } },
+    onNavToHelp = {})
+    }
+}
+
 @Preview
 @Composable
 fun topBarOverflowPreview() {
     TopBarWithOverflow(false,stringResource(id = R.string.app_name),onNavigate = { }, onNavToHelp = {})
+}
+
+@Preview(widthDp = 600)
+@Composable
+fun TopBarNavAllPreview() {
+    DateTimeCalculatorTheme()
+    {
+    TopBarFullNav(
+        isBackStackBase = false,
+        title = "",
+        onNavigate = { },
+        onNavToHelp = { },
+        onNavToAdd = { }) {
+
+    }}
 }
 
 /**
