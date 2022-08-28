@@ -1,4 +1,4 @@
-package kunimitsova.valbee.datetimecalculator.ui.dialogs
+package kunimitsova.valbee.datetimecalculator.ui.components.dialogs
 
 import android.app.TimePickerDialog
 import androidx.compose.foundation.clickable

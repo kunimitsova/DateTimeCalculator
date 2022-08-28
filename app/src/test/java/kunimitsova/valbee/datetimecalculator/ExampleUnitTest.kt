@@ -1,9 +1,13 @@
 package kunimitsova.valbee.datetimecalculator
 
+import android.graphics.Rect
 import kunimitsova.valbee.datetimecalculator.utils.*
+import kunimitsova.valbee.datetimecalculator.utils.screenclassification.middleSpacer
 import org.junit.Test
 
 import org.junit.Assert.*
+import org.junit.runner.RunWith
+import org.mockito.junit.MockitoJUnitRunner
 import java.time.LocalDateTime
 
 /**
@@ -11,6 +15,7 @@ import java.time.LocalDateTime
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+@RunWith(MockitoJUnitRunner::class)
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
@@ -56,4 +61,6 @@ class ExampleUnitTest {
         val actual = leadingZero(myStr, 2)
         assertEquals(expected, actual)
     }
+
+
 }

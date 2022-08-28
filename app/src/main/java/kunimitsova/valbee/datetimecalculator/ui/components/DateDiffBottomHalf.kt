@@ -7,8 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.R
+import kunimitsova.valbee.datetimecalculator.ui.components.reusables.BigText
+import kunimitsova.valbee.datetimecalculator.ui.components.reusables.LittleText
 import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 import java.time.LocalDateTime
 
@@ -26,13 +29,15 @@ fun DateDiffBottomHalf(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(16.dp)
+                .padding(vertical = 16.dp)
                 .fillMaxWidth(1f)
         ) {
             BigText(
                 text = stringResource(id = R.string.how_many),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.End
             )
+            Spacer(modifier = Modifier.width(4.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 LittleText(text = stringResource(id = R.string.difference_units))
                 UnitsSpinner(

@@ -1,25 +1,21 @@
 package kunimitsova.valbee.datetimecalculator.viewmodels
 
 import android.content.Context
-import android.os.Build
-import android.text.Html
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.core.text.HtmlCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kunimitsova.valbee.datetimecalculator.utils.UiState
 import java.io.IOException
 
 class HelpPageViewModel: ViewModel() {
-    private val _uiState = mutableStateOf(UiState(
+    private val _uiState = mutableStateOf(HelpScreenUiState(
         isLoading = true,
         isError = false,
         howToUseString = null
     ))
-    val uiState: State<UiState> = _uiState
+    val uiState: State<HelpScreenUiState> = _uiState
 
     fun loadHelpData(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -50,3 +46,8 @@ class HelpPageViewModel: ViewModel() {
         }
     }
 }
+data class HelpScreenUiState(
+    val isLoading: Boolean,
+    val isError: Boolean,
+    val howToUseString: String?
+)

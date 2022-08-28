@@ -1,43 +1,45 @@
 package kunimitsova.valbee.datetimecalculator.ui.screens
 
-import android.content.Context
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.scrollable
+
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.DpSize
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.window.layout.FoldingFeature
+import androidx.window.layout.WindowLayoutInfo
+import kotlinx.coroutines.flow.StateFlow
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.R
-import kunimitsova.valbee.datetimecalculator.ui.components.BottomMenu
+import kunimitsova.valbee.datetimecalculator.navigation.DtcNavHost
+import kunimitsova.valbee.datetimecalculator.navigation.Screen
+import kunimitsova.valbee.datetimecalculator.navigation.navigatePopToHome
 import kunimitsova.valbee.datetimecalculator.ui.components.TopBarFullNav
 import kunimitsova.valbee.datetimecalculator.ui.components.TopBarWithOverflow
+import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenu
 import kunimitsova.valbee.datetimecalculator.utils.*
+import kunimitsova.valbee.datetimecalculator.utils.screenclassification.PresentationSizeClass
+import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenInfo2
 
 @Composable
 fun DateTimeMainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    windowSize: WindowWidthSizeClass,
-    foldingDevicePosture: DevicePosture
+    windowDpSize: DpSize,
+    devicePosture: StateFlow<WindowLayoutInfo>
 ) {
     DateTimeCalculatorTheme {
         val currentBackStack by navController.currentBackStackEntryAsState()
         val currentDestination = currentBackStack?.destination
         val navToHelp = { navController.navigatePopToHome(Screen.helpScreen.route)}
+
+        val devicePostureValue by devicePosture.collectAsState()
+        val screenClassifier by remember { mutableStateOf( ScreenInfo2().createClassifier(
+            devicePostureValue,
+            windowDpSize)) }
 
         val scaffoldState = rememberScaffoldState()
 //        val scope = rememberCoroutineScope()
@@ -46,16 +48,10 @@ fun DateTimeMainScreen(
             scaffoldState = scaffoldState,
             backgroundColor = MaterialTheme.colors.secondary,
             topBar = {
-                when (windowSize) {
+                when (screenClassifier.mode) {
                     // only two options right now
-                    WindowWidthSizeClass.Compact ->
-                        TopBarWithOverflow(
-                            isBackStackBase = navController.previousBackStackEntry == null,
-                            title = stringResource(id = R.string.app_name),
-                            onNavigate = { navController.navigateUp() },
-                            onNavToHelp = navToHelp
-                        )
-                    else ->
+                    PresentationSizeClass.Small, PresentationSizeClass.Wide ->
+                        // when the size is compact x compact or compact x [bigger]
                         TopBarFullNav(
                             isBackStackBase = navController.previousBackStackEntry == null,
                             title = "",
@@ -64,11 +60,18 @@ fun DateTimeMainScreen(
                             onNavToAdd = { navController.navigatePopToHome(Screen.addScreen.route) },
                             onNavToDiff = { navController.navigatePopToHome(Screen.dateDiff.route)}
                         )
+                    else ->
+                        TopBarWithOverflow(
+                            isBackStackBase = navController.previousBackStackEntry == null,
+                            title = stringResource(id = R.string.app_name),
+                            onNavigate = { navController.navigateUp() },
+                            onNavToHelp = navToHelp
+                        )
                 }
             },
             bottomBar = {
-                when (windowSize) {
-                    WindowWidthSizeClass.Medium -> {}
+                when (screenClassifier.mode) {
+                    PresentationSizeClass.Wide, PresentationSizeClass.Small -> {}
                     else -> BottomMenu(
                         navController = navController,
                         currentBackStack = currentBackStack,
@@ -80,7 +83,7 @@ fun DateTimeMainScreen(
              DtcNavHost(
                  navController = navController,
                  startDestination = Screen.addScreen.route,
-                 windowSize = windowSize,
+                 screenClassifier = screenClassifier,
                  modifier = Modifier
                      .fillMaxSize(1f)
                      .padding(innerPadding)

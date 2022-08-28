@@ -1,4 +1,4 @@
-package kunimitsova.valbee.datetimecalculator.utils
+package kunimitsova.valbee.datetimecalculator.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
@@ -10,12 +10,15 @@ import androidx.navigation.compose.composable
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.screens.DateDifferenceScreen
 import kunimitsova.valbee.datetimecalculator.ui.screens.DateTimeScreen
+import kunimitsova.valbee.datetimecalculator.ui.screens.DoubleScreen
 import kunimitsova.valbee.datetimecalculator.ui.screens.HelpScreen
+import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenClassifier2
 
 sealed class Screen( val route: String, @StringRes val resourceId: Int) {
     object addScreen: Screen("addscreen", R.string.add_date)
     object dateDiff: Screen("datediff", R.string.date_difference)
     object helpScreen: Screen("help", R.string.help)
+    object dualScreen: Screen("dualscreen", R.string.double_screen)
 }
 
 val mainLocations = listOf(
@@ -27,7 +30,7 @@ val mainLocations = listOf(
 fun DtcNavHost(
     navController: NavHostController,
     startDestination: String,
-    windowSize: WindowWidthSizeClass,
+    screenClassifier: ScreenClassifier2,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -36,10 +39,13 @@ fun DtcNavHost(
         modifier = modifier
     ) {
         composable(Screen.addScreen.route) {
-            DateTimeScreen(windowSize = windowSize)
+            DateTimeScreen(screenClassifier = screenClassifier)
         }
         composable(Screen.dateDiff.route ) {
-            DateDifferenceScreen(windowSize = windowSize)
+            DateDifferenceScreen(screenClassifier = screenClassifier)
+        }
+        composable(Screen.dualScreen.route) {
+            DoubleScreen(screenClassifier = screenClassifier)
         }
         composable(Screen.helpScreen.route ) {
             HelpScreen()

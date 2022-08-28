@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kunimitsova.valbee.datetimecalculator.ui.components.reusables.DtcDivider
 import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 
 @Composable

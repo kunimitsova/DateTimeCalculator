@@ -9,48 +9,33 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.window.layout.FoldingFeature
 import androidx.window.layout.WindowInfoTracker
+import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kunimitsova.valbee.datetimecalculator.ui.screens.DateTimeMainScreen
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
-import kunimitsova.valbee.datetimecalculator.utils.DevicePosture
-import kunimitsova.valbee.datetimecalculator.utils.calculateWindowSizeClass
-import kunimitsova.valbee.datetimecalculator.utils.isBookPosture
-import kunimitsova.valbee.datetimecalculator.utils.isSeparating
+import kunimitsova.valbee.datetimecalculator.utils.screenclassification.rememberWindowDpSize
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val devicePostureFlow =  WindowInfoTracker.getOrCreate(this).windowLayoutInfo(this)
-            .flowWithLifecycle(this.lifecycle)
-            .map { layoutInfo ->
-                val foldingFeature =
-                    layoutInfo.displayFeatures
-                        .filterIsInstance<FoldingFeature>()
-                        .firstOrNull()
-                when {
-                    isBookPosture(foldingFeature) ->
-                        DevicePosture.BookPosture(foldingFeature.bounds)
 
-                    isSeparating(foldingFeature) ->
-                        DevicePosture.Separating(foldingFeature.bounds, foldingFeature.orientation)
-
-                    else -> DevicePosture.NormalPosture
-                }
-            }
+        val devicePosture = WindowInfoTracker
+            .getOrCreate(this)
+            .windowLayoutInfo(this)
             .stateIn(
                 scope = lifecycleScope,
                 started = SharingStarted.Eagerly,
-                initialValue = DevicePosture.NormalPosture
+                initialValue = WindowLayoutInfo(emptyList())
             )
+
         setContent {
             DateTimeCalculatorTheme {
-                val windowSize = calculateWindowSizeClass(activity = this)
-                val devicePosture = devicePostureFlow.collectAsState().value
+                val windowDpSize = rememberWindowDpSize(activity = this)
                 DateTimeMainScreen(
-                    windowSize = windowSize.widthSizeClass,
-                    foldingDevicePosture = devicePosture )
+                    devicePosture = devicePosture,
+                    windowDpSize = windowDpSize )
             }
         }
     }

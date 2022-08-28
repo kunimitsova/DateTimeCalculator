@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kunimitsova.valbee.datetimecalculator.ui.components.reusables.DtcDivider
 import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 import java.time.LocalDateTime
 
@@ -33,8 +34,9 @@ fun AddDateBottomHalf(
             onClickUnits = onClickUnits,
             modifier = Modifier
         )
+        Spacer(modifier = Modifier.height(8.dp))
         DtcDivider()
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         CalculateButton(onCalculate = onCalculate,
             modifier = Modifier
                 .fillMaxWidth(1f))
