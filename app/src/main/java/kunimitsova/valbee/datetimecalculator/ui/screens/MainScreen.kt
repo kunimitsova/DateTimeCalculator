@@ -15,11 +15,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.navigation.DtcNavHost
+import kunimitsova.valbee.datetimecalculator.navigation.MainNavHost
 import kunimitsova.valbee.datetimecalculator.navigation.Screen
 import kunimitsova.valbee.datetimecalculator.navigation.navigatePopToHome
 import kunimitsova.valbee.datetimecalculator.ui.components.TopBarFullNav
 import kunimitsova.valbee.datetimecalculator.ui.components.TopBarWithOverflow
 import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenu
+import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenuHelpOnly
 import kunimitsova.valbee.datetimecalculator.utils.*
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.PresentationSizeClass
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenInfo2
@@ -40,6 +42,8 @@ fun DateTimeMainScreen(
         val screenClassifier by remember { mutableStateOf( ScreenInfo2().createClassifier(
             devicePostureValue,
             windowDpSize)) }
+
+        val startScreen = if (screenClassifier.canDualScreen) Screen.dualScreen.route else Screen.singleScreen.route
 
         val scaffoldState = rememberScaffoldState()
 //        val scope = rememberCoroutineScope()
@@ -72,6 +76,14 @@ fun DateTimeMainScreen(
             bottomBar = {
                 when (screenClassifier.mode) {
                     PresentationSizeClass.Wide, PresentationSizeClass.Small -> {}
+                    PresentationSizeClass.Big, PresentationSizeClass.TableBig,
+                        PresentationSizeClass.BookBig -> if (screenClassifier.canDualScreen) {
+                            BottomMenuHelpOnly(
+                            onNavToHelp = navToHelp,
+                            currentBackStack = currentBackStack,
+                            currentDestination = currentDestination
+                        )
+                    }
                     else -> BottomMenu(
                         navController = navController,
                         currentBackStack = currentBackStack,
@@ -80,11 +92,11 @@ fun DateTimeMainScreen(
                 }
             },
          content = { innerPadding ->
-             DtcNavHost(
+             MainNavHost(
                  navController = navController,
-                 startDestination = Screen.addScreen.route,
+                 startDestination = startScreen,
                  screenClassifier = screenClassifier,
-                 modifier = Modifier
+                 modifier = modifier
                      .fillMaxSize(1f)
                      .padding(innerPadding)
              )

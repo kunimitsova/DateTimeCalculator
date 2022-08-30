@@ -30,6 +30,8 @@ fun AdaptiveScreenLayout(
     // parameters.
 
     val middleSpacer = middleSpacer(rect1, rect2)
+
+    // if rect2 is null then there is no reason to use the modifier on the boxes
     val modifierBoxOne: Modifier = if (rect2 != null) Modifier
         .height(rect1.height().dp)
         .width(rect1.width().dp) else Modifier

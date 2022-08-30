@@ -109,6 +109,8 @@ fun DateTimeScreen(
 
 
 fun addScreenRect1(mode: PresentationSizeClass, rect1: Rect, rect2: Rect?): Rect {
+    // if there are two rects and rect1 is the biggest, use that one for
+    // showing the screen in the case of halfOpen but not twoHalves
     return when (mode) {
         PresentationSizeClass.Small -> rect1
         PresentationSizeClass.Tall -> rect1
@@ -122,14 +124,17 @@ fun addScreenRect1(mode: PresentationSizeClass, rect1: Rect, rect2: Rect?): Rect
 }
 
 fun addScreenRect2(mode: PresentationSizeClass, rect1: Rect, rect2: Rect?): Rect? {
+    // if the presentation size is set up for dual screen (bookbig, tablebig, big)
+    // we want the layout for this screen to mimic single-screen, which has null
+    // rect2. (rect2 in those cases defines where DateDiffScreen is)
     return when (mode) {
-        PresentationSizeClass.Small -> rect1
-        PresentationSizeClass.Tall -> rect1
-        PresentationSizeClass.Wide -> rect1
-        PresentationSizeClass.Big -> rect1
-        PresentationSizeClass.BookBig -> rect1
+        PresentationSizeClass.Small -> null
+        PresentationSizeClass.Tall -> null
+        PresentationSizeClass.Wide -> null
+        PresentationSizeClass.Big -> null
+        PresentationSizeClass.BookBig -> null
         PresentationSizeClass.BookSmall -> rect2
-        PresentationSizeClass.TableBig -> rect1
+        PresentationSizeClass.TableBig -> null
         PresentationSizeClass.TableSmall -> rect2
     }
 }
@@ -152,6 +157,5 @@ val sampleClassifier2 = ScreenClassifier2(
     hingePosition = Rect(0,400,420,420),
     rect1 = Rect(0,0,420,400),
     rect2 = Rect(0,420,420,800),
-    isSeparating = true,
-    occlusionType = null
+    canDualScreen =  false
 )

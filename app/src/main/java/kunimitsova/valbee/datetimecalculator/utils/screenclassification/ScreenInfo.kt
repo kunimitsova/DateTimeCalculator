@@ -32,7 +32,7 @@ class ScreenInfo2{
 
         val pHeight = Dimension(windowDpSize.height, windowHeightSizeClass)
         val pWidth = Dimension(windowDpSize.width, windowWidthSizeClass)
-        var halfOpen = foldingFeature?.state == FoldingFeature.State.HALF_OPENED
+        val halfOpen = foldingFeature?.state == FoldingFeature.State.HALF_OPENED
         val foldOrientation = foldingFeature?.orientation
         val bookMode = halfOpen && (foldOrientation == FoldingFeature.Orientation.VERTICAL )
         val tableMode = halfOpen && (foldOrientation == FoldingFeature.Orientation.HORIZONTAL)
@@ -47,13 +47,8 @@ class ScreenInfo2{
 
         val modeSizeClass = getPresentationClass(halfOpen, bookMode, tableMode,
             windowWidthSizeClass, windowHeightSizeClass)
-
+        // determine if both screens will fit in the presentation mode
         val twoHalves = getTwoHalves(halfOpen, bookMode, tableMode, rect1, rect2, modeSizeClass)
-
-        // make changes if the two halves won't fit:
-        // create a rect that shows where the app should fit
-        // use that rect as the container for the column/row that has the screen.
-
 
         screen2 = ScreenClassifier2(
             height = pHeight,
@@ -66,22 +61,31 @@ class ScreenInfo2{
             rect1 = rect1,
             // rect2 is only valid if there is a foldingFeature
             rect2 = if (halfOpen) rect2 else null,
-            isSeparating = if (halfOpen) separating else null,
-            occlusionType = if (halfOpen) occlusionType else null
+            canDualScreen = twoHalves,
         )
-
         return screen2
     }
 
     private fun getTwoHalves(
         halfOpen: Boolean,
-        bookMode: Boolean,
-        tableMode: Boolean,
+        bookMode: Boolean?,
+        tableMode: Boolean?,
         rect1: Rect,
-        rect2: Rect,
+        rect2: Rect?,
         modeSizeClass: PresentationSizeClass
-    ): Any {
-        TODO("Not yet implemented")
+    ): Boolean {
+        when (modeSizeClass) {
+            PresentationSizeClass.Big -> {
+                return true
+            }
+            else -> {
+                return if (halfOpen) {
+                    twoHalvesCanFit(rect1, rect2, bookMode, tableMode)
+                } else {
+                    false
+                }
+            }
+        }
     }
 
     fun getPresentationClass(

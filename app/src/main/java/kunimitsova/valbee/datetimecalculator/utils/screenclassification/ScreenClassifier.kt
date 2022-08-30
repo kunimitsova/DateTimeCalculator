@@ -9,14 +9,12 @@ data class ScreenClassifier2(
     val width: Dimension,
     val mode: PresentationSizeClass,
     val halfOpen: Boolean,
+    val rect1: Rect,
     val isBookMode: Boolean? = null,
     val isTableMode: Boolean? = null,
     val hingePosition: Rect? = null,
-    val rect1: Rect,
     val rect2: Rect? = null,
-    val twoHalves: Boolean? = null,
-    val isSeparating: Boolean? = null,
-    val occlusionType: FoldingFeature.OcclusionType? = null
+    val canDualScreen: Boolean,
 )
 // this is the old version that I decided not to use , from a tutorial
 //sealed interface ScreenClassifier {

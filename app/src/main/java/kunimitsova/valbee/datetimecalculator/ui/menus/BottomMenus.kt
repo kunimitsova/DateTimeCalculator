@@ -1,13 +1,12 @@
 package kunimitsova.valbee.datetimecalculator.ui.menus
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,6 +15,8 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import kunimitsova.valbee.datetimecalculator.R
+import kunimitsova.valbee.datetimecalculator.navigation.Screen
 import kunimitsova.valbee.datetimecalculator.navigation.mainLocations
 import kunimitsova.valbee.datetimecalculator.navigation.navigatePopToHome
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.HeaderText
@@ -62,26 +63,43 @@ fun BottomMenu(
 
 @Composable
 fun BottomMenuHelpOnly(
-    navController: NavHostController,
+    onNavToHelp : () -> Unit,
     currentBackStack: NavBackStackEntry?,
     currentDestination: NavDestination?
 ) {
     BottomNavigation(
-        backgroundColor = MaterialTheme.colors.primary
+        backgroundColor = MaterialTheme.colors.primary,
+        modifier = Modifier.fillMaxWidth(1f)
     ) {
-        Row(horizontalArrangement = Arrangement.Center) {
-            
+        Row(modifier = Modifier.fillMaxWidth(0.5f),
+            horizontalArrangement = Arrangement.End
+        ) {
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_help_outline_24),
+                        contentDescription = stringResource(
+                            id = R.string.help
+                        )
+                    )
+                },
+                label = null,
+                selected = currentDestination?.hierarchy?.any() {
+                    it.route == Screen.helpScreen.route
+                } == true,
+                onClick = onNavToHelp,
+                modifier = Modifier.weight(2f)
+            )
         }
     }
-
 }
 
 @Preview
 @Composable
 fun BottomMenuPreview() {
     DateTimeCalculatorTheme {
-        BottomMenu(
-            navController = rememberNavController(),
+        BottomMenuHelpOnly(
+            onNavToHelp = {},
             currentBackStack = null,
             currentDestination = null
         )

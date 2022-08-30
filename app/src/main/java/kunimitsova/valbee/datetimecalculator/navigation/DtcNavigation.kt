@@ -14,13 +14,6 @@ import kunimitsova.valbee.datetimecalculator.ui.screens.DoubleScreen
 import kunimitsova.valbee.datetimecalculator.ui.screens.HelpScreen
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenClassifier2
 
-sealed class Screen( val route: String, @StringRes val resourceId: Int) {
-    object addScreen: Screen("addscreen", R.string.add_date)
-    object dateDiff: Screen("datediff", R.string.date_difference)
-    object helpScreen: Screen("help", R.string.help)
-    object dualScreen: Screen("dualscreen", R.string.double_screen)
-}
-
 val mainLocations = listOf(
     Screen.addScreen,
     Screen.dateDiff
@@ -43,9 +36,6 @@ fun DtcNavHost(
         }
         composable(Screen.dateDiff.route ) {
             DateDifferenceScreen(screenClassifier = screenClassifier)
-        }
-        composable(Screen.dualScreen.route) {
-            DoubleScreen(screenClassifier = screenClassifier)
         }
         composable(Screen.helpScreen.route ) {
             HelpScreen()
