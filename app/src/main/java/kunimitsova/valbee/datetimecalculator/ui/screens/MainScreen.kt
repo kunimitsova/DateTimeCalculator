@@ -15,14 +15,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.navigation.DtcNavHost
-import kunimitsova.valbee.datetimecalculator.navigation.MainNavHost
 import kunimitsova.valbee.datetimecalculator.navigation.Screen
 import kunimitsova.valbee.datetimecalculator.navigation.navigatePopToHome
 import kunimitsova.valbee.datetimecalculator.ui.components.TopBarFullNav
 import kunimitsova.valbee.datetimecalculator.ui.components.TopBarWithOverflow
 import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenu
 import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenuHelpOnly
-import kunimitsova.valbee.datetimecalculator.utils.*
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.PresentationSizeClass
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenInfo2
 
@@ -43,7 +41,8 @@ fun DateTimeMainScreen(
             devicePostureValue,
             windowDpSize)) }
 
-        val startScreen = if (screenClassifier.canDualScreen) Screen.dualScreen.route else Screen.singleScreen.route
+        // not sure this is how to do this:
+//        val startScreen = remember { mutableStateOf( if (screenClassifier.canDualScreen) Screen.dualScreen.route else Screen.addScreen.route) }
 
         val scaffoldState = rememberScaffoldState()
 //        val scope = rememberCoroutineScope()
@@ -92,9 +91,9 @@ fun DateTimeMainScreen(
                 }
             },
          content = { innerPadding ->
-             MainNavHost(
+             DtcNavHost(
                  navController = navController,
-                 startDestination = startScreen,
+                 startDestination = Screen.dualScreen.route,
                  screenClassifier = screenClassifier,
                  modifier = modifier
                      .fillMaxSize(1f)

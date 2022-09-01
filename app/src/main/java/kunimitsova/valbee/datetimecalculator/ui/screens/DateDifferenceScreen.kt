@@ -4,6 +4,8 @@ import android.graphics.Rect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
@@ -48,8 +50,12 @@ fun DateDifferenceScreen(
     }
 
     val layoutStyle = layoutStyle(
-        if (screenClassifier.mode == PresentationSizeClass.Big) PresentationSizeClass.Tall
-        else screenClassifier.mode)
+        when (screenClassifier.mode) {
+            PresentationSizeClass.Big -> PresentationSizeClass.Tall
+            PresentationSizeClass.BookBig -> PresentationSizeClass.Tall
+            PresentationSizeClass.TableBig -> PresentationSizeClass.Wide
+            else -> screenClassifier.mode
+        } )
 
     Column(modifier = modifier
         .fillMaxHeight(1f)
@@ -91,7 +97,8 @@ fun DateDifferenceScreen(
                         },
            layoutStyle,
            rect1 = screenClassifier.rect1,
-           rect2 = screenClassifier.rect2
+           rect2 = screenClassifier.rect2,
+           modifierVerticalScroll = Modifier.verticalScroll(rememberScrollState())
            )
     }
 }

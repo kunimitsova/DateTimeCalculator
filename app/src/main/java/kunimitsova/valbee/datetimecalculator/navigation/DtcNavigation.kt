@@ -37,6 +37,9 @@ fun DtcNavHost(
         composable(Screen.dateDiff.route ) {
             DateDifferenceScreen(screenClassifier = screenClassifier)
         }
+        composable(Screen.dualScreen.route) {
+            DoubleScreen(screenClassifier = screenClassifier)
+        }
         composable(Screen.helpScreen.route ) {
             HelpScreen()
         }

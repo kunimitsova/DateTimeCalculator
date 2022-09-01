@@ -4,6 +4,8 @@ import android.graphics.Rect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -56,8 +58,8 @@ fun DateTimeScreen(
             else -> screenClassifier.mode
         } )
 
-    val rect1 = addScreenRect1(screenClassifier.mode, screenClassifier.rect1, screenClassifier.rect2)
-    val rect2 = addScreenRect2(screenClassifier.mode, screenClassifier.rect1, screenClassifier.rect2)
+    val rect1 = addScreenRect1(screenClassifier.mode, screenClassifier.canDualScreen, screenClassifier.rect1, screenClassifier.rect2)
+    val rect2 = addScreenRect2(screenClassifier.mode,  screenClassifier.rect1, screenClassifier.rect2)
 
     Column(modifier = modifier
         .fillMaxHeight(1f)
@@ -102,23 +104,24 @@ fun DateTimeScreen(
             },
             layoutStyle,
             rect1 = rect1,
-            rect2 = rect2
+            rect2 = rect2,
+            modifierVerticalScroll = Modifier.verticalScroll(rememberScrollState())
         )
     }
 }
 
 
-fun addScreenRect1(mode: PresentationSizeClass, rect1: Rect, rect2: Rect?): Rect {
+fun addScreenRect1(mode: PresentationSizeClass, canDualScreen: Boolean,rect1: Rect, rect2: Rect?): Rect {
     // if there are two rects and rect1 is the biggest, use that one for
     // showing the screen in the case of halfOpen but not twoHalves
     return when (mode) {
         PresentationSizeClass.Small -> rect1
         PresentationSizeClass.Tall -> rect1
         PresentationSizeClass.Wide -> rect1
-        PresentationSizeClass.Big -> rect1
-        PresentationSizeClass.BookBig -> rect1
+        PresentationSizeClass.Big -> if (!canDualScreen) getBiggestRect(rect1, rect2) else rect1
+        PresentationSizeClass.BookBig -> if (!canDualScreen) getBiggestRect(rect1, rect2) else rect1
         PresentationSizeClass.BookSmall -> rect1
-        PresentationSizeClass.TableBig -> rect1
+        PresentationSizeClass.TableBig -> if (!canDualScreen) getBiggestRect(rect1, rect2) else rect1
         PresentationSizeClass.TableSmall -> rect1
     }
 }

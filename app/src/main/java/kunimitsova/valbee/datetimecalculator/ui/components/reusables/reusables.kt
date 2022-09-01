@@ -134,6 +134,15 @@ fun DtcDivider(modifier: Modifier = Modifier) {
 }
 
 @Composable
+fun VerticalDivider(modifier: Modifier = Modifier) {
+    Divider(
+        color = MaterialTheme.colors.primary,
+        thickness = 1.dp,
+        modifier = modifier.fillMaxHeight(1f).width(1.dp)
+    )
+}
+
+@Composable
 fun HeaderText(
     text: String,
     modifier: Modifier = Modifier,
@@ -172,7 +181,7 @@ fun ReusableTextButton(modifier: Modifier = Modifier,
         shape = MaterialTheme.shapes.large,
         modifier = modifier.defaultMinSize(minHeight = 48.dp)
     ){
-        Button(onClick = onClick, content = content)
+        Button(onClick = onClick, content = content, shape = MaterialTheme.shapes.large)
     }
 }
 

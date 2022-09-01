@@ -6,6 +6,11 @@ import androidx.core.graphics.minus
 import kunimitsova.valbee.datetimecalculator.ui.LayoutSetup
 import kotlin.math.abs
 
+/**
+ * Functions for getting info about the screen size and hinge placement
+ * and how the existing comps can fit into them.
+ */
+
 const val MIN_COLUMN_WIDTH = 320
 const val MIN_ROW_HEIGHT = 320
 const val MIN_SPACER = 16
@@ -81,14 +86,16 @@ fun getBigHalfTall(rect: Rect) : Rect {
     }
 }
 
-fun getBiggestRect (rect1: Rect, rect2: Rect): Rect {
+fun getBiggestRect (rect1: Rect, rect2: Rect?): Rect {
     // for when there is a big folding feature but there is not enough
     // room for dual screen. find the big rect to use for the
     // single screen presentation.
+    val rectA = rect1
+    val rectB = if (rect2 == null) Rect(0,0,0,0) else rect2
 
-    val area1 = rect1.height() * rect1.width()
-    val area2 = rect2.height() * rect2.width()
-    return if (area2 > area1) rect2 else rect1
+    val area1 = rectA.height() * rectA.width()
+    val area2 = rectB.height() * rectB.width()
+    return if (area2 > area1) rectB else rectA
 }
 
 fun middleSpacer(rect1: Rect, rect2: Rect?): Int {

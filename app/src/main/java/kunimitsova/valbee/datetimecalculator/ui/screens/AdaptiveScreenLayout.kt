@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.ui.LayoutSetup
+import kunimitsova.valbee.datetimecalculator.ui.components.reusables.VerticalDivider
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.middleSpacer
 import kotlin.math.abs
 
@@ -17,17 +18,22 @@ fun AdaptiveScreenLayout(
     compTwo: @Composable () -> Unit,
     layoutSetup: LayoutSetup,
     rect1: Rect,
-    rect2: Rect?
+    rect2: Rect?,
+    modifierVerticalScroll: Modifier = Modifier
 ) {
-    // Layout receiving any order of the composables.
-    // For anything in the "compact" area, or weird hinging,
-    // only one screen shows at a time, and the
-    // navigation will show (top or bottom depending)
-    // For anything bigger, both screens will show at the same time.
-    // Keep all scrolling in the Layouts, not in the Components or Screens.
-    // As in, all scrolling behavior should be in this page.
-    // It is the caller's responsibility to know which pieces go with which
-    // parameters.
+    /**
+     * Layout receiving any order of the composables.
+     * For anything in the "compact" area, or weird hinging,
+     * only one screen shows at a time, and the
+     * navigation will show (top or bottom depending)
+     * (I assume, this has been hell to test)
+     * For anything bigger, both screens will show at the same time.
+     * To keep scrolling from nesting, the vertical scroll modifier
+     * is only added for the lower-level comps. (i.e., not doubleScreen)
+     * It is the caller's responsibility to know which pieces go with which
+     * parameters.
+      */
+
 
     val middleSpacer = middleSpacer(rect1, rect2)
 
@@ -42,7 +48,7 @@ fun AdaptiveScreenLayout(
     when (layoutSetup) {
         LayoutSetup.ONE_COLUMN -> {
             // scroll the entire height of the column as one
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            Column(modifier = modifierVerticalScroll) {
                 Box(modifier = modifierBoxOne) {
                     compOne()
                 }
@@ -55,20 +61,19 @@ fun AdaptiveScreenLayout(
         LayoutSetup.ONE_ROW -> {
             Row(modifier = Modifier) {
                 Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
+                    modifier = modifierVerticalScroll
                         .weight(1f)
                 ) {
                     Box(modifier = modifierBoxOne) {
                         compOne()
                     }
                 }
+                Spacer(modifier = Modifier.width(middleSpacer.dp))
+                VerticalDivider()
                 Column(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
+                    modifier = modifierVerticalScroll
                         .weight(1f)
                 ) {
-                    Spacer(modifier = Modifier.height(middleSpacer.dp))
                     Box(modifier = modifierBoxTwo) {
                         compTwo()
                     }
@@ -77,7 +82,7 @@ fun AdaptiveScreenLayout(
         }
         else -> {
             // scroll the entire height of the column as one
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+            Column(modifier = modifierVerticalScroll) {
                 Box(modifier = modifierBoxOne) {
                     compOne()
                 }

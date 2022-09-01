@@ -2,6 +2,7 @@ package kunimitsova.valbee.datetimecalculator.ui.screens
 
 import android.graphics.Rect
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import kunimitsova.valbee.datetimecalculator.ui.LayoutSetup
 import kunimitsova.valbee.datetimecalculator.ui.components.AdaptiveScreenLayout
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.PresentationSizeClass
@@ -38,7 +39,8 @@ fun DoubleScreen(screenClassifier: ScreenClassifier2) {
         compTwo = comp2,
         layoutStyle(screenClassifier.mode),
         rect1 = rect1,
-        rect2 = rect2
+        rect2 = rect2,
+        modifierVerticalScroll = Modifier
     )
 }
 
