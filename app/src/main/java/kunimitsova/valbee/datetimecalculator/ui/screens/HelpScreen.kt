@@ -8,6 +8,7 @@ import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -45,12 +46,14 @@ fun HelpScreen (modifier: Modifier = Modifier, helpPageViewModel: HelpPageViewMo
             modifier
                 .padding(16.dp)
                 .fillMaxSize(1f)
-                .scrollable(rememberScrollState(), orientation = Orientation.Vertical)
+
         ) {
             HeaderText(text = stringResource(id = R.string.help))
             Spacer(modifier = Modifier.height(16.dp))
             Divider(Modifier.fillMaxWidth(1f))
-            BodyText(text = spannedString.toString(), modifier = Modifier)
+            Column(modifier = Modifier.verticalScroll(state = rememberScrollState())) {
+                BodyText(text = spannedString.toString(), modifier = Modifier)
+            }
         }
     }
 }
