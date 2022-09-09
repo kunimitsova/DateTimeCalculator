@@ -24,6 +24,7 @@ fun AddDateBottomHalf(
     endDateTime: LocalDateTime
 ) {
     Column{
+        Spacer(Modifier.height(12.dp))
         AddOrSubtractThis(
             numToAdd = numToAdd,
             onNumChange = onNumChange,

@@ -42,7 +42,7 @@ fun DateTimeMainScreen(
             windowDpSize)) }
 
         // not sure this is how to do this:
-//        val startScreen = remember { mutableStateOf( if (screenClassifier.canDualScreen) Screen.dualScreen.route else Screen.addScreen.route) }
+        val startScreen = remember { mutableStateOf( if (screenClassifier.canDualScreen) Screen.dualScreen.route else Screen.addScreen.route) }
 
         val scaffoldState = rememberScaffoldState()
 //        val scope = rememberCoroutineScope()
@@ -93,7 +93,7 @@ fun DateTimeMainScreen(
          content = { innerPadding ->
              DtcNavHost(
                  navController = navController,
-                 startDestination = Screen.dualScreen.route,
+                 startDestination = startScreen.value,
                  screenClassifier = screenClassifier,
                  modifier = modifier
                      .fillMaxSize(1f)

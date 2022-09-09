@@ -4,6 +4,14 @@ import android.graphics.Rect
 import androidx.compose.runtime.Composable
 import androidx.window.layout.FoldingFeature
 
+//data class ScreenClassifier3(
+//    val height: Dimension,
+//    val width: Dimension,
+//    val mode: PresentationSizeClass,
+//    val segments: Int,
+//    val foldingFeature: FoldingFeature?,
+//)
+
 data class ScreenClassifier2(
     val height: Dimension,
     val width: Dimension,

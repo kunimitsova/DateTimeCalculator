@@ -3,12 +3,88 @@ package kunimitsova.valbee.datetimecalculator.utils.screenclassification
 import android.app.Presentation
 import android.graphics.Rect
 import android.icu.text.CaseMap.Fold
+import android.icu.text.CaseMap.fold
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.window.layout.FoldingFeature
 import androidx.window.layout.WindowLayoutInfo
 import kunimitsova.valbee.datetimecalculator.ui.components.PreviewDropdown
 import kotlin.contracts.contract
+
+/**
+ * Maybe will switch to the ScreenInfo3 later.
+ */
+
+//class ScreenInfo3 {
+//    fun createClassifier(devicePosture: WindowLayoutInfo, windowDpSize: DpSize){
+//        val screen3: ScreenClassifier3
+//
+//        val foldingFeature = devicePosture.displayFeatures.find {
+//            it is FoldingFeature
+//        } as? FoldingFeature
+//
+//        val windowHeightSizeClass = when {
+//            windowDpSize.height < 480.dp -> WindowSizeClass.Compact
+//            windowDpSize.height < 900.dp -> WindowSizeClass.Medium
+//            else -> WindowSizeClass.Expanded
+//        }
+//        val windowWidthSizeClass = when {
+//            windowDpSize.width < 600.dp -> WindowSizeClass.Compact
+//            windowDpSize.width < 840.dp -> WindowSizeClass.Medium
+//            else -> WindowSizeClass.Expanded
+//        }
+//
+//        val pHeight = Dimension(windowDpSize.height, windowHeightSizeClass)
+//        val pWidth = Dimension(windowDpSize.width, windowWidthSizeClass)
+//
+//        val modeSizeClass = getPresentationMode(windowWidthSizeClass, windowHeightSizeClass, foldingFeature)
+//        val segments = getSegments(modeSizeClass, foldingFeature)
+//
+//        screen3 = ScreenClassifier3(
+//            height = pHeight,
+//            width = pWidth,
+//            mode = modeSizeClass,
+//            segments = segments,
+//            foldingFeature = foldingFeature
+//        )
+//    }
+//
+//    private fun getSegments(
+//        mode: PresentationSizeClass,
+//        foldingFeature: FoldingFeature?
+//    ): Int {
+//        val hinge = if (foldingFeature == null) null else foldingFeature.bounds
+//        var segments = 1
+//         // TODO() figure out how many max segments there are
+//
+//        return segments
+//    }
+//
+//    fun getPresentationMode(widthClass: WindowSizeClass,
+//                            heightClass: WindowSizeClass,
+//                            foldingFeature: FoldingFeature?,
+//    ): PresentationSizeClass {
+//        val sizeMode = when {
+//            (widthClass == WindowSizeClass.Compact && heightClass == WindowSizeClass.Compact) -> PresentationSizeClass.Small
+//            (widthClass != WindowSizeClass.Compact && heightClass == WindowSizeClass.Compact) -> PresentationSizeClass.Wide
+//            (widthClass == WindowSizeClass.Compact && heightClass != WindowSizeClass.Compact) -> PresentationSizeClass.Tall
+//            else -> PresentationSizeClass.Big
+//        }
+//        val foldMode = when {
+//            (foldingFeature == null) -> sizeMode
+//            (foldingFeature.state == FoldingFeature.State.HALF_OPENED &&
+//                    foldingFeature.orientation == FoldingFeature.Orientation.HORIZONTAL) -> {
+//                        if (widthClass != WindowSizeClass.Compact) PresentationSizeClass.TableBig else PresentationSizeClass.TableSmall
+//                    }
+//            (foldingFeature.state == FoldingFeature.State.HALF_OPENED &&
+//                    foldingFeature.orientation == FoldingFeature.Orientation.VERTICAL) -> {
+//                        if (heightClass != WindowSizeClass.Compact) PresentationSizeClass.BookBig else PresentationSizeClass.BookSmall
+//                    }
+//            else -> sizeMode // big size mode is always two columns unless it's half-open
+//        }
+//        return foldMode
+//    }
+//}
 
 class ScreenInfo2{
     fun createClassifier(devicePosture: WindowLayoutInfo, windowDpSize: DpSize): ScreenClassifier2 {
@@ -42,8 +118,10 @@ class ScreenInfo2{
 
         val rect1 = if (bookMode) bookModeLeftRect(windowDpSize, hingePosition) else
             tableModeTopRect(windowDpSize, hingePosition)
-        val rect2 = if (bookMode) bookModeRightRect(windowDpSize, hingePosition) else
-            tableModeBottomRect(windowDpSize, hingePosition)
+        val rect2 = if (halfOpen) {
+            if (bookMode) bookModeRightRect(windowDpSize, hingePosition) else
+                tableModeBottomRect(windowDpSize, hingePosition)
+        } else null
 
         val modeSizeClass = getPresentationClass(halfOpen, bookMode, tableMode,
             windowWidthSizeClass, windowHeightSizeClass)
@@ -74,18 +152,20 @@ class ScreenInfo2{
         rect2: Rect?,
         modeSizeClass: PresentationSizeClass
     ): Boolean {
+        var b1 = false
         when (modeSizeClass) {
             PresentationSizeClass.Big -> {
-                return true
+                b1 = true
             }
             else -> {
-                return if (halfOpen) {
-                    twoHalvesCanFit(rect1, rect2, bookMode, tableMode)
+               if (halfOpen) {
+                   b1 = twoHalvesCanFit(rect1, rect2, bookMode, tableMode)
                 } else {
-                    false
+                   b1 = false
                 }
             }
         }
+        return b1
     }
 
     fun getPresentationClass(

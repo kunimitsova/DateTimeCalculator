@@ -8,5 +8,4 @@ sealed class Screen( val route: String, @StringRes val resourceId: Int) {
     object dateDiff: Screen("datediff", R.string.date_difference)
     object helpScreen: Screen("help", R.string.help)
     object dualScreen: Screen("dualscreen", R.string.double_screen)
-    object singleScreen: Screen("singlescreen", R.string.app_name)
 }
