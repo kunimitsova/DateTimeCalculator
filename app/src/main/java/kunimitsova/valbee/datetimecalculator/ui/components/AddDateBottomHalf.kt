@@ -41,6 +41,7 @@ fun AddDateBottomHalf(
         CalculateButton(onCalculate = onCalculate,
             modifier = Modifier
                 .fillMaxWidth(1f))
+   //     TestCrashButton(modifier = Modifier.fillMaxWidth(1f))
         Spacer(modifier = Modifier.height(16.dp))
         OutputDateTimeVert(dateTime = endDateTime)
     }

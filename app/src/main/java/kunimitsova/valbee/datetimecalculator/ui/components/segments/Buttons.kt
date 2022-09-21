@@ -89,6 +89,20 @@ fun CalculateButton(modifier: Modifier = Modifier,onCalculate: () -> Unit) {
     }
 }
 
+@Composable
+fun TestCrashButton(modifier: Modifier = Modifier) {
+// the modifier param is for the Button not the row.
+    val onClick = { throw RuntimeException("Test Crash")}
+    Row(modifier = Modifier
+        .fillMaxWidth(1f)
+        .padding(horizontal = 12.dp)
+    ) {
+        ReusableTextButton(modifier = modifier, onClick = onClick) {
+            ButtonText(text = "test crash")
+        }
+    }
+}
+
 @Preview(heightDp = 100)
 @Composable
 fun buttonsPreview() {

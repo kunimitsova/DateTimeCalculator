@@ -94,14 +94,14 @@ fun BottomMenuHelpOnly(
     }
 }
 
-@Preview
-@Composable
-fun BottomMenuPreview() {
-    DateTimeCalculatorTheme {
-        BottomMenuHelpOnly(
-            onNavToHelp = {},
-            currentBackStack = null,
-            currentDestination = null
-        )
-    }
-}
+//@Preview
+//@Composable
+//fun BottomMenuPreview() {
+//    DateTimeCalculatorTheme {
+//        BottomMenuHelpOnly(
+//            onNavToHelp = {},
+//            currentBackStack = null,
+//            currentDestination = null
+//        )
+//    }
+//}

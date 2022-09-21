@@ -113,8 +113,8 @@ class ScreenInfo2{
         val bookMode = halfOpen && (foldOrientation == FoldingFeature.Orientation.VERTICAL )
         val tableMode = halfOpen && (foldOrientation == FoldingFeature.Orientation.HORIZONTAL)
         val hingePosition = foldingFeature?.bounds
-        val separating = foldingFeature?.isSeparating
-        val occlusionType = foldingFeature?.occlusionType
+      //  val separating = foldingFeature?.isSeparating
+      //  val occlusionType = foldingFeature?.occlusionType
 
         val rect1 = if (bookMode) bookModeLeftRect(windowDpSize, hingePosition) else
             tableModeTopRect(windowDpSize, hingePosition)
@@ -152,7 +152,7 @@ class ScreenInfo2{
         rect2: Rect?,
         modeSizeClass: PresentationSizeClass
     ): Boolean {
-        var b1 = false
+        var b1: Boolean
         when (modeSizeClass) {
             PresentationSizeClass.Big -> {
                 b1 = true
@@ -176,40 +176,39 @@ class ScreenInfo2{
        heightClass: WindowSizeClass,
    ): PresentationSizeClass {
        // default is med or exp X med or exp, no folding feature
-       var class1: PresentationSizeClass = PresentationSizeClass.Big
 
-       class1 = if (halfOpen) {
-           // folding feature active
-           if (tableMode) {
-               if (widthClass == WindowSizeClass.Compact) {  // tall with hinge
-                   PresentationSizeClass.TableSmall
-               } else {
-                   PresentationSizeClass.TableBig  // big with horiz hinge
-               }
-           } else {
-               if (heightClass == WindowSizeClass.Compact) {
-                   PresentationSizeClass.BookSmall  // wide with hinge
-               } else {
-                   PresentationSizeClass.BookBig // big with vert hinge
-               }
-           }
-       } else {
-           // no folding feature (flat)
-           if (widthClass == WindowSizeClass.Compact) {
-               // possible options are Small and Tall
-               if (heightClass == WindowSizeClass.Compact) {
-                   PresentationSizeClass.Small // compact x compact
-               } else {
-                   PresentationSizeClass.Tall // compact x med/exp
-               }
-           } else {
-               if (heightClass == WindowSizeClass.Compact) {
-                   PresentationSizeClass.Wide // med/exp x compact
-               } else {
-                   PresentationSizeClass.Big // med/exp x med/exp
-               }
-           }
-       }
+        var class1: PresentationSizeClass = if (halfOpen) {
+            // folding feature active
+            if (tableMode) {
+                if (widthClass == WindowSizeClass.Compact) {  // tall with hinge
+                    PresentationSizeClass.TableSmall
+                } else {
+                    PresentationSizeClass.TableBig  // big with horiz hinge
+                }
+            } else {
+                if (heightClass == WindowSizeClass.Compact) {
+                    PresentationSizeClass.BookSmall  // wide with hinge
+                } else {
+                    PresentationSizeClass.BookBig // big with vert hinge
+                }
+            }
+        } else {
+            // no folding feature (flat)
+            if (widthClass == WindowSizeClass.Compact) {
+                // possible options are Small and Tall
+                if (heightClass == WindowSizeClass.Compact) {
+                    PresentationSizeClass.Small // compact x compact
+                } else {
+                    PresentationSizeClass.Tall // compact x med/exp
+                }
+            } else {
+                if (heightClass == WindowSizeClass.Compact) {
+                    PresentationSizeClass.Wide // med/exp x compact
+                } else {
+                    PresentationSizeClass.Big // med/exp x med/exp
+                }
+            }
+        }
        return class1
    }
 }

@@ -79,11 +79,11 @@ fun ActionsNavRow(onNavToAdd: () -> Unit, onNavToDiff: () -> Unit, onNavToHelp: 
     }
 }
 
-@Preview
-@Composable
-fun RowPreview() {
-    DateTimeCalculatorTheme {
-        ActionsNavRow(modifier = Modifier,onNavToAdd = { }, onNavToDiff = { { /*TODO*/ } },
-            onNavToHelp = {})
-    }
-}
+//@Preview
+//@Composable
+//fun RowPreview() {
+//    DateTimeCalculatorTheme {
+//        ActionsNavRow(modifier = Modifier,onNavToAdd = { }, onNavToDiff = { },
+//            onNavToHelp = {})
+//    }
+//}

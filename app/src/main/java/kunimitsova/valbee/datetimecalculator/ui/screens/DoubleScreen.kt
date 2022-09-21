@@ -3,7 +3,6 @@ package kunimitsova.valbee.datetimecalculator.ui.screens
 import android.graphics.Rect
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kunimitsova.valbee.datetimecalculator.ui.LayoutSetup
 import kunimitsova.valbee.datetimecalculator.ui.components.AdaptiveScreenLayout
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.PresentationSizeClass
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenClassifier2
@@ -12,8 +11,6 @@ import kunimitsova.valbee.datetimecalculator.utils.screenclassification.tableMod
 
 @Composable
 fun DoubleScreen(screenClassifier: ScreenClassifier2) {
-    var comp1: @Composable () -> Unit = {}
-    var comp2: @Composable () -> Unit = {}
 
     // make changes if the two halves won't fit:
     // create a rect that shows where the app should fit
@@ -26,8 +23,8 @@ fun DoubleScreen(screenClassifier: ScreenClassifier2) {
         getBigRect2(screenClassifier.rect1) } else screenClassifier.rect2
 
 //    if (screenClassifier.twoHalves == true) {
-        comp1 = { DateTimeScreen(screenClassifier = screenClassifier) }
-        comp2 = { DateDifferenceScreen(screenClassifier = screenClassifier)}
+    val comp1: @Composable () -> Unit = { DateTimeScreen(screenClassifier = screenClassifier) }
+    val comp2: @Composable () -> Unit = { DateDifferenceScreen(screenClassifier = screenClassifier)}
 //    } else {
 //        when {
 //            // when rect1 is too small and rect2 is a good size, use rect2 for the NavHost
