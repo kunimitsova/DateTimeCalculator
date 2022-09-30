@@ -7,7 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.DtcDivider
-import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
+import kunimitsova.valbee.datetimecalculator.ui.components.segments.DateItemsInput
+import kunimitsova.valbee.datetimecalculator.ui.components.segments.PlusMinusButton
+import kunimitsova.valbee.datetimecalculator.ui.components.segments.TimeItemsInput
 
 @Composable
 fun AddDateTopHalf(

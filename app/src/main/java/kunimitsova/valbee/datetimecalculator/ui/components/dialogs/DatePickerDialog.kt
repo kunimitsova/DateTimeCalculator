@@ -1,20 +1,20 @@
 package kunimitsova.valbee.datetimecalculator.ui.components.dialogs
 
-import android.app.DatePickerDialog
-import android.widget.DatePicker
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import kunimitsova.valbee.datetimecalculator.R
-import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
-import java.util.*
+//import android.app.DatePickerDialog
+//import android.widget.DatePicker
+//import androidx.compose.foundation.clickable
+//import androidx.compose.foundation.layout.*
+//import androidx.compose.material.Icon
+//import androidx.compose.material.MaterialTheme
+//import androidx.compose.material.Text
+//import androidx.compose.runtime.*
+//import androidx.compose.ui.Modifier
+//import androidx.compose.ui.platform.LocalContext
+//import androidx.compose.ui.res.painterResource
+//import androidx.compose.ui.unit.dp
+//import kunimitsova.valbee.datetimecalculator.R
+//import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
+//import java.util.*
 
 // tbd - later add option for user to use the dialogs rather than direct number entry.
 

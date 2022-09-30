@@ -1,8 +1,7 @@
-package kunimitsova.valbee.datetimecalculator.ui.components
+package kunimitsova.valbee.datetimecalculator.ui.components.segments
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier

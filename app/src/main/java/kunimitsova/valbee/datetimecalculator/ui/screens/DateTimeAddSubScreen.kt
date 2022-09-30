@@ -17,7 +17,6 @@ import kunimitsova.valbee.datetimecalculator.ui.components.*
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.viewmodels.DateTimeAddSubViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kunimitsova.valbee.datetimecalculator.ui.LayoutSetup
 import kunimitsova.valbee.datetimecalculator.utils.*
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.*
 
@@ -105,7 +104,7 @@ fun DateTimeScreen(
             layoutStyle,
             rect1 = rect1,
             rect2 = rect2,
-            modifierVerticalScroll = Modifier.verticalScroll(rememberScrollState())
+            modifier = Modifier.verticalScroll(rememberScrollState())
         )
     }
 }

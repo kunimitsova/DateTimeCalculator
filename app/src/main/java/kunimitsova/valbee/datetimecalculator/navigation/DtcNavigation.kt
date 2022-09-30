@@ -1,13 +1,11 @@
 package kunimitsova.valbee.datetimecalculator.navigation
 
-import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.screens.DateDifferenceScreen
 import kunimitsova.valbee.datetimecalculator.ui.screens.DateTimeScreen
 import kunimitsova.valbee.datetimecalculator.ui.screens.DoubleScreen
@@ -15,8 +13,8 @@ import kunimitsova.valbee.datetimecalculator.ui.screens.HelpScreen
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenClassifier2
 
 val mainLocations = listOf(
-    Screen.addScreen,
-    Screen.dateDiff
+    Screen.AddScreen,
+    Screen.DateDiff
 )
 
 @Composable
@@ -31,16 +29,16 @@ fun DtcNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        composable(Screen.addScreen.route) {
+        composable(Screen.AddScreen.route) {
             DateTimeScreen(screenClassifier = screenClassifier)
         }
-        composable(Screen.dateDiff.route ) {
+        composable(Screen.DateDiff.route ) {
             DateDifferenceScreen(screenClassifier = screenClassifier)
         }
-        composable(Screen.dualScreen.route) {
+        composable(Screen.DualScreen.route) {
             DoubleScreen(screenClassifier = screenClassifier)
         }
-        composable(Screen.helpScreen.route ) {
+        composable(Screen.HelpScreen.route ) {
             HelpScreen()
         }
     }
@@ -51,7 +49,7 @@ fun NavHostController.navigatePopToHome(route: String) =
         // Pop up to the start destination of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items
-        if (this@navigatePopToHome.previousBackStackEntry?.destination?.route == Screen.helpScreen.route) {
+        if (this@navigatePopToHome.previousBackStackEntry?.destination?.route == Screen.HelpScreen.route) {
             this@navigatePopToHome.backQueue.removeLastOrNull()
         }
         popUpTo(

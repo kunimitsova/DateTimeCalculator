@@ -1,16 +1,18 @@
-package kunimitsova.valbee.datetimecalculator.ui.components
+package kunimitsova.valbee.datetimecalculator.ui.screens
 
 import android.graphics.Rect
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.ui.LayoutSetup
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.VerticalDivider
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.middleSpacer
-import kotlin.math.abs
 
 @Composable
 fun AdaptiveScreenLayout(
@@ -19,19 +21,19 @@ fun AdaptiveScreenLayout(
     layoutSetup: LayoutSetup,
     rect1: Rect,
     rect2: Rect?,
-    modifierVerticalScroll: Modifier = Modifier
+    modifier: Modifier = Modifier // modifier for vertical scroll on container columns
 ) {
     /**
      * Layout receiving any order of the composables.
      * For anything in the "compact" area, or weird hinging,
      * only one screen shows at a time, and the
      * navigation will show (top or bottom depending)
-     * (I assume, this has been hell to test)
      * For anything bigger, both screens will show at the same time.
      * To keep scrolling from nesting, the vertical scroll modifier
      * is only added for the lower-level comps. (i.e., not doubleScreen)
      * It is the caller's responsibility to know which pieces go with which
      * parameters.
+     * modifier in the parameters is vertical scroll modifier.
       */
 
 
@@ -48,7 +50,7 @@ fun AdaptiveScreenLayout(
     when (layoutSetup) {
         LayoutSetup.ONE_COLUMN -> {
             // scroll the entire height of the column as one
-            Column(modifier = modifierVerticalScroll) {
+            Column(modifier = modifier) {
                 Box(modifier = modifierBoxOne) {
                     compOne()
                 }
@@ -61,7 +63,7 @@ fun AdaptiveScreenLayout(
         LayoutSetup.ONE_ROW -> {
             Row(modifier = Modifier) {
                 Column(
-                    modifier = modifierVerticalScroll
+                    modifier = modifier
                         .weight(1f)
                 ) {
                     Box(modifier = modifierBoxOne) {
@@ -71,7 +73,7 @@ fun AdaptiveScreenLayout(
                 Spacer(modifier = Modifier.width(middleSpacer.dp))
                 VerticalDivider()
                 Column(
-                    modifier = modifierVerticalScroll
+                    modifier = modifier
                         .weight(1f)
                 ) {
                     Box(modifier = modifierBoxTwo) {
@@ -82,7 +84,7 @@ fun AdaptiveScreenLayout(
         }
         else -> {
             // scroll the entire height of the column as one
-            Column(modifier = modifierVerticalScroll) {
+            Column(modifier = modifier) {
                 Box(modifier = modifierBoxOne) {
                     compOne()
                 }

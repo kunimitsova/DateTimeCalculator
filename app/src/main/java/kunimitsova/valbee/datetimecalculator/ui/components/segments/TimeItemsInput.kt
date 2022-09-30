@@ -1,4 +1,4 @@
-package kunimitsova.valbee.datetimecalculator.ui.components
+package kunimitsova.valbee.datetimecalculator.ui.components.segments
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -12,7 +12,6 @@ import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.EntryText
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.TimeDivider
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
-import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 
 @Composable
 fun TimeItemsInput(

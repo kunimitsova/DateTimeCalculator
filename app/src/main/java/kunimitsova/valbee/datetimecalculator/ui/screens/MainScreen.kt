@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -13,16 +12,16 @@ import androidx.navigation.compose.rememberNavController
 import androidx.window.layout.WindowLayoutInfo
 import kotlinx.coroutines.flow.StateFlow
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
-import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.navigation.DtcNavHost
 import kunimitsova.valbee.datetimecalculator.navigation.Screen
 import kunimitsova.valbee.datetimecalculator.navigation.navigatePopToHome
-import kunimitsova.valbee.datetimecalculator.ui.components.TopBarFullNav
-import kunimitsova.valbee.datetimecalculator.ui.components.TopBarWithOverflow
+import kunimitsova.valbee.datetimecalculator.ui.menus.TopBarFullNav
+import kunimitsova.valbee.datetimecalculator.ui.menus.TopBarWithOverflow
 import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenu
 import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenuHelpOnly
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.PresentationSizeClass
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenInfo2
+import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenInfo3
 
 @Composable
 fun DateTimeMainScreen(
@@ -34,7 +33,7 @@ fun DateTimeMainScreen(
     DateTimeCalculatorTheme {
         val currentBackStack by navController.currentBackStackEntryAsState()
         val currentDestination = currentBackStack?.destination
-        val navToHelp = { navController.navigatePopToHome(Screen.helpScreen.route)}
+        val navToHelp = { navController.navigatePopToHome(Screen.HelpScreen.route)}
 
         val devicePostureValue by devicePosture.collectAsState()
         val screenClassifier by remember { mutableStateOf( ScreenInfo2().createClassifier(
@@ -42,7 +41,7 @@ fun DateTimeMainScreen(
             windowDpSize)) }
 
         // not sure this is how to do this:
-        val startScreen = remember { mutableStateOf( if (screenClassifier.canDualScreen) Screen.dualScreen.route else Screen.addScreen.route) }
+        val startScreen = remember { mutableStateOf( if (screenClassifier.canDualScreen) Screen.DualScreen.route else Screen.AddScreen.route) }
 
         val scaffoldState = rememberScaffoldState()
 //        val scope = rememberCoroutineScope()
@@ -57,16 +56,14 @@ fun DateTimeMainScreen(
                         // when the size is compact x compact or compact x [bigger]
                         TopBarFullNav(
                             isBackStackBase = navController.previousBackStackEntry == null,
-                            title = "",
                             onNavigate = { navController.navigateUp() },
                             onNavToHelp = navToHelp,
-                            onNavToAdd = { navController.navigatePopToHome(Screen.addScreen.route) },
-                            onNavToDiff = { navController.navigatePopToHome(Screen.dateDiff.route)}
-                        )
+                            onNavToAdd = { navController.navigatePopToHome(Screen.AddScreen.route) }
+                        ) { navController.navigatePopToHome(Screen.DateDiff.route) }
+
                     else ->
                         TopBarWithOverflow(
                             isBackStackBase = navController.previousBackStackEntry == null,
-                            title = stringResource(id = R.string.app_name),
                             onNavigate = { navController.navigateUp() },
                             onNavToHelp = navToHelp
                         )
@@ -78,14 +75,12 @@ fun DateTimeMainScreen(
                     PresentationSizeClass.Big, PresentationSizeClass.TableBig,
                         PresentationSizeClass.BookBig -> if (screenClassifier.canDualScreen) {
                             BottomMenuHelpOnly(
-                            onNavToHelp = navToHelp,
-                            currentBackStack = currentBackStack,
-                            currentDestination = currentDestination
-                        )
+                                onNavToHelp = navToHelp,
+                                currentDestination = currentDestination
+                            )
                     }
                     else -> BottomMenu(
                         navController = navController,
-                        currentBackStack = currentBackStack,
                         currentDestination = currentDestination
                     )
                 }

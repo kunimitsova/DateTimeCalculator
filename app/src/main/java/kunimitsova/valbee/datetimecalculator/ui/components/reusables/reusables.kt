@@ -1,6 +1,6 @@
 package kunimitsova.valbee.datetimecalculator.ui.components.reusables
 
-import android.util.Log
+//import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -16,21 +16,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kunimitsova.valbee.datetimecalculator.BuildConfig
+//import kunimitsova.valbee.datetimecalculator.BuildConfig
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
-class Ref(var value: Int)
+//class Ref(var value: Int)
 // Note the inline function below which ensures that this function is essentially
 // copied at the call site to ensure that its logging only recompositions from the
 // original call site.
-@Composable
-inline fun LogCompositions(tag: String, msg: String) {
-    if (BuildConfig.DEBUG) {
-        val ref = remember { Ref(0) }
-        SideEffect { ref.value++ }
-        Log.d(tag, "Compositions: $msg ${ref.value}")
-    }
-}
+//@Composable
+//inline fun LogCompositions(tag: String, msg: String) {
+//    if (BuildConfig.DEBUG) {
+//        val ref = remember { Ref(0) }
+//        SideEffect { ref.value++ }
+//        Log.d(tag, "Compositions: $msg ${ref.value}")
+//    }
+//}
 
 // EntryText height on main page = 79dp
 @OptIn(ExperimentalComposeUiApi::class)
@@ -200,7 +200,7 @@ fun ReusableIconButton(modifier: Modifier = Modifier, onClick: () -> Unit, conte
 
 @Preview
 @Composable
-fun reusablesPreview() {
+fun ReusablesPreview() {
     DateTimeCalculatorTheme {
         HeaderText(text = "Bloody Hell")
     }

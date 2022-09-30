@@ -1,8 +1,10 @@
 package kunimitsova.valbee.datetimecalculator
 
-import android.graphics.Rect
 import kunimitsova.valbee.datetimecalculator.utils.*
-import kunimitsova.valbee.datetimecalculator.utils.screenclassification.middleSpacer
+import kunimitsova.valbee.datetimecalculator.utils.functions.calculateMinus
+import kunimitsova.valbee.datetimecalculator.utils.functions.calculatePlus
+import kunimitsova.valbee.datetimecalculator.utils.functions.leadingZero
+import kunimitsova.valbee.datetimecalculator.utils.functions.validFloat
 import org.junit.Test
 
 import org.junit.Assert.*

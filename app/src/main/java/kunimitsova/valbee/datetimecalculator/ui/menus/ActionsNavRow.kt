@@ -12,18 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.HeaderText
-import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
 @Composable
 fun ActionsNavRow(onNavToAdd: () -> Unit, onNavToDiff: () -> Unit, onNavToHelp: () -> Unit,
                   modifier: Modifier = Modifier
 ) {
     // fits into the TopAppBar after the Navigation Icon
-    // where Actions{} go, so if it's used somehwere else
+    // where Actions{} go, so if it's used somewhere else
     // make sure to put at least 48dp of something in front
     // so it's balanced.
     Row(modifier) {

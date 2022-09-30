@@ -1,28 +1,21 @@
 package kunimitsova.valbee.datetimecalculator.ui.screens
 
-import android.graphics.Rect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kunimitsova.valbee.datetimecalculator.R
-import kunimitsova.valbee.datetimecalculator.ui.LayoutSetup
 import kunimitsova.valbee.datetimecalculator.ui.components.*
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
-import kunimitsova.valbee.datetimecalculator.utils.calculateDifference
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.PresentationSizeClass
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenClassifier2
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.layoutStyle
@@ -98,14 +91,14 @@ fun DateDifferenceScreen(
            layoutStyle,
            rect1 = screenClassifier.rect1,
            rect2 = screenClassifier.rect2,
-           modifierVerticalScroll = Modifier.verticalScroll(rememberScrollState())
+           modifier = Modifier.verticalScroll(rememberScrollState())
            )
     }
 }
 
 @Preview
 @Composable
-fun diPreview() {
+fun DiPreview() {
     DateTimeCalculatorTheme {
         DateDifferenceScreen(screenClassifier = sampleClassifier2)
     }

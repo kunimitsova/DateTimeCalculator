@@ -1,33 +1,35 @@
 package kunimitsova.valbee.datetimecalculator.ui.menus
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.navigation.Screen
 import kunimitsova.valbee.datetimecalculator.navigation.mainLocations
 import kunimitsova.valbee.datetimecalculator.navigation.navigatePopToHome
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.HeaderText
-import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
-import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenClassifier2
 
 
 @Composable
 fun BottomMenu(
     navController: NavHostController,
-    currentBackStack: NavBackStackEntry?,
     currentDestination: NavDestination?
 ) {
     // we only need full navigation when it's in Tall mode
@@ -48,7 +50,7 @@ fun BottomMenu(
                 BottomNavigationItem(
                     icon = { HeaderText(stringResource(id = screen.resourceId)) },
                     label = null,
-                    selected = currentDestination?.hierarchy?.any() { it.route == screen.route } == true,
+                    selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                     onClick = {
                         navController.navigatePopToHome(route = screen.route)
                     },
@@ -63,8 +65,7 @@ fun BottomMenu(
 
 @Composable
 fun BottomMenuHelpOnly(
-    onNavToHelp : () -> Unit,
-    currentBackStack: NavBackStackEntry?,
+    onNavToHelp: () -> Unit,
     currentDestination: NavDestination?
 ) {
     BottomNavigation(
@@ -84,8 +85,8 @@ fun BottomMenuHelpOnly(
                     )
                 },
                 label = null,
-                selected = currentDestination?.hierarchy?.any() {
-                    it.route == Screen.helpScreen.route
+                selected = currentDestination?.hierarchy?.any {
+                    it.route == Screen.HelpScreen.route
                 } == true,
                 onClick = onNavToHelp,
                 modifier = Modifier.weight(2f)

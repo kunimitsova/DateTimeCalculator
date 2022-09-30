@@ -1,4 +1,4 @@
-package kunimitsova.valbee.datetimecalculator.ui.components
+package kunimitsova.valbee.datetimecalculator.ui.menus
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -11,11 +11,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.R
-import kunimitsova.valbee.datetimecalculator.ui.menus.ActionsNavRow
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
 @Composable
-fun TopBarWithOverflow(isBackStackBase: Boolean, title: String, onNavigate: () -> Unit, onNavToHelp: () -> Unit) {
+fun TopBarWithOverflow(isBackStackBase: Boolean, onNavigate: () -> Unit, onNavToHelp: () -> Unit) {
 //    var showMenu by remember { mutableStateOf(false) }
     // isBackStackBase = navController.previousBackStackEntry == null
     TopAppBar(
@@ -38,7 +37,7 @@ fun TopBarWithOverflow(isBackStackBase: Boolean, title: String, onNavigate: () -
         }
     )
 
-            // this will come in handy when we change from Help button to OVerflow menu
+            // this will come in handy when we change from Help button to Overflow menu
 //            DropdownMenu(
 //                expanded = showMenu,
 //                onDismissRequest = { showMenu = false }
@@ -50,8 +49,9 @@ fun TopBarWithOverflow(isBackStackBase: Boolean, title: String, onNavigate: () -
 }
 
 @Composable
-fun TopBarFullNav(isBackStackBase: Boolean, title: String, onNavigate: () -> Unit,
-                  onNavToHelp: () -> Unit, onNavToAdd: () -> Unit, onNavToDiff: () -> Unit
+fun TopBarFullNav(
+    isBackStackBase: Boolean, onNavigate: () -> Unit, onNavToHelp: () -> Unit,
+    onNavToAdd: () -> Unit, onNavToDiff: () -> Unit
 ) {
 // for when the window width size class = Medium (phone in landscape)
     TopAppBar(
@@ -74,7 +74,7 @@ fun TopBarFullNav(isBackStackBase: Boolean, title: String, onNavigate: () -> Uni
             )
         }
     )
-    // this will come in handy when we change from Help button to OVerflow menu
+    // this will come in handy when we change from Help button to Overflow menu
     //            DropdownMenu(
     //                expanded = showMenu,
     //                onDismissRequest = { showMenu = false }
@@ -89,8 +89,8 @@ fun TopBarFullNav(isBackStackBase: Boolean, title: String, onNavigate: () -> Uni
 
 @Preview
 @Composable
-fun topBarOverflowPreview() {
-    TopBarWithOverflow(false,stringResource(id = R.string.app_name),onNavigate = { }, onNavToHelp = {})
+fun TopBarOverflowPreview() {
+    TopBarWithOverflow(false, onNavigate = { }) {}
 }
 
 @Preview(widthDp = 600)
@@ -100,10 +100,10 @@ fun TopBarNavAllPreview() {
     {
     TopBarFullNav(
         isBackStackBase = false,
-        title = "",
         onNavigate = { },
         onNavToHelp = { },
         onNavToAdd = { }) {
 
-    }}
+    }
+    }
 }

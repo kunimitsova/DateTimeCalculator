@@ -1,32 +1,14 @@
-package kunimitsova.valbee.datetimecalculator.utils
+package kunimitsova.valbee.datetimecalculator.utils.functions
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.unit.dp
-
-import androidx.compose.foundation.layout.Column
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 
 //import androidx.annotation.Sampled
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
+import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
-import java.util.*
 import kotlin.math.abs
 
 /**
@@ -61,14 +43,14 @@ fun validFloat(num: Any?): String {
     // a string with the numbers extracted from something weird.
     val numString = num.toString()
     val regFloaty = "\\d*\\.?\\d+".toRegex()
-    if (numString.matches(regFloaty)) {
-        return numString
+    return if (numString.matches(regFloaty)) {
+        numString
     } else {
         // select all chars prior to a dot and send them to validInt
         var index = numString.indexOf(".")
         index = if (index == -1) 0 else index
         val tmp = validInt(numString.dropLast(numString.length - index))
-        return if (tmp.isBlank()) validInt(numString) else validInt(tmp)
+        if (tmp.isBlank()) validInt(numString) else validInt(tmp)
     }
 }
 
@@ -97,22 +79,22 @@ fun getMilliString(milliStr: String): String {
      * The app assumes if you've typed in more than 3 millis for starting time, it's
      * because you've accidentally typed in micros or nanos.
      */
-    if (milliStr.length > 3) {
-        return milliStr.dropLast(milliStr.length - 3)
+    return if (milliStr.length > 3) {
+        milliStr.dropLast(milliStr.length - 3)
     } else {
-        return leadingZero(milliStr,3)
+        leadingZero(milliStr, 3)
     }
 }
 
 @SuppressLint("NewApi")
 fun getSecString(secStr: String?): String {
-    if (secStr.isNullOrBlank()) {
-        return "00"
+    return if (secStr.isNullOrBlank()) {
+        "00"
     } else {
         if (secStr.toInt() in (0..59)) {
-            return leadingZero(secStr, 2)
+            leadingZero(secStr, 2)
         } else {
-            return leadingZero(
+            leadingZero(
                 LocalTime.now()
                     .format(DateTimeFormatter.ofPattern("ss")), 2
             )
@@ -122,14 +104,14 @@ fun getSecString(secStr: String?): String {
 
 @SuppressLint("NewApi")
 fun getMinString(minStr: String?): String {
-    if (minStr.isNullOrBlank()) {
-        return "00"
+    return if (minStr.isNullOrBlank()) {
+        "00"
     } else {
         val minNum = minStr.toInt()
         if (minNum in (0..59)) {
-            return leadingZero(minStr, 2)
+            leadingZero(minStr, 2)
         } else {
-            return leadingZero(
+            leadingZero(
                 LocalTime.now()
                     .format(DateTimeFormatter.ofPattern("mm")), 2
             )
@@ -139,15 +121,15 @@ fun getMinString(minStr: String?): String {
 
 @SuppressLint("NewApi")
 fun getHourString(hourStr: String?) : String {
-    if (hourStr.isNullOrBlank()) {
-        return "00"
+    return if (hourStr.isNullOrBlank()) {
+        "00"
     } else {
         val hourNum = hourStr.toInt()
         if (hourNum in (0..23)) {
-            return leadingZero(hourStr, 2)
+            leadingZero(hourStr, 2)
         } else {
             // 'k' is hour in a day (1-24)
-            return leadingZero(
+            leadingZero(
                 LocalTime.now()
                     .format(DateTimeFormatter.ofPattern("kk")), 2
             )
@@ -157,14 +139,14 @@ fun getHourString(hourStr: String?) : String {
 
 @SuppressLint("NewApi")
 fun getDayString(dayStr: String?) : String {
-    if (dayStr.isNullOrBlank()) {
-        return "01"
+    return if (dayStr.isNullOrBlank()) {
+        "01"
     } else {
         val dayNum = dayStr.toInt()
         if (dayNum in (1..31)) {
-            return leadingZero(dayStr, 2)
+            leadingZero(dayStr, 2)
         } else {
-            return leadingZero(
+            leadingZero(
                 LocalDate.now()
                     .format(DateTimeFormatter.ofPattern("dd")), 2
             )
@@ -174,14 +156,14 @@ fun getDayString(dayStr: String?) : String {
 
 @SuppressLint("NewApi")
 fun getMonthString(month: String?): String {
-    if (month.isNullOrBlank()) {
-        return "01"
+    return if (month.isNullOrBlank()) {
+        "01"
     } else {
         val numMonth = month.toInt()
         if (numMonth in (1..12)) {
-            return leadingZero(month, 2)
+            leadingZero(month, 2)
         } else {
-            return leadingZero(
+            leadingZero(
                 LocalDate.now()
                     .format(DateTimeFormatter.ofPattern("MM")), 2
             )
@@ -191,10 +173,10 @@ fun getMonthString(month: String?): String {
 
 @SuppressLint("NewApi")
 fun getYearStr(year: String?): String {
-    if (year.isNullOrBlank()) {
-        return "1900"
+    return if (year.isNullOrBlank()) {
+        "1900"
     } else {
-        return leadingZero(validInt(year), 4)
+        leadingZero(validInt(year), 4)
     }
 }
 
@@ -213,11 +195,11 @@ fun formatLocalTime(hour: String, minute: String, second: String, millis: String
 fun getDateTimeLocal(year: String, month: String, day: String, hour: String,
                      min: String, sec: String, milli: String
 ): LocalDateTime {
-    var dateStr = validateDate(year, month, day)
-    var timeStr = formatLocalTime(
+    val dateStr = validateDate(year, month, day)
+    val timeStr = formatLocalTime(
         hour, min, sec, milli
     )
-    var dateTimeStr = dateStr + "T" + timeStr
+    val dateTimeStr = dateStr + "T" + timeStr
 
     return LocalDateTime.parse(dateTimeStr)
 }
@@ -242,7 +224,8 @@ fun calculatePlus(startDate: LocalDateTime, numToAdd: Long, units: DateTimeUnits
 @SuppressLint("NewApi")
 fun calculateMinus(startDate: LocalDateTime,
                    numToSubtract: Long,
-                   units: DateTimeUnits): LocalDateTime {
+                   units: DateTimeUnits
+): LocalDateTime {
     return startDate.minus(numToSubtract, units.unit)
 }
 
@@ -250,7 +233,6 @@ fun calculateMinus(startDate: LocalDateTime,
 @SuppressLint("NewApi")
 fun calculateDifference(date1: LocalDateTime, date2: LocalDateTime, units: DateTimeUnits): Long {
     val chronoUnits: ChronoUnit = units.unit
-    val diff = abs( chronoUnits.between(date1 , date2))
-    return diff
+    return abs(chronoUnits.between(date1, date2))
 }
 

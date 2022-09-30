@@ -5,6 +5,19 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kunimitsova.valbee.datetimecalculator.utils.*
+import kunimitsova.valbee.datetimecalculator.utils.functions.calculateMinus
+import kunimitsova.valbee.datetimecalculator.utils.functions.calculatePlus
+import kunimitsova.valbee.datetimecalculator.utils.functions.getDateTimeLocal
+import kunimitsova.valbee.datetimecalculator.utils.functions.getDayString
+import kunimitsova.valbee.datetimecalculator.utils.functions.getHourString
+import kunimitsova.valbee.datetimecalculator.utils.functions.getMilliString
+import kunimitsova.valbee.datetimecalculator.utils.functions.getMinString
+import kunimitsova.valbee.datetimecalculator.utils.functions.getMonthString
+import kunimitsova.valbee.datetimecalculator.utils.functions.getNumAndUnits
+import kunimitsova.valbee.datetimecalculator.utils.functions.getSecString
+import kunimitsova.valbee.datetimecalculator.utils.functions.getYearStr
+import kunimitsova.valbee.datetimecalculator.utils.functions.leadingZero
+import kunimitsova.valbee.datetimecalculator.utils.functions.validFloat
 import java.time.LocalDateTime
 import java.util.*
 
@@ -108,15 +121,15 @@ class DateTimeAddSubViewModel: ViewModel() {
         updateStartMilli(getMilliString(strNano))
         updateNumToAdd(validFloat(numToAdd.value))
     }
-    var startLocalDateTime = formatAsDateTime()
+    private var startLocalDateTime = formatAsDateTime()
 
     fun calculatedDate(): LocalDateTime {
         val numAndUnits = getNumAndUnits(numToAdd.value, selectedUnit.value)
-        // plusMInus = TRUE for addition, FALSE for subtraction.
-        if (plusMinus.value) {
-            return calculatePlus(formatAsDateTime(), numAndUnits.first, numAndUnits.second)
+        // plusMinus = TRUE for addition, FALSE for subtraction.
+        return if (plusMinus.value) {
+            calculatePlus(formatAsDateTime(), numAndUnits.first, numAndUnits.second)
         } else {
-            return calculateMinus(formatAsDateTime(), numAndUnits.first, numAndUnits.second)
+            calculateMinus(formatAsDateTime(), numAndUnits.first, numAndUnits.second)
         }
     }
 

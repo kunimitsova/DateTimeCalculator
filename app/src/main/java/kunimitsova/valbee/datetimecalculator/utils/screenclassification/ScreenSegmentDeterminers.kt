@@ -2,7 +2,8 @@ package kunimitsova.valbee.datetimecalculator.utils.screenclassification
 
 import android.graphics.Rect
 import androidx.compose.ui.unit.*
-import androidx.core.graphics.minus
+import androidx.window.layout.FoldingFeature
+//import androidx.core.graphics.minus
 import kunimitsova.valbee.datetimecalculator.ui.LayoutSetup
 import kotlin.math.abs
 
@@ -16,8 +17,18 @@ const val MIN_ROW_HEIGHT = 320
 const val MIN_SPACER = 16
 
 
-fun twoHalvesCanFit(rect1: Rect, rect2: Rect?,
-                    bookMode: Boolean?, tableMode: Boolean?): Boolean {
+fun getSegments(
+    mode: PresentationSizeClass,
+    foldingFeature: FoldingFeature?
+): Int {
+    val hinge = foldingFeature?.bounds
+    var segments = 1
+    // TODO() figure out how many max segments there are
+
+    return segments
+}
+
+fun twoHalvesCanFit(rect1: Rect, rect2: Rect?, tableMode: Boolean?): Boolean {
     // two halves can only fit if there are two full size presentation rects
     val minSize = if (tableMode == true) MIN_ROW_HEIGHT else MIN_COLUMN_WIDTH
     val comp1 = if (tableMode == true) rect1.height() else rect1.width()
@@ -30,13 +41,13 @@ fun twoHalvesCanFit(rect1: Rect, rect2: Rect?,
 fun bookModeLeftRect(dpSize: DpSize, hinge: Rect?): Rect {
     val left = 0
     val top = 0
-    val right = if (hinge == null) dpSize.width.value.toInt() else hinge.left
+    val right = hinge?.left ?: dpSize.width.value.toInt()
     val bottom = dpSize.height.value.toInt()
     return Rect(left, top, right, bottom)
 }
 
 fun bookModeRightRect(dpSize: DpSize, hinge: Rect?): Rect {
-    val left = if (hinge == null) 0 else hinge.right
+    val left = hinge?.right ?: 0
     val top = 0
     val right = dpSize.width.value.toInt()
     val bottom = dpSize.height.value.toInt()
@@ -47,13 +58,13 @@ fun tableModeTopRect(dpSize: DpSize, hinge: Rect?): Rect {
     val left = 0
     val top = 0
     val right = dpSize.width.value.toInt()
-    val bottom = if (hinge == null) dpSize.height.value.toInt() else hinge.top
+    val bottom = hinge?.top ?: dpSize.height.value.toInt()
     return Rect(left, top, right, bottom)
 }
 
 fun tableModeBottomRect(dpSize: DpSize, hinge: Rect?): Rect {
     val left = 0
-    val top = if (hinge == null) 0 else hinge.bottom
+    val top = hinge?.bottom ?: 0
     val right = dpSize.width.value.toInt()
     val bottom = dpSize.height.value.toInt()
     return Rect(left, top, right, bottom)
@@ -79,10 +90,10 @@ fun layoutStyle(mode: PresentationSizeClass): LayoutSetup {
 fun getBigHalfTall(rect: Rect) : Rect {
     val width = rect.width() / 2
     val newRect = Rect(rect.left, rect.top, width, rect.bottom)
-    if (width >= MIN_COLUMN_WIDTH) {
-        return newRect
+    return if (width >= MIN_COLUMN_WIDTH) {
+        newRect
     } else {
-        return rect
+        rect
     }
 }
 
@@ -91,7 +102,7 @@ fun getBiggestRect (rect1: Rect, rect2: Rect?): Rect {
     // room for dual screen. find the big rect to use for the
     // single screen presentation.
     val rectA = rect1
-    val rectB = if (rect2 == null) Rect(0,0,0,0) else rect2
+    val rectB = rect2 ?: Rect(0,0,0,0)
 
     val area1 = rectA.height() * rectA.width()
     val area2 = rectB.height() * rectB.width()
@@ -100,7 +111,7 @@ fun getBiggestRect (rect1: Rect, rect2: Rect?): Rect {
 
 fun middleSpacer(rect1: Rect, rect2: Rect?): Int {
     // get the spacer that matches the hinge area
-    val rect2bang = if (rect2 == null) rect1 else rect2
+    val rect2bang = rect2 ?: rect1
 
     // if both rects are the same, then there's no hinge
     return if (rect1 == rect2bang) {

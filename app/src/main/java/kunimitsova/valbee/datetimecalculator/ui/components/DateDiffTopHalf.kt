@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.HeaderText
+import kunimitsova.valbee.datetimecalculator.ui.components.segments.DateItemsInput
 
 @Composable
 fun DateDiffTopHalf(
@@ -23,7 +24,7 @@ fun DateDiffTopHalf(
     onDay1Change: (String) -> Unit,
     onDay2Change: (String) -> Unit
 ) {
-    Column() {
+    Column {
         Row(modifier = Modifier.padding(vertical = 4.dp)) {
             HeaderText(text = "Date 1")
         }

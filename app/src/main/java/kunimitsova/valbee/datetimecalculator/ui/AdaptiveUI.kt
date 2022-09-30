@@ -1,4 +1,4 @@
-package kunimitsova.valbee.datetimecalculator.utils
+package kunimitsova.valbee.datetimecalculator.ui
 
 enum class AdaptiveLayoutsScreenType{
    AddOnly,

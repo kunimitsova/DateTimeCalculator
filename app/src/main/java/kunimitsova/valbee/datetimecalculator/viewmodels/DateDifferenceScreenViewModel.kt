@@ -1,13 +1,16 @@
 package kunimitsova.valbee.datetimecalculator.viewmodels
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kunimitsova.valbee.datetimecalculator.utils.*
-import java.time.LocalDate
+import kunimitsova.valbee.datetimecalculator.utils.functions.calculateDifference
+import kunimitsova.valbee.datetimecalculator.utils.functions.getDayString
+import kunimitsova.valbee.datetimecalculator.utils.functions.getMonthString
+import kunimitsova.valbee.datetimecalculator.utils.functions.getYearStr
+import kunimitsova.valbee.datetimecalculator.utils.functions.leadingZero
+import kunimitsova.valbee.datetimecalculator.utils.functions.validateDate
 import java.time.LocalDateTime
 import java.util.Calendar
 
