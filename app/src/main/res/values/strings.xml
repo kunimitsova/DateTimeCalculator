@@ -29,4 +29,7 @@
     <string name="overflow_desc">How to use</string>
     <string name="back_icon">back icon</string>
     <string name="double_screen">\"Double screen</string>
+    <string name="add_button">Add</string>
+    <string name="subtract_button">Subtract</string>
+    <string name="select_time_units">Select units of time</string>
 </resources>

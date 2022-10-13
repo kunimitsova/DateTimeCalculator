@@ -9,13 +9,22 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.invisibleToUser
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.selects.select
 //import kunimitsova.valbee.datetimecalculator.BuildConfig
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
@@ -42,6 +51,7 @@ fun EntryText(
     modifier: Modifier = Modifier,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     TextField(
         value = text,
         singleLine = true,
@@ -51,10 +61,12 @@ fun EntryText(
         textStyle = MaterialTheme.typography.h5,
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Done,
-            keyboardType = KeyboardType.Number
         ),
         keyboardActions = KeyboardActions(
-            onDone = { keyboardController?.hide() }
+            onDone = {
+                keyboardController?.hide()
+                focusManager.clearFocus(true)
+            }
         ),
         label = { Text(label) },
         modifier = modifier
@@ -104,19 +116,23 @@ fun ButtonText(
     )
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun DateDivider(modifier: Modifier = Modifier){
     Text(text = "/",
         style = MaterialTheme.typography.h4,
         modifier = modifier.wrapContentWidth(Alignment.CenterHorizontally)
+            .semantics { invisibleToUser() }
     )
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun TimeDivider(modifier: Modifier = Modifier){
     Text(text = ":",
         style = MaterialTheme.typography.h4,
         modifier = modifier.wrapContentWidth(Alignment.CenterHorizontally)
+            .semantics { invisibleToUser() }
     )
 }
 

@@ -39,10 +39,11 @@ fun DateDiffBottomHalf(
             )
             Spacer(modifier = Modifier.width(4.dp))
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                LittleText(text = stringResource(id = R.string.difference_units))
+//                LittleText(text = stringResource(id = R.string.difference_units))
                 UnitsSpinner(
                     selectedUnit = selectedUnit,
                     expanded = expanded,
+                    textAbove = stringResource(id = R.string.add_or_subtract_units),
                     onBoxClick = onExpandClick,
                     onDismissMenu = onDismissMenu,
                     onClickUnits = onClickSpinner

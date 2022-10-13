@@ -21,7 +21,7 @@ import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenu
 import kunimitsova.valbee.datetimecalculator.ui.menus.BottomMenuHelpOnly
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.PresentationSizeClass
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenInfo2
-import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenInfo3
+//import kunimitsova.valbee.datetimecalculator.utils.screenclassification.ScreenInfo3
 
 @Composable
 fun DateTimeMainScreen(
@@ -36,12 +36,14 @@ fun DateTimeMainScreen(
         val navToHelp = { navController.navigatePopToHome(Screen.HelpScreen.route)}
 
         val devicePostureValue by devicePosture.collectAsState()
-        val screenClassifier by remember { mutableStateOf( ScreenInfo2().createClassifier(
-            devicePostureValue,
-            windowDpSize)) }
+//        val screenClassifier by remember { mutableStateOf( ScreenInfo2().createClassifier(
+//            devicePostureValue,
+//            windowDpSize)) }
+        val screenClassifier = ScreenInfo2().createClassifier(devicePostureValue, windowDpSize)
 
         // not sure this is how to do this:
-        val startScreen = remember { mutableStateOf( if (screenClassifier.canDualScreen) Screen.DualScreen.route else Screen.AddScreen.route) }
+        val startScreen = remember { mutableStateOf( if (screenClassifier.canDualScreen)
+            Screen.DualScreen.route else Screen.AddScreen.route) }
 
         val scaffoldState = rememberScaffoldState()
 //        val scope = rememberCoroutineScope()

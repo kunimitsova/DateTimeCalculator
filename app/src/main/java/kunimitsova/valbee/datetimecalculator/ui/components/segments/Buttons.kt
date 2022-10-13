@@ -1,12 +1,18 @@
 package kunimitsova.valbee.datetimecalculator.ui.components.segments
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.selected
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.R
@@ -17,7 +23,18 @@ import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 
 @Composable
 fun PlusMinusButton(addDate: Boolean, onToggle: (Boolean) -> Unit) {
-    Row(modifier = Modifier.padding(start = 30.dp, end = 16.dp)) {
+    val stateAdd = stringResource(id = R.string.add_button)
+    val stateSubtract = stringResource(id = R.string.subtract_button)
+    Row(modifier = Modifier.padding(start = 30.dp, end = 16.dp)
+        .semantics(mergeDescendants = true) {
+            stateDescription = if (addDate) stateAdd else stateSubtract
+        }
+        .toggleable(
+            value = addDate,
+            onValueChange = onToggle,
+            role = Role.Switch
+        )
+    ) {
         IconToggleButton(
             checked = addDate,
             onCheckedChange = onToggle,
@@ -25,6 +42,7 @@ fun PlusMinusButton(addDate: Boolean, onToggle: (Boolean) -> Unit) {
                 .height(75.dp)
                 .width(75.dp)
                 .padding(4.dp)
+                .clearAndSetSemantics {  }
 //                .background(
 //                    color = MaterialTheme.colors.primary,
 //                    shape = MaterialTheme.shapes.medium
@@ -94,7 +112,10 @@ fun TestCrashButton(modifier: Modifier = Modifier) {
 @Composable
 fun ButtonsPreview() {
     DateTimeCalculatorTheme {
-       CalculateButton (modifier = Modifier, onCalculate = {})
+       PlusMinusButton (
+           addDate = true,
+           onToggle = { addDate: Boolean -> !addDate }
+               )
 
     }
 }

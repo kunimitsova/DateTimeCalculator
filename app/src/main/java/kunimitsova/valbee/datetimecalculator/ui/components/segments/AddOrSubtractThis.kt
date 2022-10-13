@@ -1,10 +1,13 @@
 package kunimitsova.valbee.datetimecalculator.ui.components.segments
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.R
@@ -35,13 +38,15 @@ fun AddOrSubtractThis(numToAdd: String, onNumChange: (String) -> Unit ,
         Spacer(modifier = Modifier.width(4.dp))
         Column(horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(horizontal = 4.dp)
+
         ) {
-            LittleText(text = stringResource(id = R.string.add_or_subtract_units),
-                modifier = Modifier
-            )
+//            LittleText(text = stringResource(id = R.string.add_or_subtract_units),
+//                modifier = Modifier
+//            )
             UnitsSpinner(
                 selectedUnit = selectedUnit,
                 expanded = expanded,
+                textAbove = stringResource(id = R.string.add_or_subtract_units),
                 onBoxClick = onBoxClick,
                 onDismissMenu = onDismissMenu,
                 onClickUnits = onClickUnits

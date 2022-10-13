@@ -16,72 +16,72 @@ import androidx.window.layout.WindowLayoutInfo
  * the device is unfolded and flat.
  */
 
-class ScreenInfo3 {
-    fun createClassifier(devicePosture: WindowLayoutInfo, windowDpSize: DpSize): ScreenClassifier3 {
-
-        val foldingFeature = devicePosture.displayFeatures.find {
-            it is FoldingFeature
-        } as? FoldingFeature
-
-        val windowHeightSizeClass = when {
-            windowDpSize.height < 480.dp -> WindowSizeClass.Compact
-            windowDpSize.height < 900.dp -> WindowSizeClass.Medium
-            else -> WindowSizeClass.Expanded
-        }
-        val windowWidthSizeClass = when {
-            windowDpSize.width < 600.dp -> WindowSizeClass.Compact
-            windowDpSize.width < 840.dp -> WindowSizeClass.Medium
-            else -> WindowSizeClass.Expanded
-        }
-
-        val pHeight = Dimension(windowDpSize.height, windowHeightSizeClass)
-        val pWidth = Dimension(windowDpSize.width, windowWidthSizeClass)
-
-        val modeSizeClass =
-            getPresentationMode(windowWidthSizeClass, windowHeightSizeClass, foldingFeature)
-
-        return ScreenClassifier3(
-            height = pHeight,
-            width = pWidth,
-            mode = modeSizeClass,
-            foldingFeature = foldingFeature
-        )
-    }
-    private fun getPresentationMode(widthClass: WindowSizeClass,
-                                    heightClass: WindowSizeClass,
-                                    foldingFeature: FoldingFeature?,
-    ): PresentationSizeClass {
-        // basic size class regardless of folding feature:
-        val sizeMode = when {
-            (widthClass == WindowSizeClass.Compact && heightClass == WindowSizeClass.Compact) -> PresentationSizeClass.Small
-            (widthClass != WindowSizeClass.Compact && heightClass == WindowSizeClass.Compact) -> PresentationSizeClass.Wide
-            (widthClass == WindowSizeClass.Compact && heightClass != WindowSizeClass.Compact) -> PresentationSizeClass.Tall
-            else -> PresentationSizeClass.Big
-        }
-        // if there's a folding feature, determine if the fold is horizontal or vertical
-        // if there is no folding feature, no more calculations need to be done
-        val foldMode = when {
-            (foldingFeature == null) -> sizeMode
-            (foldingFeature.state == FoldingFeature.State.HALF_OPENED &&
-                    foldingFeature.orientation == FoldingFeature.Orientation.HORIZONTAL) -> {
-                if (widthClass != WindowSizeClass.Compact) PresentationSizeClass.TableBig else PresentationSizeClass.TableSmall
-            } // the logic is this: if the fold is horizontal  but the width class is compact,
-            // that means it's not an unfolded tablet size but something phone-sized with a fold.
-            // If the orientation of the fold is vertical and the height class is compact, that
-            // means it is a phone-sized device with a fold. Remember the fold orientation
-            // for a phone-shaped device will be perpendicular to the orientation of the device
-            // itself. It's a bit confusing.
-
-            (foldingFeature.state == FoldingFeature.State.HALF_OPENED &&
-                    foldingFeature.orientation == FoldingFeature.Orientation.VERTICAL) -> {
-                if (heightClass != WindowSizeClass.Compact) PresentationSizeClass.BookBig else PresentationSizeClass.BookSmall
-            }
-
-            else -> sizeMode // big size mode is always two columns unless it's half-open
-        }
-        return foldMode
-    }
-}
+//class ScreenInfo3 {
+//    fun createClassifier(devicePosture: WindowLayoutInfo, windowDpSize: DpSize): ScreenClassifier3 {
+//
+//        val foldingFeature = devicePosture.displayFeatures.find {
+//            it is FoldingFeature
+//        } as? FoldingFeature
+//
+//        val windowHeightSizeClass = when {
+//            windowDpSize.height < 480.dp -> WindowSizeClass.Compact
+//            windowDpSize.height < 900.dp -> WindowSizeClass.Medium
+//            else -> WindowSizeClass.Expanded
+//        }
+//        val windowWidthSizeClass = when {
+//            windowDpSize.width < 600.dp -> WindowSizeClass.Compact
+//            windowDpSize.width < 840.dp -> WindowSizeClass.Medium
+//            else -> WindowSizeClass.Expanded
+//        }
+//
+//        val pHeight = Dimension(windowDpSize.height, windowHeightSizeClass)
+//        val pWidth = Dimension(windowDpSize.width, windowWidthSizeClass)
+//
+//        val modeSizeClass =
+//            getPresentationMode(windowWidthSizeClass, windowHeightSizeClass, foldingFeature)
+//
+//        return ScreenClassifier3(
+//            height = pHeight,
+//            width = pWidth,
+//            mode = modeSizeClass,
+//            foldingFeature = foldingFeature
+//        )
+//    }
+//    private fun getPresentationMode(widthClass: WindowSizeClass,
+//                                    heightClass: WindowSizeClass,
+//                                    foldingFeature: FoldingFeature?,
+//    ): PresentationSizeClass {
+//        // basic size class regardless of folding feature:
+//        val sizeMode = when {
+//            (widthClass == WindowSizeClass.Compact && heightClass == WindowSizeClass.Compact) -> PresentationSizeClass.Small
+//            (widthClass != WindowSizeClass.Compact && heightClass == WindowSizeClass.Compact) -> PresentationSizeClass.Wide
+//            (widthClass == WindowSizeClass.Compact && heightClass != WindowSizeClass.Compact) -> PresentationSizeClass.Tall
+//            else -> PresentationSizeClass.Big
+//        }
+//        // if there's a folding feature, determine if the fold is horizontal or vertical
+//        // if there is no folding feature, no more calculations need to be done
+//        val foldMode = when {
+//            (foldingFeature == null) -> sizeMode
+//            (foldingFeature.state == FoldingFeature.State.HALF_OPENED &&
+//                    foldingFeature.orientation == FoldingFeature.Orientation.HORIZONTAL) -> {
+//                if (widthClass != WindowSizeClass.Compact) PresentationSizeClass.TableBig else PresentationSizeClass.TableSmall
+//            } // the logic is this: if the fold is horizontal  but the width class is compact,
+//            // that means it's not an unfolded tablet size but something phone-sized with a fold.
+//            // If the orientation of the fold is vertical and the height class is compact, that
+//            // means it is a phone-sized device with a fold. Remember the fold orientation
+//            // for a phone-shaped device will be perpendicular to the orientation of the device
+//            // itself. It's a bit confusing.
+//
+//            (foldingFeature.state == FoldingFeature.State.HALF_OPENED &&
+//                    foldingFeature.orientation == FoldingFeature.Orientation.VERTICAL) -> {
+//                if (heightClass != WindowSizeClass.Compact) PresentationSizeClass.BookBig else PresentationSizeClass.BookSmall
+//            }
+//
+//            else -> sizeMode // big size mode is always two columns unless it's half-open
+//        }
+//        return foldMode
+//    }
+//}
 
 class ScreenInfo2{
     fun createClassifier(devicePosture: WindowLayoutInfo, windowDpSize: DpSize): ScreenClassifier2 {

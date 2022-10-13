@@ -11,9 +11,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.BigText
+import kunimitsova.valbee.datetimecalculator.ui.components.reusables.LittleText
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 
@@ -21,48 +27,61 @@ import kunimitsova.valbee.datetimecalculator.utils.DateTimeUnits
 fun UnitsSpinner(
     selectedUnit: DateTimeUnits,
     expanded: Boolean,
+    textAbove: String,
     onBoxClick: () -> Unit,
     onDismissMenu: () -> Unit,
     onClickUnits: (DateTimeUnits) -> Unit
 ){
-
-
-    Box() {
-        Surface(elevation = 1.dp,
-            shape = MaterialTheme.shapes.large,
-            color = MaterialTheme.colors.surface,
-            contentColor = MaterialTheme.colors.onSurface,
-            modifier = Modifier
-                .requiredWidth(220.dp)
-        ) {
-        Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(10.dp)
-                .clickable(onClick =  onBoxClick)
-                .animateContentSize(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow))
-        ) {
-            BigText(text = stringResource(selectedUnit.friendlyNameID))
-            DropdownMenu(expanded = expanded,
-                onDismissRequest =  onDismissMenu  ) {
-                    enumValues<DateTimeUnits>().forEach {
-                        DropdownMenuItem(
-                            onClick = { onClickUnits(it) }
-                        ) {
-                            BigText(text = stringResource(it.friendlyNameID))
+    Column(modifier = Modifier
+        .semantics(mergeDescendants = true){}
+        .clickable(
+            onClick = onBoxClick,
+            onClickLabel = stringResource(id = R.string.select_time_units),
+            role = Role.Button
+        )
+    ) {
+        LittleText(text = textAbove, modifier = Modifier)
+        Box() {
+            Surface(
+                elevation = 1.dp,
+                shape = MaterialTheme.shapes.large,
+                color = MaterialTheme.colors.surface,
+                contentColor = MaterialTheme.colors.onSurface,
+                modifier = Modifier
+                    .requiredWidth(220.dp)
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .animateContentSize(
+                            animationSpec = spring(
+                                dampingRatio = Spring.DampingRatioMediumBouncy,
+                                stiffness = Spring.StiffnessLow
+                            )
+                        )
+                ) {
+                    BigText(text = stringResource(selectedUnit.friendlyNameID))
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = onDismissMenu
+                    ) {
+                        enumValues<DateTimeUnits>().forEach {
+                            DropdownMenuItem(
+                                onClick = { onClickUnits(it) }
+                            ) {
+                                BigText(text = stringResource(it.friendlyNameID))
+                            }
+                        }
                     }
                 }
             }
-          }
         }
     }
 }
 
-@Preview(showBackground = true, widthDp = 300)
+@Preview
 @Composable
 fun PreviewDropdown() {
     var selectedUnit by rememberSaveable { mutableStateOf(DateTimeUnits.DAY) }
@@ -77,6 +96,7 @@ fun PreviewDropdown() {
         UnitsSpinner(
             selectedUnit = selectedUnit,
             expanded = expanded,
+            textAbove = "Sample text",
             onBoxClick = onBoxClick,
             onDismissMenu = onDismissMenu,
             onClickUnits = onClickUnits
