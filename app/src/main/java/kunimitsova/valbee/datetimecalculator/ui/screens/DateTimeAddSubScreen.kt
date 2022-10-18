@@ -11,12 +11,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kunimitsova.valbee.datetimecalculator.ui.components.*
 import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 import kunimitsova.valbee.datetimecalculator.viewmodels.DateTimeAddSubViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kunimitsova.valbee.datetimecalculator.navigation.Screen
 import kunimitsova.valbee.datetimecalculator.utils.*
 import kunimitsova.valbee.datetimecalculator.utils.screenclassification.*
 
@@ -33,6 +37,8 @@ fun DateTimeScreen(
 ) {
     // modifier is for the Column
     val localFocusManager = LocalFocusManager.current
+
+    val pageContentDescription = stringResource(id = Screen.AddScreen.resourceId) + " Screen"
 
     var expandedAst by remember { mutableStateOf(false) }
     val onAstBoxClick = { expandedAst = !expandedAst }
@@ -68,6 +74,7 @@ fun DateTimeScreen(
                 localFocusManager.clearFocus()
             })
         }
+        .semantics { contentDescription = pageContentDescription }
     ) {
         AdaptiveScreenLayout( compOne = {
             AddDateTopHalf(

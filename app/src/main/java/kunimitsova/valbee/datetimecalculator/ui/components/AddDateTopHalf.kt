@@ -5,7 +5,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kunimitsova.valbee.datetimecalculator.R
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.DtcDivider
 import kunimitsova.valbee.datetimecalculator.ui.components.segments.DateItemsInput
 import kunimitsova.valbee.datetimecalculator.ui.components.segments.PlusMinusButton
@@ -36,6 +38,9 @@ fun AddDateTopHalf(
             startYear = startYear,
             startMonth = startMonth,
             startDay = startDay,
+            yearLabel = stringResource(id = R.string.year),
+            monthLabel = stringResource(id = R.string.month),
+            dayLabel = stringResource(id = R.string.day),
             onYrChange = onYrChange,
             onMonthChange = onMonthChange,
             onDayChange = onDayChange,
@@ -46,6 +51,10 @@ fun AddDateTopHalf(
             startMin = startMin,
             startSec = startSec,
             startMilli = startMilli,
+            hourLabel = stringResource(id = R.string.hour),
+            minLabel = stringResource(id = R.string.minute),
+            secLabel = stringResource(id = R.string.second),
+            milliLabel = stringResource(id = R.string.Millis),
             onHrChange = onHourChange,
             onMinChange = onMinChange,
             onSecChange = onSecChange,

@@ -32,6 +32,9 @@ fun BottomMenu(
     navController: NavHostController,
     currentDestination: NavDestination?
 ) {
+    val contentColor = MaterialTheme.colors.onPrimary
+    val unselectedColor = MaterialTheme.colors.onPrimary.copy(alpha = 0.8f)
+
     // we only need full navigation when it's in Tall mode
     BottomNavigation(
         backgroundColor = MaterialTheme.colors.secondary,
@@ -51,6 +54,8 @@ fun BottomMenu(
                     icon = { HeaderText(stringResource(id = screen.resourceId)) },
                     label = null,
                     selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                    selectedContentColor = contentColor,
+                    unselectedContentColor = unselectedColor,
                     onClick = {
                         navController.navigatePopToHome(route = screen.route)
                     },

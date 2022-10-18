@@ -15,11 +15,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import kunimitsova.valbee.datetimecalculator.R
+import kunimitsova.valbee.datetimecalculator.navigation.Screen
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.BodyText
 import kunimitsova.valbee.datetimecalculator.ui.components.reusables.HeaderText
 import kunimitsova.valbee.datetimecalculator.viewmodels.HelpPageViewModel
@@ -31,6 +34,9 @@ import java.io.InputStream
 fun HelpScreen (modifier: Modifier = Modifier, helpPageViewModel: HelpPageViewModel = viewModel()) {
 
     helpPageViewModel.loadHelpData(LocalContext.current)
+
+    val pageContentDescription = stringResource(id = Screen.HelpScreen.resourceId) + " Screen"
+
     val uiString: String = if (helpPageViewModel.uiState.value.howToUseString == null) {
         ""
     } else {
@@ -46,6 +52,7 @@ fun HelpScreen (modifier: Modifier = Modifier, helpPageViewModel: HelpPageViewMo
             modifier
                 .padding(16.dp)
                 .fillMaxSize(1f)
+                .semantics { contentDescription = pageContentDescription }
 
         ) {
             HeaderText(text = stringResource(id = R.string.help))

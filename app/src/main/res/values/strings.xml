@@ -22,7 +22,7 @@
     <string name="add_or_subtract_units">click to change the units to add or subtract</string>
     <string name="difference_units">click to select the units to display</string>
     <string name="help">How To Use</string>
-    <string name="add_date">Add (units) to date</string>
+    <string name="add_date">Add time units to date</string>
     <string name="date_difference">Difference between dates</string>
     <string name="how_many">How many</string>
     <string name="output_difference">%1$s between: %2$d</string>
@@ -32,4 +32,11 @@
     <string name="add_button">Add</string>
     <string name="subtract_button">Subtract</string>
     <string name="select_time_units">Select units of time</string>
+    <string name="year1">date 1 year</string>
+    <string name="month1">date 1 month</string>
+    <string name="day1">date 1 day</string>
+    <string name="year2">date 2 year</string>
+    <string name="month2">date 2 month</string>
+    <string name="day2">date 2 day</string>
+    <string name="unitlist">list of time units</string>
 </resources>

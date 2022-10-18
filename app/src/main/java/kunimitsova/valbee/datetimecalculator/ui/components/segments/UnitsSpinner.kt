@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,8 +33,9 @@ fun UnitsSpinner(
     onDismissMenu: () -> Unit,
     onClickUnits: (DateTimeUnits) -> Unit
 ){
+    val popupDescription = stringResource(id = R.string.unitlist)
     Column(modifier = Modifier
-        .semantics(mergeDescendants = true){}
+        .semantics(mergeDescendants = true) {}
         .clickable(
             onClick = onBoxClick,
             onClickLabel = stringResource(id = R.string.select_time_units),
@@ -65,7 +67,8 @@ fun UnitsSpinner(
                     BigText(text = stringResource(selectedUnit.friendlyNameID))
                     DropdownMenu(
                         expanded = expanded,
-                        onDismissRequest = onDismissMenu
+                        onDismissRequest = onDismissMenu,
+                        modifier = Modifier.semantics { if (expanded) contentDescription = popupDescription else null }
                     ) {
                         enumValues<DateTimeUnits>().forEach {
                             DropdownMenuItem(

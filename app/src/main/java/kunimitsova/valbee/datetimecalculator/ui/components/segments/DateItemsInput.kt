@@ -17,6 +17,7 @@ import kunimitsova.valbee.datetimecalculator.ui.components.reusables.EntryText
 @Composable
 fun DateItemsInput(
     startYear: String,  startMonth: String, startDay: String,
+    yearLabel: String, monthLabel: String, dayLabel: String,
     onYrChange: (String) -> Unit,
     onMonthChange: (String) -> Unit,
     onDayChange: (String) -> Unit,
@@ -29,19 +30,19 @@ fun DateItemsInput(
         modifier = Modifier.padding(4.dp)
     ) {
         EntryText(
-            text = startYear, label = stringResource(id = R.string.year),
+            text = startYear, label = yearLabel,
             onChanged = onYrChange ,
             modifier = modifier.weight(0.8f)
         )
         DateDivider()
         EntryText(
-            text = startMonth, label = stringResource(id = R.string.month),
+            text = startMonth, label = monthLabel,
             onChanged = onMonthChange,
             modifier = modifier.weight(0.6f)
         )
         DateDivider()
         EntryText(
-            text = startDay, label = stringResource(id = R.string.day),
+            text = startDay, label = dayLabel,
             onChanged = onDayChange,
             modifier = modifier.weight(0.6f)
         )

@@ -19,6 +19,7 @@ import kunimitsova.valbee.datetimecalculator.ui.theme.DateTimeCalculatorTheme
 @Composable
 fun TimeItemsInput(
     startHour: String, startMin: String, startSec: String, startMilli: String,
+    hourLabel: String, minLabel: String, secLabel: String, milliLabel: String,
     onHrChange: (String) -> Unit,
     onMinChange: (String) -> Unit,
     onSecChange: (String) -> Unit,
@@ -30,26 +31,26 @@ fun TimeItemsInput(
     Row(verticalAlignment = Alignment.Bottom,
         modifier = Modifier.padding(4.dp)) {
         EntryText(
-            text = startHour, label = stringResource(id = R.string.hour),
+            text = startHour, label = hourLabel,
             onChanged = onHrChange,
             modifier = modifier.weight(1f)
         )
         TimeDivider()
         EntryText(
-            text = startMin, label = stringResource(id = R.string.minute),
+            text = startMin, label = minLabel,
             onChanged = onMinChange,
             modifier = modifier.weight(1f)
         )
         TimeDivider()
         EntryText(
-            text = startSec, label = stringResource(id = R.string.second),
+            text = startSec, label = secLabel,
             onChanged = onSecChange,
             modifier = modifier.weight(1f)
         )
         if (showMillis) {
             EntryText(
                 text = startMilli,
-                label = stringResource(id = R.string.Millis),
+                label = milliLabel,
                 onChanged = onMilliChange,
                 modifier = modifier.weight(1f)
             )
@@ -66,6 +67,10 @@ fun TimeItemsInputPreview() {
             startMin = "33",
             startSec = "38",
             startMilli = "125",
+            hourLabel = "Hour",
+            minLabel = "Minute",
+            secLabel = "Second",
+            milliLabel = "Millis",
             onHrChange = {},
             onMinChange = {},
             onSecChange = {},
